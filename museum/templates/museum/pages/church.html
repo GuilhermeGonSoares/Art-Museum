@@ -1,0 +1,29 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %}{{painting.name}} | {% endblock title %}
+{% block content %}
+
+<div class="main-content main-content-detail container">
+    
+    <h1>Nome da Igreja: {{ church.name }}</h1>
+    {% if church.city %}
+        <h3>Cidade da Igreja: {{ church.city }}</h3>
+    {% endif %}
+    {% if church.state %}
+        <h3>Estado da Igreja: {{ church.state }}</h3>
+    {% endif %}
+    
+    <br>
+    <h2>Lista das pinturas dessa igreja</h2>
+    <br>
+    <div class="main-content main-content-list container">
+        {% for painting in paintings %}
+        
+            {% include 'museum/partials/painting.html' %}
+
+        {% endfor %}
+    </div>
+
+
+</div>
+    
+{% endblock content %}
