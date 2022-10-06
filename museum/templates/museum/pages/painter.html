@@ -4,17 +4,12 @@
 
 <div class="main-content main-content-detail container">
     
-    <h1>Nome da Igreja: {{ church.name }}</h1>
-    {% if church.city %}
-        <h3>Cidade da Igreja: {{ church.city }}</h3>
-    {% endif %}
-    {% if church.state %}
-        <h3>Estado da Igreja: {{ church.state }}</h3>
-    {% endif %}
+    <h1>Pintor: {{ painter.name }}</h1>
+
+    <br>
+    <h2>Lista das suas pinturas:</h2>
+    <br>
     
-    <br>
-    <h2>Lista das pinturas dessa igreja</h2>
-    <br>
     <div class="main-content main-content-list container">
         {% for painting in paintings %}
         

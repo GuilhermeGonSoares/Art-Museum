@@ -12,7 +12,7 @@
         <span class="recipe-author-item">
             {% for author in painting.author.all %}
                 <i class="fas fa-user"></i>
-                    {{author}}
+                    <a href="{% url 'painting:painter' author.id %}">{{author}}</a>
                     <br>
             {%empty%}
                 <i class="fas fa-user"></i>
@@ -21,7 +21,11 @@
         </span>
         <span class="recipe-author-item">
             <i class="fas fa-calendar-alt"></i>
-            {{ painting.date |date:"d/m/Y" }}
+            {% if painting.date %}
+                {{ painting.date |date:"d/m/Y" }}
+            {% else %}
+                Desconhecido
+            {% endif %}
         </span>
         
         
