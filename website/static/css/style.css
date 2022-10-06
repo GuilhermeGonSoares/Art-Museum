@@ -567,21 +567,10 @@
     transition: all 300ms ease-in-out;
   }
 
-.recipe-list-item{
-  display: flex;
-  flex-direction: column;
-}
 
-.recipe-cover{
-  height: 75vh;
-}
-.recipe-title{
-  height: 5vh;
-}
-.recipe-content{
-  height: 15vh;
-}
-
-.recipe-author{
-  height: 6vh;
-}
+  .recipe-list-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between ;
+    min-height: 120rem;
+  }

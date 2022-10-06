@@ -47,24 +47,25 @@
             <p>{{ painting.summary }}</p>
         </div>
     
-        <div class="recipe-meta-container">
-            <div class="recipe-meta recipe-preparation">
-                <h3 class="recipe-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
-                <div class="recipe-meta-text">
-                    {{painting.post_author.username}}
-                </div>
-            </div>
-            <div class="recipe-meta recipe-servings">
-                <h3 class="recipe-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
-                <div class="recipe-meta-text">
-                    {{painting.post_date}}
-                </div>
-            </div>
-        </div>
+        
     
     
         {% if isDetailPage is not True %}
         <footer class="recipe-footer">
+            <div class="recipe-meta-container">
+                <div class="recipe-meta recipe-preparation">
+                    <h3 class="recipe-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
+                    <div class="recipe-meta-text">
+                        {{painting.post_author.username}}
+                    </div>
+                </div>
+                <div class="recipe-meta recipe-servings">
+                    <h3 class="recipe-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
+                    <div class="recipe-meta-text">
+                        {{painting.post_date}}
+                    </div>
+                </div>
+            </div>
             <a class="recipe-read-more button button-dark button-full-width" href="{% url 'painting:detail' painting.id %}">
                 <i class="fas fa-eye"></i>
                 <span>ver mais...</span>
