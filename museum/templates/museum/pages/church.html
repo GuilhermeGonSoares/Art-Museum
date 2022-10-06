@@ -1,0 +1,25 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %}{{painting.name}} | {% endblock title %}
+{% block content %}
+
+<div class="main-content main-content-detail container">
+    
+    <h1>Nome da Igreja: {{ church.name }}</h1>
+    <h4>Cidade da Igreja: {{ church.city }}</h4>
+    <h4>Cidade da Igreja: {{ church.state }}</h4>
+    
+    <br>
+    <h2>Lista das pinturas dessa igreja</h4>
+    <br>
+    <div class="main-content main-content-list container">
+        {% for painting in paintings %}
+        
+            {% include 'museum/partials/painting.html' %}
+
+        {% endfor %}
+    </div>
+
+
+</div>
+    
+{% endblock content %}

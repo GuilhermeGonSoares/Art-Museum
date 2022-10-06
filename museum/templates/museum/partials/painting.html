@@ -1,0 +1,78 @@
+<div class="recipe recipe-list-item">
+    <div class="recipe-cover">
+        <a href="{% url 'painting:detail' painting.id %}">
+            <img src="{{ painting.cover.url }}" alt="temporario">  
+        </a>
+    </div>
+    <div class="recipe-title-container">
+        <h2 class="recipe-title">{{ painting.name }}</h2>
+    </div>
+
+    <div class="recipe-author">
+        <span class="recipe-author-item">
+            {% for author in painting.author.all %}
+                <i class="fas fa-user"></i>
+                    {{author}}
+                    <br>
+            {%empty%}
+                <i class="fas fa-user"></i>
+                    Desconhecido
+            {% endfor %}
+        </span>
+        <span class="recipe-author-item">
+            <i class="fas fa-calendar-alt"></i>
+            {{ painting.date |date:"d/m/Y" }}
+        </span>
+        
+        
+        <span class="recipe-author-item">   
+            <i class="fas fa-church"></i>
+                {% if painting.church is not None %}
+                    <a href="{% url 'painting:church' painting.church.id %}">
+                        <span>{{ painting.church.name }}</span>
+                    </a>
+                {% else %}
+                    <span>Igreja desconhecida</span>
+                {% endif %}
+        </span>
+    </div>
+
+    <div class="recipe-content">
+        <p>{{ painting.summary }}</p>
+    </div>
+
+    <div class="recipe-meta-container">
+        <div class="recipe-meta recipe-preparation">
+            <h3 class="recipe-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
+            <div class="recipe-meta-text">
+                {{painting.post_author.username}}
+            </div>
+        </div>
+        <div class="recipe-meta recipe-servings">
+            <h3 class="recipe-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
+            <div class="recipe-meta-text">
+                {{painting.post_date}}
+            </div>
+        </div>
+    </div>
+
+
+    {% if isDetailPage is not True %}
+    <footer class="recipe-footer">
+        <a class="recipe-read-more button button-dark button-full-width" href="{% url 'painting:detail' painting.id %}">
+            <i class="fas fa-eye"></i>
+            <span>ver mais...</span>
+        </a>
+    </footer>
+    {% endif %}
+
+    
+    {% if isDetailPage is True %}
+        <div class="preparation-steps">
+            {{ painting.description | linebreaks}}
+        </div>
+    {% endif %}
+
+    
+
+</div>
