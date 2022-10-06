@@ -1,7 +1,7 @@
 <div class="search-container">
     <div class="container">
         <form action="{% url 'painting:search' %}" method="GET" class="search-form">
-            <select name="filter" required>
+            <select name="filter" required id="filter">
                 <option value="paintings">Pinturas</option>
                 <option value="churches">Igrejas</option>
                 <option value="painters">Pintores</option>
