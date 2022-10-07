@@ -2,8 +2,7 @@
 {% block title %}{{painting.name}} | {% endblock title %}
 {% block content %}
 
-<div class="main-content main-content-detail container">
-    
+<div class="text-secondary-page">
     <h1>Nome da Igreja: {{ church.name }}</h1>
     {% if church.city %}
         <h3>Cidade da Igreja: {{ church.city }}</h3>
@@ -15,7 +14,9 @@
     <br>
     <h2>Lista das pinturas dessa igreja</h2>
     <br>
-    <div class="main-content main-content-list container">
+
+</div>
+    <div class="main-content main-content-list container" id="church-page">
         {% for painting in paintings %}
         
             {% include 'museum/partials/painting.html' %}
@@ -24,6 +25,5 @@
     </div>
 
 
-</div>
     
 {% endblock content %}

@@ -563,13 +563,12 @@
   #filter{
     padding: 6px;
     color: white;
-    border-radius: 0px;
-    border-color: grey;
     font-family: var(--font-headings);
     background-color: black;
     font-size: 15px;
     print-color-adjust: white;
     transition: all 300ms ease-in-out;
+    cursor: pointer;
   }
 
 .img-main{
@@ -599,11 +598,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 80rem;
+  height: 75rem;
 }
 #details-page .recipe-list-item{
   height: auto;
 }
 #details-page .recipe-content{
   height: auto;
+}
+
+.text-secondary-page{
+  padding: 3rem 3rem;
 }
