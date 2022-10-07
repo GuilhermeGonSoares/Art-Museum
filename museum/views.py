@@ -12,7 +12,6 @@ from .models import Author, Church, Painting
 def home(request: HttpRequest) -> HttpResponse:
     paintings = Painting.objects.all().order_by('-id') 
 
-    messages.success(request, "Pinturas carregadas com sucesso")
     return render(request, 'museum/pages/home.html', {
         'paintings': paintings
     })
