@@ -1,13 +1,17 @@
 {% extends 'templates/pages/global.html' %}
 {% block title %}Home | {% endblock title %}
 {% block content %}
-
+    {% include 'templates/partials/messages.html' %}
     <div class="main-content main-content-list container">
-        {% for painting in paintings %}
-            
+        {% for painting in paintings %}          
             {% include 'museum/partials/painting.html' %} 
+<<<<<<< HEAD
 
         {%empty%}
+=======
+        {%empty%}  
+        <h1>No paintings found here!</h1>
+>>>>>>> origin/Guilherme
         {% endfor %}
     </div>
     

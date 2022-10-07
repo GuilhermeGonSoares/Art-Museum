@@ -1,5 +1,4 @@
-from multiprocessing import context
-
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.http import Http404, HttpRequest, HttpResponse
@@ -13,6 +12,7 @@ from .models import Author, Church, Painting
 def home(request: HttpRequest) -> HttpResponse:
     paintings = Painting.objects.all().order_by('-id') 
 
+    messages.success(request, "Pinturas carregadas com sucesso")
     return render(request, 'museum/pages/home.html', {
         'paintings': paintings
     })
