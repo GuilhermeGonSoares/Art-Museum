@@ -1,9 +1,13 @@
 <div class="recipe recipe-list-item">
     <div class="recipe-cover">
         <a href="{% url 'painting:detail' painting.id %}">
-            <img src="{{ painting.cover.url }}" alt="temporario">  
+            <img src="{{ painting.cover.url }}" alt="temporario" class="img-main">  
         </a>
     </div>
+
+
+    
+
 
     <div class="recipe-main">
         <div class="recipe-title-container">
@@ -46,26 +50,28 @@
         <div class="recipe-content">
             <p>{{ painting.summary }}</p>
         </div>
+
+        <div class="recipe-meta-container">
+            <div class="recipe-meta recipe-preparation">
+                <h3 class="recipe-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
+                <div class="recipe-meta-text">
+                    {{painting.post_author.username}}
+                </div>
+            </div>
+            <div class="recipe-meta recipe-servings">
+                <h3 class="recipe-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
+                <div class="recipe-meta-text">
+                    {{painting.post_date}}
+                </div>
+            </div>
+        </div>
     
         
     
     
         {% if isDetailPage is not True %}
         <footer class="recipe-footer">
-            <div class="recipe-meta-container">
-                <div class="recipe-meta recipe-preparation">
-                    <h3 class="recipe-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
-                    <div class="recipe-meta-text">
-                        {{painting.post_author.username}}
-                    </div>
-                </div>
-                <div class="recipe-meta recipe-servings">
-                    <h3 class="recipe-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
-                    <div class="recipe-meta-text">
-                        {{painting.post_date}}
-                    </div>
-                </div>
-            </div>
+            
             <a class="recipe-read-more button button-dark button-full-width" href="{% url 'painting:detail' painting.id %}">
                 <i class="fas fa-eye"></i>
                 <span>ver mais...</span>
@@ -77,6 +83,7 @@
         {% if isDetailPage is True %}
             <div class="preparation-steps">
                 {{ painting.description | linebreaks}}
+                
             </div>
         {% endif %}
     </div>
