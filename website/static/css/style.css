@@ -578,3 +578,9 @@
   width: auto;
   object-fit: none;
 }
+
+/* .recipe-list-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+} */
