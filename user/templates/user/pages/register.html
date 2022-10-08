@@ -3,7 +3,6 @@
 {% block title %}Register | {% endblock title %}
 {% block content %}
     <div class="main-content center container">
-        
         <form action="{% url 'user:create' %}" method="POST">
             {% csrf_token %}
             <div class="form-content form-content-grid">

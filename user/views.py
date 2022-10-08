@@ -1,5 +1,6 @@
 from audioop import reverse
 
+from django.contrib import messages
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import (require_GET, require_http_methods,
@@ -28,5 +29,14 @@ def register_create(request: HttpRequest)-> HttpResponse:
     POST = request.POST
     request.session['register_form_data'] = POST
     form = RegisterForm(POST)
+    
+    if form.is_valid():
+        user = form.save(commit=False)
+        user.set_password(user.password)
+        user.save()
+        messages.success(request, "Usuário criado, por favor faça o log in.")
+
+        del(request.session['register_form_data'])
+        return redirect('painting:home')
 
     return redirect('user:register')
