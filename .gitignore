@@ -125,3 +125,4 @@ local_settings.py
 _local_settings.py
 gunicorn-error-log
 test.py
+.vscode
