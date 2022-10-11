@@ -85,11 +85,19 @@
     margin: 0 auto;
     padding: var(--spacing-gutter-medium);
   }
-  
+
   .main-header-container {
     background: var(--color-primary-dark);
+    align-self: center;
+    display: flex;
   }
-  
+
+  .login, 
+  .logout{
+    align-self: flex-end;
+    padding: 1rem;
+  }
+
   .main-logo {
     font-size: 4rem;
     color: var(--color-white);

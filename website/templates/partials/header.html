@@ -1,13 +1,22 @@
 <header class="main-header-container">
-    <div class="main-header container">
-        <h1>
-            <a class="main-logo" href="{% url 'painting:home' %}">
-                <i class="fas fa-palette main-logo-icon"></i>
-                <span>RafArte</span>
-            </a>
-        </h1>
-    </div>
-    <div class="logout">
-        <a href="{% url 'user:logout' %}">Logout</a>
-    </div>
+  <div class="main-header container">
+    <h1>
+      <a class="main-logo" href="{% url 'painting:home' %}">
+        <i class="fas fa-palette main-logo-icon"></i>
+        <span>RafArte</span>
+      </a>
+    </h1>
+  </div>
+  <div class="login">
+    <a href="{% url 'user:login' %}">
+      <i class="fa-solid fa-user"></i>
+      <span>login</span>
+    </a>
+  </div>
+  <div class="logout">
+    <a href="{% url 'user:logout' %}">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      <span>logout</span>
+    </a>
+  </div>
 </header>
