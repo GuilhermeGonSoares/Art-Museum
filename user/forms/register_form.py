@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
-from utils.django_form import strong_password
+from utils.django_form import email_validate, strong_password
 
 
 class RegisterForm(forms.ModelForm):
@@ -44,7 +43,9 @@ class RegisterForm(forms.ModelForm):
         )
     )
     password = forms.CharField(
-        widget = forms.PasswordInput(),
+        widget = forms.PasswordInput(attrs={
+            'placeholder': 'Sua senha'
+        }),
         error_messages = {
             'required': 'A senha não pode ser vazia.'
         },
@@ -53,7 +54,10 @@ class RegisterForm(forms.ModelForm):
         validators = [strong_password]
     )
     password2 = forms.CharField(
-        widget=forms.PasswordInput(),
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Repita sua senha'
+        }),
         label='Confirmar senha',
         error_messages={
             'required': 'Por favor, repita sua senha'
@@ -61,14 +65,16 @@ class RegisterForm(forms.ModelForm):
     )
 
     email = forms.EmailField(
+        required=True,
         error_messages = {'required': 'E-mail não pode ser vazio'},
         label = 'E-mail',
-        help_text = 'E-mail precisa ser válido.',
+    
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Ex.: email@email.com'
             }
-        )
+        ),
+        validators=[email_validate]
     )
 
     class Meta:
@@ -81,7 +87,20 @@ class RegisterForm(forms.ModelForm):
             'password',
         ]
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '')
+        email_exist = User.objects.filter(email=email).exists()
+        
+        if email_exist:
+            raise ValidationError(
+                ('E-mail já cadastrado! Por favor, cadastre um e-mail diferente.'),
+                code='invalid'
+            )
+
     def clean(self):
+        #OBS1: self.data => nos pegamos os dados crus do formulário sem nenhuma limpeza
+        #OBS2: self.cleaned_data => é um dicionário com os dados já tratados pelo django. As chaves são os campos
+
         cleaned_data = super().clean()
 
         password = cleaned_data.get('password')
@@ -89,7 +108,8 @@ class RegisterForm(forms.ModelForm):
 
         if password != password2:
             password_confirmation_error = ValidationError(
-                'As senhas estão diferentes, por favor digite-as novamente'
+                'As senhas estão diferentes, por favor digite-as novamente',
+                code='invalid'
             )
             raise ValidationError({
                 'password': password_confirmation_error,

@@ -1,12 +1,10 @@
-from audioop import reverse
-
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.views.decorators.http import (require_GET, require_http_methods,
-                                          require_POST)
+from django.views.decorators.http import require_GET, require_POST
 
-from .forms import RegisterForm
+from .forms import LoginForm, RegisterForm
 
 
 #UTILIZAR A SESSÃO DO USUÁRIO PARA PODER TRAFEGAR DADOS DE UMA VIEW PARA OUTRA
@@ -19,6 +17,7 @@ def register(request: HttpRequest)-> HttpResponse:
 
     return render(request, 'user/pages/register.html', {
         'form': form,
+        'form_action': 'user:register_create'
     })
 
 #ESSA VIEW É APENAS PARA TRATAR OS DADOS NÃO IRÁ RENDERIZAR
@@ -37,6 +36,43 @@ def register_create(request: HttpRequest)-> HttpResponse:
         messages.success(request, "Usuário criado, por favor faça o log in.")
 
         del(request.session['register_form_data'])
-        return redirect('painting:home')
+        #return redirect('painting:home')
 
     return redirect('user:register')
+
+@require_GET
+def login_view(request:HttpRequest)-> HttpResponse:
+    login_form = LoginForm()
+    
+    return render(request, 'user/pages/login.html',{
+        'form': login_form,
+        'form_action': 'user:login_create'
+    })
+
+@require_POST
+def login_create(request: HttpRequest)-> HttpResponse:
+    
+    login_form = LoginForm(request.POST)
+    if login_form.is_valid():
+        username = login_form.cleaned_data.get('username', '')
+        password = login_form.cleaned_data.get('password', '')
+        authenticated_user = authenticate(request,
+            username = username,
+            password = password
+        )
+        if authenticated_user is not None:
+            messages.success(request, f'Usuário {username} logado com sucesso!')
+            login(request, authenticated_user)
+            return redirect('painting:home')
+        
+        messages.error(request, 'Login inválido! Por favor, tente novamente.')
+        return redirect('user:login')
+    
+    messages.error(request, 'Error ao validar o formulário.')
+    return redirect('user:login')
+
+@require_GET
+def logout_user(request: HttpRequest)-> HttpResponse:
+    logout(request)
+    messages.success(request, 'Usuário deslogado com sucesso')
+    return redirect('user:login')

@@ -2,6 +2,7 @@
 {% block title %}Home | {% endblock title %}
 {% block content %}
     {% include 'templates/partials/messages.html' %}
+    
     <div class="main-content main-content-list container">
         {% for painting in paintings %}          
             {% include 'museum/partials/painting.html' %} 
