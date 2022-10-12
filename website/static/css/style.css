@@ -89,13 +89,24 @@
   .main-header-container {
     background: var(--color-primary-dark);
     align-self: center;
+    flex-direction: column;
     display: flex;
+    min-width: 60rem;
   }
 
+  .main-header.container{
+    align-self: center;
+    padding-bottom: 0%;
+  }
+
+  .login-and-logout{
+    display: flex;
+    align-self: flex-end;
+}
   .login, 
   .logout{
-    align-self: flex-end;
-    padding: 1rem;
+    font-size: 2rem;
+    padding: 1.5rem;
   }
 
   .main-logo {

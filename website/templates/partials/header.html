@@ -7,16 +7,18 @@
       </a>
     </h1>
   </div>
-  <div class="login">
-    <a href="{% url 'user:login' %}">
-      <i class="fa-solid fa-user"></i>
-      <span>login</span>
-    </a>
-  </div>
-  <div class="logout">
-    <a href="{% url 'user:logout' %}">
-      <i class="fa-solid fa-right-to-bracket"></i>
-      <span>logout</span>
-    </a>
+  <div class="login-and-logout">
+    <div class="login">
+      <a href="{% url 'user:login' %}">
+        <i class="fa-solid fa-user"></i>
+        <span>login</span>
+      </a>
+    </div>
+    <div class="logout">
+      <a href="{% url 'user:logout' %}">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span>logout</span>
+      </a>
+    </div>
   </div>
 </header>
