@@ -105,7 +105,7 @@
 }
   .login, 
   .logout{
-    font-size: 2rem;
+    font-size: 1.6rem;
     padding: 1.5rem;
   }
 
@@ -618,6 +618,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 75rem;
+  
 }
 #details-page .recipe-list-item{
   height: auto;
