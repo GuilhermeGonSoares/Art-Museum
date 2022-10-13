@@ -64,7 +64,7 @@ def login_create(request: HttpRequest)-> HttpResponse:
         if authenticated_user is not None:
             messages.success(request, f'Usuário {username} logado com sucesso!')
             login(request, authenticated_user)
-            return redirect('painting:home')
+            return redirect('user:dashboard')
         
         messages.error(request, 'Login inválido! Por favor, tente novamente.')
         return redirect('user:login')
@@ -72,9 +72,22 @@ def login_create(request: HttpRequest)-> HttpResponse:
     messages.error(request, 'Error ao validar o formulário.')
     return redirect('user:login')
 
-@require_GET
+#Utilizamos uma proteção para o nosso logout para ele não aceitar requisição GET
+#com isso para deslogar tem que ser necessariamente pelo site
+@require_POST
 @login_required(login_url='user:login', redirect_field_name='next')
 def logout_user(request: HttpRequest)-> HttpResponse:
+    
+    if request.POST.get('username') != request.user.username:
+        messages.error(request, 'Error ao realizar logout')
+        return redirect('painting:home')
+    
     logout(request)
     messages.success(request, 'Usuário deslogado com sucesso')
     return redirect('user:login')
+
+@require_GET
+@login_required(login_url='user:login')
+def dashboard(request:HttpRequest) -> HttpResponse:
+    
+    return render(request, 'user/pages/dashboard.html')

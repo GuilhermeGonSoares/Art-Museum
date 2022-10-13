@@ -9,7 +9,17 @@
     </div>
     {% if user.is_authenticated %}
         <div class="logout">
-            <a href="{% url 'user:logout' %}">Logout</a>
+            <form action="{% url 'user:logout' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="username" value="{{request.user.username}}">
+                <button class="plaintext-button" type="submit">Deslogar</button>
+            </form>
+        </div>
+    {% endif %}
+    {% if not user.is_authenticated %}
+        <div class="login">
+            <a href="{% url 'user:login' %}">Logar</a>
+            <a href="{% url 'user:register' %}">Registrar</a>
         </div>
     {% endif %}
 </header>

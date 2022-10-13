@@ -4,6 +4,9 @@
 {% block content %}
     <div class="main-content center container">
         <h2>Registro</h2>
+        <br>
+        <h4>Já possui conta? <a href="{% url 'user:login' %}">Clique aqui</a> para realizar o login</h4>
+        <br>
         {% include 'templates/partials/messages.html' %}
         {% include 'templates/partials/form.html' %}
     </div>
