@@ -9,7 +9,9 @@
 <body>
     {% include 'templates/partials/header.html' %}
 
-    {% include 'templates/partials/search.html' %}
+    {% if search is not False %}
+        {% include 'templates/partials/search.html' %}
+    {% endif %}
 
     <main class="main-content-container">
         {% block content %}{% endblock content %}

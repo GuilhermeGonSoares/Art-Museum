@@ -19,7 +19,8 @@ def register(request: HttpRequest)-> HttpResponse:
 
     return render(request, 'user/pages/register.html', {
         'form': form,
-        'form_action': 'user:register_create'
+        'form_action': 'user:register_create',
+        'search': False,
     })
 
 #ESSA VIEW É APENAS PARA TRATAR OS DADOS NÃO IRÁ RENDERIZAR
@@ -48,7 +49,8 @@ def login_view(request:HttpRequest)-> HttpResponse:
     
     return render(request, 'user/pages/login.html',{
         'form': login_form,
-        'form_action': 'user:login_create'
+        'form_action': 'user:login_create',
+        'search': False,
     })
 
 @require_POST
@@ -98,4 +100,5 @@ def dashboard(request:HttpRequest) -> HttpResponse:
 
     return render(request, 'user/pages/dashboard.html', {
         'paintings': paintings,
+        'search': False,
     })

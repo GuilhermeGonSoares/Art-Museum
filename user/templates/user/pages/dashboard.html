@@ -12,7 +12,7 @@
             <ul>
                 {% for painting in paintings %}
                     <li>
-                        <a href="{% url 'painting:detail' painting.id %}">{{painting.name}}</a>
+                        <a href="{% url 'painting:detail_not_published' painting.id %}">{{painting.name}}</a>
                     </li>
                 {%empty%}
                     <h3>Nenhuma pintura, não publicada, encontrada para este usuário.</h3>
