@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
+from museum.models import Painting
 
 from .forms import LoginForm, RegisterForm
 
@@ -89,5 +90,12 @@ def logout_user(request: HttpRequest)-> HttpResponse:
 @require_GET
 @login_required(login_url='user:login')
 def dashboard(request:HttpRequest) -> HttpResponse:
-    
-    return render(request, 'user/pages/dashboard.html')
+    user = request.user
+    paintings = Painting.objects.filter(
+        is_published=False, post_author=user
+    ).order_by('-id')
+
+
+    return render(request, 'user/pages/dashboard.html', {
+        'paintings': paintings,
+    })
