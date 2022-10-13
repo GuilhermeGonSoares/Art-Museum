@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
@@ -36,7 +37,7 @@ def register_create(request: HttpRequest)-> HttpResponse:
         messages.success(request, "Usuário criado, por favor faça o log in.")
 
         del(request.session['register_form_data'])
-        #return redirect('painting:home')
+        return redirect('user:login')
 
     return redirect('user:register')
 
@@ -72,6 +73,7 @@ def login_create(request: HttpRequest)-> HttpResponse:
     return redirect('user:login')
 
 @require_GET
+@login_required(login_url='user:login', redirect_field_name='next')
 def logout_user(request: HttpRequest)-> HttpResponse:
     logout(request)
     messages.success(request, 'Usuário deslogado com sucesso')
