@@ -5,14 +5,20 @@
 {% include 'templates/partials/messages.html' %}
     <div class="main-content center container">
         <h2>Bem-vindo ao seu dashboard {{ request.user.first_name }}</h2>
-        <div class='login-message'>Gostaria de ver todas as pinturas cadastradas? <a href="{% url 'painting:home' %}">Clique aqui.</a></div>
+        <div class='login-message'>
+            <h4>Ver todas as pinturas publicadas. <a href="{% url 'painting:home' %}">Clique aqui.</a></h4>
+        </div>
         
         <div class="authors-dashboard-container">
+            <div class='login-message'>
+                Criar nova pintura. <a href="{% url 'user:painting_create' %}">Clique aqui.</a>
+            </div>
             <h3>Suas pinturas que não foram publicadas:</h3>
             <ul>
                 {% for painting in paintings %}
                     <li>
                         <a href="{% url 'painting:detail_not_published' painting.id %}">{{painting.name}}</a>
+                        <a href="{% url 'user:painting_edit' painting.id %}">Editar</a>
                     </li>
                 {%empty%}
                     <h3>Nenhuma pintura, não publicada, encontrada para este usuário.</h3>

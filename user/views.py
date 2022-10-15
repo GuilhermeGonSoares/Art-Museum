@@ -1,12 +1,18 @@
+from http.client import HTTPResponse
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.views.decorators.http import require_GET, require_POST
+from django.urls import reverse
+from django.views.decorators.http import (require_GET, require_http_methods,
+                                          require_POST)
 from museum.models import Painting
 
-from .forms import LoginForm, RegisterForm
+from .forms import (LoginForm, RegisterAuthorForm, RegisterForm,
+                    RegisterPaintingForm)
 
 
 #UTILIZAR A SESSÃO DO USUÁRIO PARA PODER TRAFEGAR DADOS DE UMA VIEW PARA OUTRA
@@ -101,4 +107,89 @@ def dashboard(request:HttpRequest) -> HttpResponse:
     return render(request, 'user/pages/dashboard.html', {
         'paintings': paintings,
         'search': False,
+    })
+
+@require_http_methods(['GET', 'POST'])
+@login_required(login_url='user:login')
+def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
+    try:
+        user = request.user
+        painting = Painting.objects.get(
+            pk=id,
+            is_published=False, 
+            post_author=user,
+        )
+ 
+    except ObjectDoesNotExist:
+        raise Http404("Painter doesn't found in this database!")
+    
+
+    form = RegisterPaintingForm(
+            data=request.POST or None,
+            files=request.FILES or None,
+            instance=painting
+        )
+    
+    if form.is_valid():
+        authors = form.cleaned_data['author']
+        pant = form.save(commit=False)
+        pant.author.set(authors)
+        pant.post_author = user
+        pant.is_published = False
+        pant.save()
+
+        messages.success(request, 'Pintura alterada com sucesso!')
+        return redirect(reverse('user:painting_edit', args=(id,)))
+
+
+    return render(request, 'user/pages/dashboard_painting.html', {
+        'method': 'Editar',
+        'form': form,
+        'painting_id': id,
+    })
+
+@require_http_methods(['GET', 'POST'])
+@login_required(login_url='user:login')
+def painting_create(request:HttpRequest)-> HttpResponse:
+    
+    user = request.user
+    form = RegisterPaintingForm(
+            data=request.POST or None,
+            files=request.FILES or None,
+        )
+    
+    if form.is_valid():
+        authors = form.cleaned_data['author']
+        pant = form.save(commit=False)
+        pant.post_author = user
+        pant.is_published = False
+        pant.save()
+        form.save_m2m()
+
+        messages.success(request, 'Pintura cadastrada com sucesso!')
+        return redirect('user:dashboard')
+
+
+    return render(request, 'user/pages/dashboard_painting.html', {
+        'method': 'Criar',
+        'form': form,
+    })
+
+
+@require_http_methods(['GET', 'POST'])
+@login_required(login_url='user:login')
+def painting_author_create(request:HttpRequest, painting_id:int) -> HTTPResponse:
+    
+    form = RegisterAuthorForm(data=request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Autor cadastrado com sucesso")
+        #TENTAR ARMAZENAR NO SESSION OS DADOS QUE ESTAVAM NO FORMULÁRIO ANTES DE CRIAR O AUTOR
+        return redirect(reverse('user:painting_edit', args=(painting_id,)))
+
+    return render(request, 'user/pages/dashboard_author.html', {
+        'form_action': 'user:painting_author_create',
+        'form': form,
+        'painting_id':painting_id,
     })

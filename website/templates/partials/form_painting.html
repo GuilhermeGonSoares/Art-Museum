@@ -1,10 +1,15 @@
-<form action="{% url form_action %}" method="POST">
+<form action="{{form_action}}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-content form-content-grid">
         {% for field in form %}
             <div class="form-group {{field.field.widget.attrs.class}}">
                 <label for="{{field.id_for_label}}">{{field.label}}</label>
+                
+                {% if field.name == 'author' %}
+                    Deseja adicionar um novo autor? <a href="{% url 'user:painting_author_create' painting_id %} ">Sim</a>
+                {% endif %}
                 {{field}}
+                
 
                 {% if field.help_text %}
                     <p class="help-text">{{field.help_text}}</p>
@@ -13,6 +18,13 @@
                 {{field.errors}}
             </div>
 
+            
+
+            {% if field.name == 'cover' and field.value.url %}
+                <div class="span-2">
+                    <img src="{{field.value.url}}" alt="Capa para {{painting.name}}">
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 
