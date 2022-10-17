@@ -129,6 +129,8 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
             files=request.FILES or None,
             instance=painting
         )
+
+    request.session['painting_edit_id'] = id
     
     if form.is_valid():
         authors = form.cleaned_data['author']
@@ -138,6 +140,7 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
         pant.is_published = False
         pant.save()
 
+        del(request.session['painting_edit_id'])
         messages.success(request, 'Pintura alterada com sucesso!')
         return redirect(reverse('user:painting_edit', args=(id,)))
 
@@ -145,12 +148,16 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
     return render(request, 'user/pages/dashboard_painting.html', {
         'method': 'Editar',
         'form': form,
-        'painting_id': id,
+        'search': False,
+        
     })
 
 @require_http_methods(['GET', 'POST'])
 @login_required(login_url='user:login')
 def painting_create(request:HttpRequest)-> HttpResponse:
+    session_id = request.session.get('painting_edit_id', '')
+    if session_id:
+        del(request.session['painting_edit_id'])
     
     user = request.user
     form = RegisterPaintingForm(
@@ -167,29 +174,47 @@ def painting_create(request:HttpRequest)-> HttpResponse:
         form.save_m2m()
 
         messages.success(request, 'Pintura cadastrada com sucesso!')
-        return redirect('user:dashboard')
+        return redirect('user:painting_create')
 
 
     return render(request, 'user/pages/dashboard_painting.html', {
         'method': 'Criar',
         'form': form,
+        'search': False,
     })
 
 
 @require_http_methods(['GET', 'POST'])
 @login_required(login_url='user:login')
-def painting_author_create(request:HttpRequest, painting_id:int) -> HTTPResponse:
-    
+def painting_author_create(request:HttpRequest) -> HTTPResponse:
+    id = request.session.get('painting_edit_id', '')
+
     form = RegisterAuthorForm(data=request.POST or None)
 
     if form.is_valid():
         form.save()
         messages.success(request, "Autor cadastrado com sucesso")
         #TENTAR ARMAZENAR NO SESSION OS DADOS QUE ESTAVAM NO FORMULÁRIO ANTES DE CRIAR O AUTOR
-        return redirect(reverse('user:painting_edit', args=(painting_id,)))
+        if id:
+            return redirect(reverse('user:painting_edit', args=(id,)))
+        
+        return redirect('user:painting_create')
 
     return render(request, 'user/pages/dashboard_author.html', {
         'form_action': 'user:painting_author_create',
         'form': form,
-        'painting_id':painting_id,
+        'search': False,
     })
+
+@require_POST
+@login_required(login_url='user:login')
+def painting_delete(request:HttpRequest, id:int)-> HttpResponse:
+    try:
+        painting = Painting.objects.get(pk=id)
+    except ObjectDoesNotExist:
+        raise Http404("Pintura com esse ID não encontrada!")
+    
+    painting.delete()
+    messages.success(request, "Pintura excluida com sucesso.")
+
+    return redirect('user:dashboard')

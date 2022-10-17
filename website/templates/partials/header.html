@@ -7,9 +7,12 @@
             </a>
         </h1>
     </div>
-    {% if user.is_authenticated %}
-        <a href="{% url 'user:dashboard' %}">DashBoard</a>
-        <div class="logout">
+    <div class="navbar">
+        {% if user.is_authenticated %}
+        <div class="navbar-item">
+            <a href="{% url 'user:dashboard' %}">DashBoard</a>
+        </div>
+        <div class="navbar-item">
             <form action="{% url 'user:logout' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="username" value="{{request.user.username}}">
@@ -18,9 +21,14 @@
         </div>
     {% endif %}
     {% if not user.is_authenticated %}
-        <div class="login">
+        <div class="navbar-item">
             <a href="{% url 'user:login' %}">Logar</a>
+        </div>
+        <div class="navbar-item">
             <a href="{% url 'user:register' %}">Registrar</a>
         </div>
+        
     {% endif %}
+    </div>
+    
 </header>

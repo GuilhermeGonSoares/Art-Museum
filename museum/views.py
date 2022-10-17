@@ -81,4 +81,5 @@ def detail_painting_not_published(request: HttpRequest, painting_id: int) -> Htt
     return render(request, 'museum/pages/detail_painting.html', {
         'painting': painting,
         'isDetailPage': True,
+        'search':False,
     })

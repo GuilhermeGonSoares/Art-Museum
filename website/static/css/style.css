@@ -585,3 +585,38 @@
   flex-direction: column;
   justify-content: space-between;
 } */
+.navbar{
+  display: flex;
+  justify-content: end;
+  margin-right: 20px;
+  padding-bottom: 10px;
+}
+.navbar .navbar-item{
+  margin-right: 20px;
+}
+
+
+.top-space{
+  margin-top: 30px;
+}
+
+.painting-list-not-published{
+  margin-bottom: 15px;
+}
+
+.painting-modification{
+  display: flex;
+  justify-content: space-between;
+}
+.painting-edit{
+  display: flex;
+}
+.painting-edit a{
+  margin-right: 10px;
+}
+.painting-edit i{
+  margin-right: 5px;
+}
+.painting-edit form i{
+  margin-right: 0px;
+}

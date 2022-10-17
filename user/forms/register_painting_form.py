@@ -33,8 +33,26 @@ class RegisterPaintingForm(forms.ModelForm):
 
 class RegisterAuthorForm(forms.ModelForm):
 
+    name = forms.CharField(
+        max_length=50, 
+        required=True,
+        label='Nome:',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Nome do pintor'
+        })
+    )
+    biography = forms.CharField(
+        required=False,
+        max_length=500,
+        label='Biografia',
+        widget=forms.Textarea(attrs={
+            'class': 'span-2',
+            'placeholder': 'Biografia'
+        })
+    )
     class Meta:
         model = Author
         fields = [
             'name',
+            'biography'
         ]
