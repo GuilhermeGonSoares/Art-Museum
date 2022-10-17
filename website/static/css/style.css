@@ -99,10 +99,6 @@
     padding-bottom: 0%;
   }
 
-  .login-and-logout{
-    display: flex;
-    align-self: flex-end;
-}
   .login, 
   .logout{
     font-size: 1.6rem;
