@@ -620,3 +620,18 @@
 .painting-edit form i{
   margin-right: 0px;
 }
+
+.form-group label{
+  font-weight: bold;
+}
+
+#id_author{
+  margin-top: 20px;
+}
+
+#id_author label input{
+  width: auto;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+

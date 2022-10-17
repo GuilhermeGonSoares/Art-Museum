@@ -4,11 +4,33 @@ from museum.models import Author, Church, Painting
 
 
 class RegisterPaintingForm(forms.ModelForm):
+    name = forms.CharField(
+        required=True,
+        min_length=4,
+        max_length=50,
+        label="Nome",
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Nome da pintura'
+        })
+    )
+
+    summary = forms.CharField(
+        required=False,
+        min_length=10,
+        max_length=250,
+        label='Resumo',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Breve resumo da obra'
+        })
+    )
+
 
     author = forms.ModelMultipleChoiceField(
         required=False,
         queryset = Author.objects.all(),
-        widget = forms.CheckboxSelectMultiple(),
+        widget = forms.CheckboxSelectMultiple(attrs={
+            'classe':'author-field'
+        }),
     )
 
     class Meta:
@@ -22,9 +44,14 @@ class RegisterPaintingForm(forms.ModelForm):
             'author',
             'church',
         ]
+        labels = {
+            'description': 'Descrição',
+            'cover': 'Imagem'
+        }
         widgets = {
             'description': forms.Textarea(attrs={
-                'class': 'span-2'
+                'class': 'span-2',
+                'placeholder': 'Descrição detalhada da obra'
             }),
             'cover': forms.FileInput(attrs={
                 'class': 'span-2'
@@ -34,6 +61,7 @@ class RegisterPaintingForm(forms.ModelForm):
 class RegisterAuthorForm(forms.ModelForm):
 
     name = forms.CharField(
+        min_length=4,
         max_length=50, 
         required=True,
         label='Nome:',
@@ -43,6 +71,7 @@ class RegisterAuthorForm(forms.ModelForm):
     )
     biography = forms.CharField(
         required=False,
+        min_length=10,
         max_length=500,
         label='Biografia',
         widget=forms.Textarea(attrs={
