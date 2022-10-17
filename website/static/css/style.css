@@ -630,3 +630,40 @@
 .text-secondary-page{
   padding: 3rem 3rem;
 }
+
+#login-page{
+  border-style: solid;
+  border-width: 3px;
+  border-color: #000;
+  border-radius: 2rem;
+  background-color:white;
+  width: 50rem;
+  min-height: 45rem;
+  margin-bottom: 8rem;
+  padding: 2rem;
+}
+
+#login-page{
+  border-style: solid;
+  border-width: 2px;
+  border-color: #000;
+  border-radius: 2rem;
+  background-color: rgb(247, 247, 247);
+  width: 50rem;
+  min-height: 45rem;
+  margin-bottom: 8rem;
+  padding: 2rem;
+}
+
+#login-page h2{
+  padding-bottom: 3rem;
+}
+
+#login-page label{
+  padding-bottom: 5px;
+}
+
+#login-page .form-group{
+  padding-bottom: 20px;
+}
+
