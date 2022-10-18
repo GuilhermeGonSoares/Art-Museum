@@ -21,8 +21,20 @@
                     <tr>
                         <td>{{church.id}}</td>
                         <td class="main-table-name">{{church.name}}</td>
-                        <td>{{church.city}}</td>
-                        <td>{{church.state}}</td>
+                        <td>
+                            {% if church.city %}
+                                {{church.city}}
+                            {% else %}
+                                ---
+                            {% endif %}
+                        </td>                      
+                        <td>
+                            {% if church.state %}
+                                {{church.state}}
+                            {% else %}
+                                ---
+                            {% endif %}
+                        </td>
 
                     </tr>
                     {% endfor %}
