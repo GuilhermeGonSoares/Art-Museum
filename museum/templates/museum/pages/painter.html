@@ -3,18 +3,27 @@
 {% block content %}
 <div class="text-secondary-page">
     <h1>Pintor: {{ painter.name }}</h1>
-
-    <br>
-    <h2>Lista das suas pinturas:</h2>
-    <br>
+    
     <img src="media/museum/cover/2022/10/05/download.jpeg" alt="">
-    <div class="main-content main-content-list container">
-        {% for painting in paintings %}
-        
-            {% include 'museum/partials/painting.html' %}
+    {% if paintings.count == 1 %}
+        <h2>Pintura desse pintor:</h2>
+        <br>
+        <div class="main-content  container" id="one-item">
+            {% for painting in paintings %} 
+                {% include 'museum/partials/painting.html' %}    
+            {% endfor %}
+        </div>
+    {% else %}
+        <h2>Lista das suas pinturas:</h2>
+        <br>
+        <div class="main-content main-content-list container">
+            {% for painting in paintings %}            
+                {% include 'museum/partials/painting.html' %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        {% endfor %}
-    </div>
+    
 </div>
 
     

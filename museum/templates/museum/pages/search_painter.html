@@ -17,7 +17,7 @@
                 <tbody>
                     {% for painter, qtd_paintings in painters %}
                         <tr>
-                            <td class="main-table-name">{{painter.name}}</td>
+                            <td class="main-table-name"><a href="{% url 'painting:painter' painter.id %}">{{painter.name}}</a></td>
                             <td>{{qtd_paintings}}</td>
                         </tr>
                     {% endfor %}

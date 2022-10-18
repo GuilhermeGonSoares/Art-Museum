@@ -10,19 +10,33 @@
     {% if church.state %}
         <h3>Estado da Igreja: {{ church.state }}</h3>
     {% endif %}
-    
-    <br>
-    <h2>Lista das pinturas dessa igreja</h2>
-    <br>
 
 </div>
-    <div class="main-content main-content-list container" id="church-page">
-        {% for painting in paintings %}
-        
-            {% include 'museum/partials/painting.html' %}
+    {% if paintings.count == 1 %}
+        <h2>Pintura dessa igreja</h2>
+        <br>
+        <div class="main-content  container" id="one-item">
+            {% for painting in paintings %} 
+                
+                    {% include 'museum/partials/painting.html' %}
+                
+            {% endfor %}
+        </div>
 
-        {% endfor %}
-    </div>
+    {% else %}
+
+        <h2>Lista das pinturas dessa igreja</h2>
+        <br>
+        <div class="main-content main-content-list container" id="church-page">
+            {% for painting in paintings %}
+            
+                {% include 'museum/partials/painting.html' %}
+
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    
 
 
     

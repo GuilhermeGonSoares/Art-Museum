@@ -37,7 +37,8 @@ def detail_church(request: HttpRequest, id_church: int) -> HttpResponse:
     
     return render(request, 'museum/pages/church.html', {
         'paintings': paintings,
-        'church': paintings.first().church
+        'church': paintings.first().church,
+        'filterChurch': 'selected',
     })
 
 @require_GET
@@ -51,6 +52,7 @@ def detail_painter(request: HttpRequest, id_painter: int)-> HttpResponse:
     return render(request, 'museum/pages/painter.html', {
         'painter': painter,
         'paintings': paintings_this_painter,
+        'filterPainter': 'selected',
     })
 
 @require_GET
