@@ -54,9 +54,12 @@
   
   body {
     font-size: 1.6rem;
+    position: relative;
+    height: 100%;
     font-family: var(--font-primary);
     background: var(--color-gray-1);
     color: var(--color-dark-text);
+
   }
   
   h1,
@@ -290,6 +293,11 @@
     background: var(--color-primary-dark);
     color: var(--color-white);
     padding: var(--spacing-gutter-large);
+
+    position: absolute;
+    width: 100%;
+    bottom: 0; /* stick to bottom */
+
   }
   
   .main-footer a {
@@ -641,8 +649,6 @@
   border-color: #000;
   border-radius: 2rem;
   background-color: rgb(247, 247, 247);
-  min-height: 60rem;
-  margin-bottom: 8rem;
   padding: 2rem;
 }
 
@@ -711,3 +717,6 @@
   margin-bottom: 15px;
 }
 
+#white-space{
+  height: 12rem;
+}

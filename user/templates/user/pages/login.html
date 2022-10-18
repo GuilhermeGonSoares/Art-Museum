@@ -3,11 +3,13 @@
 {% block title %}Login | {% endblock title %}
 {% block content %}
 <div class="main-content center container login-and-register" id="login-page">
-    <h2>Login</h2>
-    <br>
-    <h4>Não possui conta? <a href="{% url 'user:register' %}">Clique aqui</a> para se registrar</h4>
-    <br>
-    {% include 'templates/partials/messages.html' %}
-    {% include 'templates/partials/form.html' %}
+    <div id="login-box">
+        <h2>Login</h2>
+        <br>
+        <h4>Não possui conta? <a href="{% url 'user:register' %}">Clique aqui</a> para se registrar</h4>
+        <br>
+        {% include 'templates/partials/messages.html' %}
+        {% include 'templates/partials/form.html' %}
+    </div>
 </div>
 {% endblock content %}
