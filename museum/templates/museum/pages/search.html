@@ -2,14 +2,26 @@
 {% block title %}Home | {% endblock title %}
 {% block content %}
 
-    <div class="main-content main-content-list container">
-        {% for painting in paintings %}
-            
-            {% include 'museum/partials/painting.html' %} 
+<h2>Pinturas encontradas pela busca: {{search_result}}</h2>
 
-        {%empty%}  
-        <h1>No paintings found here!</h1>
-        {% endfor %}
-    </div>
+{% if paintings %}
+    {% if paintings.count == 1 %}
+        <div class="main-content  container" id="one-item">
+            {% for painting in paintings %} 
+                
+                    {% include 'museum/partials/painting.html' %}
+                
+            {% endfor %}
+        </div>
     
+    {% else %}
+        <div class="main-content main-content-list container">
+            {% for painting in paintings %} 
+                {% include 'museum/partials/painting.html' %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% else %}
+    <h1 class="main-content  container" id="one-item" >Nenhuma pintura encontrada pela busca!</h1>
+{% endif %}
 {% endblock content %}

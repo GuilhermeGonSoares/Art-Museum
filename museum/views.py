@@ -67,7 +67,27 @@ def search(request: HttpRequest)-> HttpResponse:
         ).order_by('-id')
         
         return render(request, template, {
-            'paintings': paintings
+            'paintings': paintings,
+            'search_result': search,
+        })
+
+    if filter == 'churches':
+        template = 'museum/pages/search_church.html'
+        churches_with_paintings_published = []
+        churches = Church.objects.filter(
+            Q(
+                Q(name__icontains=search) | Q(city__icontains=search) | Q(state__icontains=search)
+            ) 
+        ).order_by('-id')
+
+        for church in churches:
+            if church.painting_set.filter(is_published=True).count() > 0:
+                churches_with_paintings_published.append(church)
+
+
+        return render(request, template,{
+            'churches': churches_with_paintings_published,
+            'search_result': search,
         })
 
 @require_GET
