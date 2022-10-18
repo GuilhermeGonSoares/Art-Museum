@@ -4,28 +4,31 @@
 
 <div class="main-content center container">
     <h2>Igrejas encontradas pela busca: {{search_result}}</h2>
-        {% if churches %}
-            <table class="table">
-                <thead>
+    {% if churches %}
+    <div id="church-page"> 
+        
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col" style="width: 8%;">id</th>
+                <th scope="col">Igreja</th>
+                <th scope="col">Cidade</th>
+                <th scope="col">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for church in churches %}
                     <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Cidade</th>
-                    <th scope="col">Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        {% for church in churches %}
-                            <th scope="row">{{church.id}}</th>
-                            <td>{{church.name}}</td>
-                            <td>{{church.city}}</td>
-                            <td>{{church.state}}</td>
+                        <td>{{church.id}}</td>
+                        <td class="main-table-name">{{church.name}}</td>
+                        <td>{{church.city}}</td>
+                        <td>{{church.state}}</td>
 
-                        {% endfor %}
                     </tr>
-                </tbody>
-            </table>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
         {% else %}
             <h1>Nenhuma igreja encontrada com essa busca</h1>
         {% endif %}

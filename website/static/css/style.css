@@ -34,12 +34,15 @@
   --color-gray-7: #4b4b4b;
   --color-gray-8: #323232;
   --color-gray-9: #191919;
+  --color-light-gray: rgb(247, 247, 247);
 
   --font-primary: sans-serif;
   --font-headings: "Roboto Slab", serif;
 
   --spacing-gutter-medium: 3rem;
   --spacing-gutter-large: 4rem;
+
+
 }
 
 * {
@@ -69,6 +72,11 @@ h4,
 h5,
 h6 {
   font-family: var(--font-headings);
+}
+
+h2{
+  text-align: center;
+  margin-bottom: 5rem;
 }
 
 img {
@@ -295,7 +303,7 @@ p {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 2.5rem;    
+  height: 2.5rem;
 }
 
 .main-footer a {
@@ -718,17 +726,54 @@ p {
 }
 
 #content-wrap {
-  padding-bottom: 2.5rem ;
+  padding-bottom: 2.5rem;
 }
 
-.main-content-container{
+.main-content-container {
   margin-bottom: 8rem;
 }
 
-.justify{
+.justify {
   text-align: justify;
 }
-#one-item{
-  
+
+#one-item {
   text-align: -webkit-center;
 }
+
+#church-page{
+  display: flex;
+  justify-content: center;
+}
+
+.table, th, td{
+  text-align: center;
+  border-collapse: collapse;
+}
+.table{
+  width: 50%;
+  border-radius: 10px;
+  border-collapse: separate;
+  border-spacing: 5px 8px;
+}
+
+th, td{
+  padding: 10px;
+  border-radius: 12px;
+  background-color: var(--color-light-gray);
+}
+
+
+th {
+  background-color: rgb(152, 190, 226);
+  color: black;
+}
+
+
+.main-table-name{
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--color-info-dark);
+}
+
+.main-table-name:hover {background-color: var(--color-primary-light-hover);}
