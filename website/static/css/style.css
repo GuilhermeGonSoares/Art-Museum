@@ -763,9 +763,13 @@ th, td{
   background-color: var(--color-light-gray);
 }
 
+td{
+  cursor:not-allowed;
+}
+
 
 th {
-  background-color: rgb(152, 190, 226);
+  background-color: rgb(141, 187, 230);
   color: black;
 }
 
