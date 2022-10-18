@@ -84,10 +84,10 @@ def search(request: HttpRequest)-> HttpResponse:
             if church.painting_set.filter(is_published=True).count() > 0:
                 churches_with_paintings_published.append(church)
 
-
         return render(request, template,{
             'churches': churches_with_paintings_published,
             'search_result': search,
+            'filterChurch': 'selected',
         })
     
     if filter == "painters":
@@ -98,10 +98,12 @@ def search(request: HttpRequest)-> HttpResponse:
         for painter in authors:
             if painter.painting_set.filter(is_published=True).count() > 0:
                 painters_with_paintings_published.append(painter)
-        
+    
+
         return render(request, template,{
             'painters': painters_with_paintings_published,
             'search_result': search,
+            'filterPainter': 'selected',
         })
 
 @require_GET
