@@ -1,19 +1,26 @@
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET, require_POST
+from utils.pagination import pagination
 
 from .models import Author, Church, Painting
 
 
 @require_GET
 def home(request: HttpRequest) -> HttpResponse:
+    current_page = int(request.GET.get('page', 1))
     paintings = Painting.objects.filter(is_published=True).order_by('-id')
+    paginator = Paginator(paintings, 6)
 
+    page = pagination(paginator, current_page)
     return render(request, 'museum/pages/home.html', {
-        'paintings': paintings
+        'paintings': page['paintings'],
+        'pagination': page['pagination'],
+        'current_page': current_page,
     })
 
 @require_GET
