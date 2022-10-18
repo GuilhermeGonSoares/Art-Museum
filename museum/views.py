@@ -10,7 +10,7 @@ from .models import Author, Church, Painting
 
 @require_GET
 def home(request: HttpRequest) -> HttpResponse:
-    paintings = Painting.objects.all().order_by('-id') 
+    paintings = Painting.objects.filter(is_published=True).order_by('-id')
 
     return render(request, 'museum/pages/home.html', {
         'paintings': paintings
@@ -19,7 +19,7 @@ def home(request: HttpRequest) -> HttpResponse:
 @require_GET
 def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
     try:
-        painting = Painting.objects.get(pk=painting_id)
+        painting = Painting.objects.get(pk=painting_id, is_published=True)
     
     except ObjectDoesNotExist:
         raise Http404('Objects not found in database')
@@ -31,7 +31,7 @@ def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
 
 @require_GET
 def detail_church(request: HttpRequest, id_church: int) -> HttpResponse:
-    paintings = Painting.objects.filter(church__id=id_church).order_by('-id')
+    paintings = Painting.objects.filter(church__id=id_church, is_published=True).order_by('-id')
     if not paintings:
         raise Http404("there are no paintings related to this church id")
     
@@ -44,7 +44,7 @@ def detail_church(request: HttpRequest, id_church: int) -> HttpResponse:
 def detail_painter(request: HttpRequest, id_painter: int)-> HttpResponse:
     try:
         painter = Author.objects.get(pk=id_painter)
-        paintings_this_painter = painter.painting_set.all().order_by('-id')
+        paintings_this_painter = painter.painting_set.filter(is_published=True).order_by('-id')
     except ObjectDoesNotExist:
         raise Http404("Painter doesn't found in this database!")
 
@@ -62,10 +62,24 @@ def search(request: HttpRequest)-> HttpResponse:
         template = 'museum/pages/search.html'
         paintings = Painting.objects.filter(
             Q(
-                Q(name__icontains=search) | Q(summary__icontains=search)
-            )
+                Q(name__icontains=search) | Q(summary__icontains=search) 
+            ) & Q(is_published=True)
         ).order_by('-id')
         
         return render(request, template, {
             'paintings': paintings
         })
+
+@require_GET
+def detail_painting_not_published(request: HttpRequest, painting_id: int) -> HttpResponse:
+    try:
+        painting = Painting.objects.get(pk=painting_id, is_published=False)
+    
+    except ObjectDoesNotExist:
+        raise Http404('Objects not found in database')
+    
+    return render(request, 'museum/pages/detail_painting.html', {
+        'painting': painting,
+        'isDetailPage': True,
+        'search':False,
+    })

@@ -1,0 +1,54 @@
+<form action="{{form_action}}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-content form-content-grid">
+        {% for field in form %}
+        <div class="form-group {{field.field.widget.attrs.class}}">
+            <label for="{{field.id_for_label}}">{{field.label}}</label>
+
+            {% if field.name == 'author' %}
+                Deseja adicionar um novo autor? <a href="{% url 'user:painting_author_create' %} ">Sim</a>
+                {{field}}  
+
+            {% elif field.name == 'church' %}
+                <p class="church-select">Deseja adicionar uma nova igreja? <a href="{% url 'user:painting_church_create' %} ">Sim</a></p>
+                {{field}}
+                
+            {% else %}
+                {{field}}
+            {% endif %}
+
+
+            {% if field.help_text %}
+            <p class="help-text">{{field.help_text}}</p>
+            {% endif %}
+
+            {{field.errors}}
+        </div>
+
+
+
+        {% if field.name == 'cover' and field.value.url %}
+        <div class="span-2">
+            <img src="{{field.value.url}}" alt="Capa para {{painting.name}}">
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if form.errors %}
+    <div class="form-content form-content-grid">
+        <div class="form-group">
+            <div class="message message-error">
+                Por favor corrijas os erros no formulário
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="form-content form-content-grid">
+        <div class="form-group">
+            <button type="submit">Enviar</button>
+        </div>
+    </div>
+
+</form>

@@ -2,9 +2,12 @@
 
 {% block title %}Login | {% endblock title %}
 {% block content %}
-    <div class="main-content center container">
-        <h2>Login</h2>
-        {% include 'templates/partials/messages.html' %}
-        {% include 'templates/partials/form.html' %}
-    </div>
+<div class="main-content center container">
+    <h2>Login</h2>
+    <br>
+    <h4>Não possui conta? <a href="{% url 'user:register' %}">Clique aqui</a> para se registrar</h4>
+    <br>
+    {% include 'templates/partials/messages.html' %}
+    {% include 'templates/partials/form.html' %}
+</div>
 {% endblock content %}
