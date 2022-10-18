@@ -89,6 +89,20 @@ def search(request: HttpRequest)-> HttpResponse:
             'churches': churches_with_paintings_published,
             'search_result': search,
         })
+    
+    if filter == "painters":
+        template = 'museum/pages/search_painter.html'
+        painters_with_paintings_published = []
+        authors = Author.objects.filter(name__icontains=search).order_by('-id')
+
+        for painter in authors:
+            if painter.painting_set.filter(is_published=True).count() > 0:
+                painters_with_paintings_published.append(painter)
+        
+        return render(request, template,{
+            'painters': painters_with_paintings_published,
+            'search_result': search,
+        })
 
 @require_GET
 def detail_painting_not_published(request: HttpRequest, painting_id: int) -> HttpResponse:
