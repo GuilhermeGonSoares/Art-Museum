@@ -15,15 +15,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        {% for church in churches %}
+                    {% for church in churches %}
+                        
+                        <tr>
                             <th scope="row">{{church.id}}</th>
                             <td>{{church.name}}</td>
-                            <td>{{church.city}}</td>
-                            <td>{{church.state}}</td>
-
-                        {% endfor %}
-                    </tr>
+                            <td>
+                                {% if church.city %}
+                                    {{church.city}}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>                      
+                            <td>
+                                {% if church.state %}
+                                    {{church.state}}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         {% else %}
