@@ -722,5 +722,9 @@ p {
 }
 
 .main-content-container{
-  margin-bottom: 10rem;
+  margin-bottom: 8rem;
+}
+
+.justify{
+  text-align: justify;
 }
