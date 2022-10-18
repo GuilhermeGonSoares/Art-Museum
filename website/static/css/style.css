@@ -649,7 +649,7 @@ p {
 }
 
 .text-secondary-page {
-  padding: 3rem 3rem;
+  margin-top: 0;
 }
 
 #login-page {
