@@ -10,15 +10,15 @@
             <table class="table">
                 <thead>
                     <tr>
-                    <th scope="col">id</th>
                     <th scope="col">Pintor</th>
+                    <th scope="col">Obras</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for painter in painters %}
+                    {% for painter, qtd_paintings in painters %}
                         <tr>
-                            <td>{{painter.id}}</td>
                             <td class="main-table-name">{{painter.name}}</td>
+                            <td>{{qtd_paintings}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

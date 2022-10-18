@@ -79,10 +79,12 @@ def search(request: HttpRequest)-> HttpResponse:
                 Q(name__icontains=search) | Q(city__icontains=search) | Q(state__icontains=search)
             ) 
         ).order_by('-id')
+        
 
         for church in churches:
-            if church.painting_set.filter(is_published=True).count() > 0:
-                churches_with_paintings_published.append(church)
+            painting_this_church = church.painting_set.filter(is_published=True).count()
+            if painting_this_church > 0:
+                churches_with_paintings_published.append((church, painting_this_church))
 
         return render(request, template,{
             'churches': churches_with_paintings_published,
@@ -96,8 +98,9 @@ def search(request: HttpRequest)-> HttpResponse:
         authors = Author.objects.filter(name__icontains=search).order_by('-id')
 
         for painter in authors:
-            if painter.painting_set.filter(is_published=True).count() > 0:
-                painters_with_paintings_published.append(painter)
+            paintings_this_painter = painter.painting_set.filter(is_published=True).count()
+            if paintings_this_painter > 0:
+                painters_with_paintings_published.append((painter, paintings_this_painter))
     
 
         return render(request, template,{
