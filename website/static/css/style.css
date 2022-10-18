@@ -78,7 +78,7 @@
   }
   
   p{
-    word-break: break-all;
+    word-break: normal;
   }
   .container {
     max-width: 144rem;
@@ -627,28 +627,34 @@
   padding: 3rem 3rem;
 }
 
-
 #login-page{
+  width: 50rem;
+}
+
+#reg-page{
+  width: 70rem;
+}
+
+.login-and-register{
   border-style: solid;
   border-width: 2px;
   border-color: #000;
   border-radius: 2rem;
   background-color: rgb(247, 247, 247);
-  width: 50rem;
   min-height: 45rem;
   margin-bottom: 8rem;
   padding: 2rem;
 }
 
-#login-page h2{
-  padding-bottom: 3rem;
+.login-and-register h2{
+  padding-bottom: 2rem;
 }
 
-#login-page label{
+.login-and-register label{
   padding-bottom: 5px;
 }
 
-#login-page .form-group{
+.login-and-register .form-group{
   padding-bottom: 20px;
 }
 
