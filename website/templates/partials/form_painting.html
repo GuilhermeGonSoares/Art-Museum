@@ -6,10 +6,13 @@
             <label for="{{field.id_for_label}}">{{field.label}}</label>
 
             {% if field.name == 'author' %}
-            Deseja adicionar um novo autor? <a href="{% url 'user:painting_author_create' %} ">Sim</a>
-                <div class="testando">
-                    {{field}}
-                </div>
+                Deseja adicionar um novo autor? <a href="{% url 'user:painting_author_create' %} ">Sim</a>
+                {{field}}  
+
+            {% elif field.name == 'church' %}
+                <p class="church-select">Deseja adicionar uma nova igreja? <a href="{% url 'user:painting_church_create' %} ">Sim</a></p>
+                {{field}}
+                
             {% else %}
                 {{field}}
             {% endif %}

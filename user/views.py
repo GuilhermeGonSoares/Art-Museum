@@ -218,3 +218,8 @@ def painting_delete(request:HttpRequest, id:int)-> HttpResponse:
     messages.success(request, "Pintura excluida com sucesso.")
 
     return redirect('user:dashboard')
+
+@require_http_methods(['GET', 'POST'])
+@login_required(login_url='user:login')
+def painting_church_create(request:HttpRequest) -> HttpResponse:
+    ...

@@ -85,3 +85,13 @@ class RegisterAuthorForm(forms.ModelForm):
             'name',
             'biography'
         ]
+
+class RegisterChurchForm(forms.ModelForm):
+    
+    class Meta:
+        model = Church
+        fields = [
+            'name',
+            'city',
+            'state',
+        ]
