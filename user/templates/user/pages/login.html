@@ -1,9 +1,10 @@
 {% extends 'templates/pages/global.html' %}
 
 {% block title %}Login | {% endblock title %}
+<div id="login-box">
 {% block content %}
-<div class="main-content center container login-and-register" id="login-page">
-    <div id="login-box">
+    <div class="center container login-and-register" id="login-page">
+
         <h2>Login</h2>
         <br>
         <h4>Não possui conta? <a href="{% url 'user:register' %}">Clique aqui</a> para se registrar</h4>
