@@ -5,22 +5,25 @@
 <div class="main-content center container">
     <h2>Igrejas encontradas pela busca: {{search_result}}</h2>
         {% if painters %}
+        <div class= "search-page">
+
             <table class="table">
                 <thead>
                     <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome</th>
+                    <th scope="col">id</th>
+                    <th scope="col">Pintor</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for painter in painters %}
                         <tr>
-                            <th scope="row">{{painter.id}}</th>
-                            <td>{{painter.name}}</td>
+                            <td>{{painter.id}}</td>
+                            <td class="main-table-name">{{painter.name}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
         {% else %}
             <h1>Nenhum pintor encontrado com essa busca</h1>
         {% endif %}

@@ -741,7 +741,7 @@ p {
   text-align: -webkit-center;
 }
 
-#church-page{
+.search-page{
   display: flex;
   justify-content: center;
 }
