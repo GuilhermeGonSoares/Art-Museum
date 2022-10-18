@@ -20,7 +20,8 @@ class RegisterPaintingForm(forms.ModelForm):
         max_length=250,
         label='Resumo',
         widget=forms.TextInput(attrs={
-            'placeholder': 'Breve resumo da obra'
+            'placeholder': 'Breve resumo da obra',
+            'class': 'span-2'
         })
     )
 
@@ -38,11 +39,11 @@ class RegisterPaintingForm(forms.ModelForm):
         fields = [
             'name',
             'date',
+            'author',
+            'church',
             'summary',
             'description',
             'cover',
-            'author',
-            'church',
         ]
         labels = {
             'description': 'Descrição',

@@ -11,8 +11,8 @@ from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from museum.models import Painting
 
-from .forms import (LoginForm, RegisterAuthorForm, RegisterForm,
-                    RegisterPaintingForm)
+from .forms import (LoginForm, RegisterAuthorForm, RegisterChurchForm,
+                    RegisterForm, RegisterPaintingForm)
 
 
 #UTILIZAR A SESSÃO DO USUÁRIO PARA PODER TRAFEGAR DADOS DE UMA VIEW PARA OUTRA
@@ -201,7 +201,6 @@ def painting_author_create(request:HttpRequest) -> HTTPResponse:
         return redirect('user:painting_create')
 
     return render(request, 'user/pages/dashboard_author.html', {
-        'form_action': 'user:painting_author_create',
         'form': form,
         'search': False,
     })
@@ -222,4 +221,20 @@ def painting_delete(request:HttpRequest, id:int)-> HttpResponse:
 @require_http_methods(['GET', 'POST'])
 @login_required(login_url='user:login')
 def painting_church_create(request:HttpRequest) -> HttpResponse:
-    ...
+    id = request.session.get('painting_edit_id', '')
+
+    form = RegisterChurchForm(data=request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Igreja cadastrada com sucesso")
+        #TENTAR ARMAZENAR NO SESSION OS DADOS QUE ESTAVAM NO FORMULÁRIO ANTES DE CRIAR O AUTOR
+        if id:
+            return redirect(reverse('user:painting_edit', args=(id,)))
+        
+        return redirect('user:painting_create')
+
+    return render(request, 'user/pages/dashboard_church.html', {
+        'form': form,
+        'search': False,
+    })

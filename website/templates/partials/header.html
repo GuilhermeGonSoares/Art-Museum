@@ -10,22 +10,24 @@
     <div class="navbar">
         {% if user.is_authenticated %}
         <div class="navbar-item">
-            <a href="{% url 'user:dashboard' %}">DashBoard</a>
+            <a href="{% url 'user:dashboard' %}"><i class="fas fa-book-open"></i> DashBoard</a>
         </div>
         <div class="navbar-item">
             <form action="{% url 'user:logout' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="username" value="{{request.user.username}}">
-                <button class="plaintext-button" type="submit">Deslogar</button>
+                
+                <button class="plaintext-button" type="submit"><i class="fas fa-right-from-bracket"></i> Deslogar</button>
             </form>
         </div>
     {% endif %}
     {% if not user.is_authenticated %}
         <div class="navbar-item">
-            <a href="{% url 'user:login' %}">Logar</a>
+            
+            <a href="{% url 'user:login' %}"><i class="fas fa-user"></i> Logar</a>
         </div>
         <div class="navbar-item">
-            <a href="{% url 'user:register' %}">Registrar</a>
+            <a href="{% url 'user:register' %}"> <i class="fa-solid fa-registered"></i> Registrar</a>
         </div>
         
     {% endif %}
