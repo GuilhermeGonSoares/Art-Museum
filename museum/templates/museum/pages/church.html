@@ -3,36 +3,37 @@
 {% block content %}
 
 <div class="text-secondary-page">
-    <h1>Nome da Igreja: {{ church.name }}</h1>
-    {% if church.city %}
-        <h3>Cidade da Igreja: {{ church.city }}</h3>
-    {% endif %}
-    {% if church.state %}
-        <h3>Estado da Igreja: {{ church.state }}</h3>
-    {% endif %}
+    <div class="center-flex" id="church-name">
+        <i class="fa-solid fa-church fa-lg logo-info"></i>
+        <h1>{{ church.name }}</h1>
+    </div>
+    
+    <div class="center-flex" id="church-location">
+        {% if church.city %}
+        <i class="fa-solid fa-flag logo-info"></i>
+        <h3>{{ church.city }}</h3>
+        {% endif %}
+        {% if church.state %}   
+             <h3>, {{ church.state }}</h3>
+        {% endif %}
+    </div>
+    
+    
+
+    
+    <br>
+    <h2 class="intro-content">Obras da igreja:</h2>
+    <br>
 
 </div>
-    {% if paintings.count == 1 %}
-        <h2>Pintura dessa igreja</h2>
-        <br>
-        <div class="main-content  container" id="one-item">
-            {% for painting in paintings %} 
-                
-                    {% include 'museum/partials/painting.html' %}
-                
-            {% endfor %}
-        </div>
+    <div class="main-content main-content-list container" id="church-page">
+        {% for painting in paintings %}
+        
+            {% include 'museum/partials/painting.html' %}
 
-    {% else %}
+        {% endfor %}
+    </div>
 
-        <h2>Lista das pinturas dessa igreja</h2>
-        <br>
-        <div class="main-content main-content-list container" id="church-page">
-            {% for painting in paintings %}
-            
-                {% include 'museum/partials/painting.html' %}
 
-            {% endfor %}
-        </div>
-    {% endif %}  
+    
 {% endblock content %}
