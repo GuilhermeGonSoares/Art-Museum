@@ -818,5 +818,20 @@ li{
 
 }
 
-
 .main-table-name:hover {background-color: var(--color-primary-light-hover);}
+
+.center-flex{
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.intro-content{
+  color: var(--color-gray-5);
+}
+
+.logo-info{
+  margin: 10px;
+}
