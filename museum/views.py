@@ -123,4 +123,5 @@ def detail_painting_not_published(request: HttpRequest, painting_id: int) -> Htt
         'painting': painting,
         'isDetailPage': True,
         'search':False,
+        
     })
