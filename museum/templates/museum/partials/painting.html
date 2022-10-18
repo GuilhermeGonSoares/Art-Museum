@@ -1,15 +1,15 @@
-<div class="recipe recipe-list-item" id="card">
-    <div class="recipe-cover">
+<div class="painting painting-list-item" id="card">
+    <div class="painting-cover">
         <a href="{% url 'painting:detail' painting.id %}">
             <img src="{{ painting.cover.url }}" alt="temporario" class="img-main">  
         </a>
     </div>
-    <div class="recipe-title-container">
-        <h2 class="recipe-title">{{ painting.name | linebreaks }}</h2>
+    <div class="painting-title-container">
+        <h2 class="painting-title">{{ painting.name | linebreaks }}</h2>
     </div>
 
-    <div class="recipe-author">
-        <span class="recipe-author-item">
+    <div class="painting-author">
+        <span class="painting-author-item">
             {% for author in painting.author.all %}
                 <i class="fas fa-user"></i>
                     <a href="{% url 'painting:painter' author.id %}">{{author}}</a>
@@ -19,7 +19,7 @@
                     Desconhecido
             {% endfor %}
         </span>
-        <span class="recipe-author-item">
+        <span class="painting-author-item">
             <i class="fas fa-calendar-alt"></i>
             {% if painting.date %}
                 {{ painting.date |date:"d/m/Y" }}
@@ -29,7 +29,7 @@
         </span>
         
         
-        <span class="recipe-author-item">   
+        <span class="painting-author-item">   
             <i class="fas fa-church"></i>
                 {% if painting.church is not None %}
                     <a href="{% url 'painting:church' painting.church.id %}">
@@ -41,20 +41,20 @@
         </span>
     </div>
 
-    <div class="recipe-content">
+    <div class="painting-content">
         <p>{{ painting.summary }}</p>
     </div>
 
-    <div class="recipe-meta-container">
-        <div class="recipe-meta recipe-preparation">
-            <h3 class="recipe-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
-            <div class="recipe-meta-text">
+    <div class="painting-meta-container">
+        <div class="painting-meta painting-preparation">
+            <h3 class="painting-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
+            <div class="painting-meta-text">
                 {{painting.post_author.username}}
             </div>
         </div>
-        <div class="recipe-meta recipe-servings">
-            <h3 class="recipe-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
-            <div class="recipe-meta-text">
+        <div class="painting-meta painting-servings">
+            <h3 class="painting-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
+            <div class="painting-meta-text">
                 {{painting.post_date}}
             </div>
         </div>
@@ -62,8 +62,8 @@
 
 
     {% if isDetailPage is not True %}
-    <footer class="recipe-footer">
-        <a class="recipe-read-more button button-dark button-full-width" href="{% url 'painting:detail' painting.id %}">
+    <footer class="painting-footer">
+        <a class="painting-read-more button button-dark button-full-width" href="{% url 'painting:detail' painting.id %}">
             <i class="fas fa-eye"></i>
             <span>ver mais...</span>
         </a>
@@ -72,7 +72,7 @@
 
     
     {% if isDetailPage is True %}
-        <div class="preparation-steps">
+        <div class="painting-description">
             {{ painting.description | linebreaks}}
         </div>
     {% endif %}
