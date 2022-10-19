@@ -2,10 +2,15 @@
 {% block title %}{{painting.name}} | {% endblock title %}
 {% block content %}
 <div class="text-secondary-page">
-    <h1>Pintor: {{ painter.name }}</h1>
+    
+    <div class="center-flex">
+        <i class="fa-solid fa-paintbrush fa-lg logo-info"></i>
+        <h1 id="painter-name">{{ painter.name }}</h1>
+        <i class="fa-solid fa-paintbrush fa-lg logo-info"></i>
+    </div>
     
     {% if paintings.count == 1 %}
-        <h2>Pintura desse pintor:</h2>
+        <h2 class="intro-content">Obra deste pintor:</h2>
         <br>
         <div class="main-content  container" id="one-item">
             {% for painting in paintings %} 
@@ -13,7 +18,7 @@
             {% endfor %}
         </div>
     {% else %}
-        <h2>Lista das suas pinturas:</h2>
+        <h2 class="intro-content">Obras deste pintor:</h2>
         <br>
         <div class="main-content main-content-list container">
             {% for painting in paintings %}            

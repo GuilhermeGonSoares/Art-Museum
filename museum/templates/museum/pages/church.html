@@ -21,7 +21,7 @@
 
 </div>
     {% if paintings.count == 1 %}
-    <h2>Pintura dessa igreja</h2>
+    <h2 class="intro-content">Pintura dessa igreja</h2>
     <br>
     <div class="main-content  container" id="one-item">
         {% for painting in paintings %} 
@@ -33,7 +33,7 @@
 
     {% else %}
 
-    <h2>Lista das pinturas dessa igreja</h2>
+    <h2 class="intro-content">Lista das pinturas dessa igreja</h2>
     <br>
     <div class="main-content main-content-list container" id="church-page">
         {% for painting in paintings %}
