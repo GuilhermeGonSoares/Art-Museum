@@ -163,7 +163,7 @@ def painting_create(request:HttpRequest)-> HttpResponse:
     form = RegisterPaintingForm(
             data=request.POST or None,
             files=request.FILES or None,
-        )
+    )    
     
     if form.is_valid():
         authors = form.cleaned_data['author']
@@ -188,7 +188,6 @@ def painting_create(request:HttpRequest)-> HttpResponse:
 @login_required(login_url='user:login')
 def painting_author_create(request:HttpRequest) -> HTTPResponse:
     id = request.session.get('painting_edit_id', '')
-
     form = RegisterAuthorForm(data=request.POST or None)
 
     if form.is_valid():
@@ -209,7 +208,7 @@ def painting_author_create(request:HttpRequest) -> HTTPResponse:
 @login_required(login_url='user:login')
 def painting_delete(request:HttpRequest, id:int)-> HttpResponse:
     try:
-        painting = Painting.objects.get(pk=id)
+        painting = Painting.objects.get(pk=id, is_published=False)
     except ObjectDoesNotExist:
         raise Http404("Pintura com esse ID não encontrada!")
     

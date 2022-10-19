@@ -5,5 +5,15 @@
 <div class="main-content main-content-detail container" id="details-page">
     {% include 'museum/partials/painting.html' %}
 </div>
-    
+    {% if edit is True %}
+        <div class="form-content center form-content-grid">
+            <div class="form-group ">
+                <a class="link-to-button" href="{% url 'user:painting_edit' painting.id %}">Editar</a>
+            </div>
+            <form class = "form-delete" action="{% url 'user:painting_delete' painting.id %}" method="POST">
+                {% csrf_token %}
+                <button class="plaintext-button" type="submit">Excluir</button>
+            </form>
+        </div>
+    {% endif %}
 {% endblock content %}

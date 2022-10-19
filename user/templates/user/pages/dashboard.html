@@ -25,10 +25,10 @@
                                 <div class="painting-edit">
                                     <i class="fas fa-pen"></i>
                                     <a href="{% url 'user:painting_edit' painting.id %}">Editar</a>
-                                    <form action="{% url 'user:painting_delete' painting.id %}" method="POST">
+                                    <form class = "form-delete" action="{% url 'user:painting_delete' painting.id %}" method="POST">
                                         {% csrf_token %}
                                         <i class="fas fa-trash"></i>
-                                        <button class="plaintext-button" type="submit">Excluir</button>
+                                        <button id = "button-delete" class="plaintext-button" type="submit">Excluir</button>
                                     </form>
                                 </div>
                             </div>
