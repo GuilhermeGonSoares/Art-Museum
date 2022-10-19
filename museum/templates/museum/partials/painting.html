@@ -15,11 +15,11 @@
     <div class="painting-author">
         <span class="painting-author-item">
             {% for author in painting.author.all %}
-                <i class="fas fa-user"></i>
+                <i class="fas fa-paintbrush"></i>
                     <a href="{% url 'painting:painter' author.id %}">{{author}}</a>
                     <br>
             {%empty%}
-                <i class="fas fa-user"></i>
+                <i class="fas fa-paintbrush"></i>
                     Desconhecido
             {% endfor %}
         </span>
