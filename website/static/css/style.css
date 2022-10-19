@@ -349,11 +349,12 @@ p {
 .pagination-content {
   display: flex;
   flex-flow: row wrap;
-  gap: 1rem 0.5rem;
-  margin-left: 30px;
+  gap: 1rem 1rem;
 }
 .pagination .page-item {
+  border-radius: 20px;
   background: var(--color-gray-3);
+  
   padding: 0.5rem 1rem;
 }
 
@@ -775,6 +776,9 @@ th, td{
   padding: 10px;
   border-radius: 12px;
   background-color: var(--color-light-gray);
+  width: 30%;
+
+  overflow: hidden;
 }
 
 td{
@@ -837,4 +841,3 @@ li{
 .logo-info{
   margin: 10px;
 }
-
