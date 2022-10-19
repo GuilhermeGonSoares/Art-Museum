@@ -17,31 +17,30 @@
              <h3>, {{ church.state }}</h3>
         {% endif %}
     </div>    
-    
 
 </div>
-    {% if paintings.count == 1 %}
-    <h2>Pintura dessa igreja</h2>
-    <br>
-    <div class="main-content  container" id="one-item">
-        {% for painting in paintings %} 
-            
-                {% include 'museum/partials/painting.html' %}
-            
-        {% endfor %}
-    </div>
-
+    
+    {% if page.total_paintings == 1 %}
+        <h2>Pintura dessa igreja</h2>
+        <br>
+        <div class="main-content  container" id="one-item">
+            {% for painting in page.paintings %}                
+                {% include 'museum/partials/painting.html' %} 
+            {% endfor %}
+        </div>
     {% else %}
-
-    <h2>Lista das pinturas dessa igreja</h2>
-    <br>
-    <div class="main-content main-content-list container" id="church-page">
-        {% for painting in paintings %}
-        
-            {% include 'museum/partials/painting.html' %}
-
-        {% endfor %}
-    </div>
+        <h2>Lista das pinturas dessa igreja</h2>
+        <br>
+        <div class="main-content main-content-list container" id="church-page">
+            {% for painting in page.paintings %}        
+                {% include 'museum/partials/painting.html' %}
+            {% endfor %}
+        </div>
+        <div class="container">
+            {% include 'templates/partials/pagination.html' %}
+        </div>
     {% endif %}
+
+    
 
 {% endblock content %}

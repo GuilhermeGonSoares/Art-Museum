@@ -18,9 +18,7 @@ def home(request: HttpRequest) -> HttpResponse:
 
     page = pagination(paginator, current_page)
     return render(request, 'museum/pages/home.html', {
-        'paintings': page['paintings'],
-        'pagination': page['pagination'],
-        'current_page': current_page,
+        'page':page,
     })
 
 @require_GET
@@ -47,20 +45,23 @@ def churches(request:HttpRequest) -> HttpResponse:
     
     return render(request, 'museum/pages/search_church.html',{
             'churches': churches_paintings,
-            'search_result': search,
             'filterChurch': 'selected',
         })
 
 
 @require_GET
 def detail_church(request: HttpRequest, id_church: int) -> HttpResponse:
+    current_page = int(request.GET.get('page', 1))
     paintings = Painting.objects.filter(church__id=id_church, is_published=True).order_by('-id')
     if not paintings:
         raise Http404("there are no paintings related to this church id")
-    
+    church = paintings.first().church
+    paginator = Paginator(paintings, 6)
+
+    page = pagination(paginator, current_page)
     return render(request, 'museum/pages/church.html', {
-        'paintings': paintings,
-        'church': paintings.first().church,
+        'page':page,
+        'church': church,
         'filterChurch': 'selected',
     })
 
@@ -74,8 +75,7 @@ def painters(request: HttpRequest) -> HttpResponse:
     
     return render(request, 'museum/pages/search_painter.html',{
             'painters': painter_paintings,
-            'search_result': search,
-            'filterPainter ': 'selected',
+            'filterPainter': 'selected',
         })
 
 @require_GET

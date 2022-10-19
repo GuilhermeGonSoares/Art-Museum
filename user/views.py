@@ -174,7 +174,7 @@ def painting_create(request:HttpRequest)-> HttpResponse:
         form.save_m2m()
 
         messages.success(request, 'Pintura cadastrada com sucesso!')
-        return redirect('user:painting_create')
+        return redirect('user:dashboard')
 
 
     return render(request, 'user/pages/dashboard_painting.html', {

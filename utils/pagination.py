@@ -7,6 +7,9 @@ def pagination(paginator: Paginator, current_page: int):
     number_page = paginator.num_pages
     
     return {
+        'current_page': current_page,
         'paintings': page.object_list,
-        'pagination': pagination,
+        'pagination': pagination if number_page > 1 else [],
+        'number_page': number_page,
+        'total_paintings': paginator.count,
     }
