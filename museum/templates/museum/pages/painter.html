@@ -4,11 +4,11 @@
 <div class="text-secondary-page">
     <h1>Pintor: {{ painter.name }}</h1>
     
-    {% if paintings.count == 1 %}
+    {% if page.total_paintings == 1 %}
         <h2>Pintura desse pintor:</h2>
         <br>
         <div class="main-content  container" id="one-item">
-            {% for painting in paintings %} 
+            {% for painting in page.paintings %} 
                 {% include 'museum/partials/painting.html' %}    
             {% endfor %}
         </div>
@@ -16,9 +16,12 @@
         <h2>Lista das suas pinturas:</h2>
         <br>
         <div class="main-content main-content-list container">
-            {% for painting in paintings %}            
+            {% for painting in page.paintings %}            
                 {% include 'museum/partials/painting.html' %}
             {% endfor %}
+        </div>
+        <div class="container">
+            {% include 'templates/partials/pagination.html' %}
         </div>
     {% endif %}   
 </div>

@@ -14,9 +14,8 @@ from .models import Author, Church, Painting
 def home(request: HttpRequest) -> HttpResponse:
     current_page = int(request.GET.get('page', 1))
     paintings = Painting.objects.filter(is_published=True).order_by('-id')
-    paginator = Paginator(paintings, 6)
 
-    page = pagination(paginator, current_page)
+    page = pagination(paintings, current_page)
     return render(request, 'museum/pages/home.html', {
         'page':page,
     })
@@ -28,7 +27,8 @@ def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
     
     except ObjectDoesNotExist:
         raise Http404('Objects not found in database')
-    
+
+
     return render(request, 'museum/pages/detail_painting.html', {
         'painting': painting,
         'isDetailPage': True,
@@ -56,9 +56,7 @@ def detail_church(request: HttpRequest, id_church: int) -> HttpResponse:
     if not paintings:
         raise Http404("there are no paintings related to this church id")
     church = paintings.first().church
-    paginator = Paginator(paintings, 6)
-
-    page = pagination(paginator, current_page)
+    page = pagination(paintings, current_page)
     return render(request, 'museum/pages/church.html', {
         'page':page,
         'church': church,
@@ -85,10 +83,12 @@ def detail_painter(request: HttpRequest, id_painter: int)-> HttpResponse:
         paintings_this_painter = painter.painting_set.filter(is_published=True).order_by('-id')
     except ObjectDoesNotExist:
         raise Http404("Painter doesn't found in this database!")
-
+    
+    current_page = int(request.GET.get('page', 1))
+    page = pagination(paintings_this_painter, current_page)
     return render(request, 'museum/pages/painter.html', {
         'painter': painter,
-        'paintings': paintings_this_painter,
+        'page': page,
         'filterPainter': 'selected',
     })
 
@@ -96,18 +96,23 @@ def detail_painter(request: HttpRequest, id_painter: int)-> HttpResponse:
 def search(request: HttpRequest)-> HttpResponse:
     filter = request.GET.get("filter", "paintings")
     search = request.GET.get("q", "")
+    current_page = int(request.GET.get('page', 1))
     
     if filter == 'paintings':
-        template = 'museum/pages/search.html'
+        template = 'museum/pages/search_painting.html'
         paintings = Painting.objects.filter(
             Q(
                 Q(name__icontains=search) | Q(summary__icontains=search) 
             ) & Q(is_published=True)
         ).order_by('-id')
-        
+
+        page = pagination(paintings, current_page)
         return render(request, template, {
-            'paintings': paintings,
+            'page': page,
             'search_result': search,
+            'is_search': True,
+            'search_form': search,
+            'filter': filter,
         })
 
     if filter == 'churches':

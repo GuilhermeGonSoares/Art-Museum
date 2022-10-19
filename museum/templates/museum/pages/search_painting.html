@@ -4,21 +4,22 @@
 
 <h2>Pinturas encontradas pela busca: {{search_result}}</h2>
 
-{% if paintings %}
-    {% if paintings.count == 1 %}
+{% if page.total_paintings > 0 %}
+    {% if page.total_paintings == 1 %}
         <div class="main-content  container" id="one-item">
-            {% for painting in paintings %} 
-                
-                    {% include 'museum/partials/painting.html' %}
-                
+            {% for painting in page.paintings %}           
+                    {% include 'museum/partials/painting.html' %}        
             {% endfor %}
         </div>
     
     {% else %}
         <div class="main-content main-content-list container">
-            {% for painting in paintings %} 
+            {% for painting in page.paintings %} 
                 {% include 'museum/partials/painting.html' %}
             {% endfor %}
+        </div>
+        <div class="container">
+            {% include 'templates/partials/pagination.html' %}
         </div>
     {% endif %}
 {% else %}
