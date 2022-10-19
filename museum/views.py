@@ -41,7 +41,9 @@ def churches(request:HttpRequest) -> HttpResponse:
     churches_paintings = []
     churches = Church.objects.filter(painting__is_published = True).distinct().order_by('-id')
     for church in churches:
-        churches_paintings.append((church, church.painting_set.count()))
+        paintings_number = church.painting_set.filter(is_published=True).count()
+        if paintings_number > 0:
+            churches_paintings.append((church, paintings_number))
     
     return render(request, 'museum/pages/search_church.html',{
             'churches': churches_paintings,
@@ -67,12 +69,13 @@ def painters(request: HttpRequest) -> HttpResponse:
     painter_paintings = []
     painters = Author.objects.filter(painting__is_published = True).distinct().order_by('-id')
     for painter in painters:
-        painter_paintings.append((painter, painter.painting_set.count()))
+        paintings_number = painter.painting_set.filter(is_published=True).count()
+        painter_paintings.append((painter, paintings_number))
     
     return render(request, 'museum/pages/search_painter.html',{
             'painters': painter_paintings,
             'search_result': search,
-            'filterPainter': 'selected',
+            'filterPainter ': 'selected',
         })
 
 @require_GET
