@@ -10,4 +10,30 @@
             <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
         </form>
     </div>
+    <div class="center" id="see-all">
+        <h2 class="see-all-msg"> Ver Tudo </h2>
+        {% if filterPainting %}
+        <a class="dashboard-button-dark-selected"  href="{% url 'painting:home' %}"> Obras </a>
+        <a class="dashboard-button-dark" href="{% url 'painting:church_all' %}"> Igrejas </a>
+        <a class="dashboard-button-dark" href="{% url 'painting:painter_all' %}"> Pintores </a>
+        {% else %}
+            {% if filterChurch  %}
+            <a class="dashboard-button-dark"  href="{% url 'painting:home' %}"> Obras </a>
+            <a class="dashboard-button-dark-selected" href="{% url 'painting:church_all' %}"> Igrejas </a>
+            <a class="dashboard-button-dark" href="{% url 'painting:painter_all' %}"> Pintores </a>
+            {% else %}
+                {% if filterPainter %}
+                <a class="dashboard-button-dark"  href="{% url 'painting:home' %}"> Obras </a>
+                <a class="dashboard-button-dark" href="{% url 'painting:church_all' %}"> Igrejas </a>
+                <a class="dashboard-button-dark-selected" href="{% url 'painting:painter_all' %}"> Pintores </a>
+                {% else %}
+                    <a class="dashboard-button-dark-selected"  href="{% url 'painting:home' %}"> Obras </a>
+                    <a class="dashboard-button-dark" href="{% url 'painting:church_all' %}"> Igrejas </a>
+                    <a class="dashboard-button-dark" href="{% url 'painting:painter_all' %}"> Pintores </a>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        
+
+    </div>
 </div>

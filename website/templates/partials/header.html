@@ -9,8 +9,6 @@
     </div>
     <div class="navbar">
         {% if user.is_authenticated %}
-        <a href="{% url 'painting:church_all' %}"> Igrejas(provisório) </a>
-        <a href="{% url 'painting:painter_all' %}"> Pintores(provisório) </a>
 
         <div class="navbar-item">
             <a href="{% url 'user:dashboard' %}"><i class="fas fa-book-open"></i> DashBoard</a>
