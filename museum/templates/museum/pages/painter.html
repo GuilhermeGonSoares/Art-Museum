@@ -1,5 +1,5 @@
 {% extends 'templates/pages/global.html' %}
-{% block title %}{{painting.name}} | {% endblock title %}
+{% block title %}{{painter.name}} | {% endblock title %}
 {% block content %}
 <div class="text-secondary-page">
     
@@ -9,7 +9,7 @@
         <i class="fa-solid fa-paintbrush fa-lg logo-info"></i>
     </div>
     
-    {% if paintings.count == 1 %}
+    {% if page.total_paintings == 1 %}
         <h2 class="gray-text">Obra deste pintor:</h2>
         <br>
         <div class="main-content  container" id="one-item">

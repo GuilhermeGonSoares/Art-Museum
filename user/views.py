@@ -190,7 +190,6 @@ def painting_create(request:HttpRequest)-> HttpResponse:
 def painting_author_create(request:HttpRequest) -> HTTPResponse:
     id = request.session.get('painting_edit_id', '')
     form = RegisterAuthorForm(data=request.POST or None)
-    print(request.session.items())
     if form.is_valid():
         form.save()
         messages.success(request, "Autor cadastrado com sucesso")

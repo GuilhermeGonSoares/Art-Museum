@@ -1,5 +1,5 @@
 {% extends 'templates/pages/global.html' %}
-{% block title %}{{painting.name}} | {% endblock title %}
+{% block title %}{{church.name}} | {% endblock title %}
 {% block content %}
 
 <div class="text-secondary-page">
@@ -19,28 +19,27 @@
     </div>    
 
 </div>
-    {% if paintings.count == 1 %}
-    <h2 class="gray-text">Pintura dessa igreja</h2>
-    <br>
-    <div class="main-content  container" id="one-item">
-        {% for painting in paintings %} 
-            
-                {% include 'museum/partials/painting.html' %}
-            
-        {% endfor %}
-    </div>
-
+    {% if page.total_paintings == 1 %}
+        <h2 class="gray-text">Pintura dessa igreja</h2>
+        <br>
+        <div class="main-content  container" id="one-item">
+            {% for painting in page.paintings %} 
+                
+                    {% include 'museum/partials/painting.html' %}
+                
+            {% endfor %}
+        </div>
     {% else %}
-
-    <h2 class="gray-text">Lista das pinturas dessa igreja</h2>
-    <br>
-    <div class="main-content main-content-list container" id="church-page">
-        {% for painting in paintings %}
-        
-            {% include 'museum/partials/painting.html' %}
-
-        {% endfor %}
-    </div>
+        <h2 class="gray-text">Lista das pinturas dessa igreja</h2>
+        <br>
+        <div class="main-content main-content-list container" id="church-page">
+            {% for painting in page.paintings %}
+                {% include 'museum/partials/painting.html' %}
+            {% endfor %}
+        </div>
+        <div class="container">
+            {% include 'templates/partials/pagination.html' %}
+        </div>
     {% endif %}
 
     
