@@ -1,4 +1,5 @@
 import re
+from tokenize import group
 
 from django.core.exceptions import ValidationError
 
@@ -23,12 +24,18 @@ def email_validate(email):
 
 def date_validade(date):
     regex = re.compile(r'^(((([1-9]|[0-2][0-9]|(3)[0-1])(\/))?(([1-9]|(0)[0-9])|((1)[0-2]))(\/))?\d{4})|M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$')
-    
+
     if not regex.match(date):
         raise ValidationError(
             ('Formato de data não aceito, Por favor insira um formato válido.'),
             code='invalid'
         )
+    if regex.match(date):
+        if len(regex.match(date).group()) != len(date):
+            raise ValidationError(
+            ('Formato de data não aceito, Por favor insira um formato válido.'),
+            code='invalid'
+        )  
 
 def verify_roman(number):
     regex = re.compile(r'^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}$')
