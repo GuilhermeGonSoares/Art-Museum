@@ -56,6 +56,7 @@ function resetSessionDashboard() {
     })
 }
 
+my_scope();
 
 const current_page = document.location.href
 if (current_page.includes("painting/create")){
@@ -63,7 +64,6 @@ if (current_page.includes("painting/create")){
     form_data();
     resetSession();
 }
-if (current_page.includes("dashboard")){
+if (current_page === "http://localhost:8081/user/dashboard/"){
     resetSessionDashboard();
-    my_scope();
 }
