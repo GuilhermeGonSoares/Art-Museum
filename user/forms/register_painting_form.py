@@ -1,8 +1,8 @@
 
-from cProfile import label
 
 from django import forms
 from museum.models import Author, Church, Painting
+from utils.django_form import date_validade
 
 
 class RegisterPaintingForm(forms.ModelForm):
@@ -47,6 +47,20 @@ class RegisterPaintingForm(forms.ModelForm):
         queryset=Church.objects.all(),
         widget=forms.SelectMultiple(),
 
+    )
+
+    date = forms.CharField(
+        required = False,
+        label="Data da obra",
+        help_text = "Formato: \
+            dia/mês/ano, \
+            mês/ano, \
+            ano ou \
+            século(em romano)",
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Ex: 28/01/1998, 01/1998, 1998, XX'
+        }),
+        validators=[date_validade]
     )
 
     class Meta:
