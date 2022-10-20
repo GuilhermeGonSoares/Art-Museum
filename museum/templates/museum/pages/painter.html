@@ -10,7 +10,7 @@
     </div>
     
     {% if paintings.count == 1 %}
-        <h2 class="intro-content">Obra deste pintor:</h2>
+        <h2 class="gray-text">Obra deste pintor:</h2>
         <br>
         <div class="main-content  container" id="one-item">
             {% for painting in paintings %} 
@@ -18,7 +18,7 @@
             {% endfor %}
         </div>
     {% else %}
-        <h2 class="intro-content">Obras deste pintor:</h2>
+        <h2 class="gray-text">Obras deste pintor:</h2>
         <br>
         <div class="main-content main-content-list container">
             {% for painting in paintings %}            

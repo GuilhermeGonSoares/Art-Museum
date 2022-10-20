@@ -834,10 +834,19 @@ li{
   justify-content: center;
 }
 
-.intro-content{
+.gray-text{
   color: var(--color-gray-5);
 }
 
 .logo-info{
   margin: 10px;
+}
+
+#dashboard-card{
+  border: 2px solid black;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: var(--color-light-gray);
+  height: 70vh;
+  width: 80%;
 }
