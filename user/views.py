@@ -166,6 +166,7 @@ def painting_create(request:HttpRequest)-> HttpResponse:
     )    
     
     if form.is_valid():
+
         authors = form.cleaned_data['author']
         pant = form.save(commit=False)
         pant.post_author = user
@@ -189,7 +190,7 @@ def painting_create(request:HttpRequest)-> HttpResponse:
 def painting_author_create(request:HttpRequest) -> HTTPResponse:
     id = request.session.get('painting_edit_id', '')
     form = RegisterAuthorForm(data=request.POST or None)
-
+    print(request.session.items())
     if form.is_valid():
         form.save()
         messages.success(request, "Autor cadastrado com sucesso")
@@ -203,6 +204,7 @@ def painting_author_create(request:HttpRequest) -> HTTPResponse:
         'form': form,
         'search': False,
     })
+
 
 @require_POST
 @login_required(login_url='user:login')
