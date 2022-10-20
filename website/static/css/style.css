@@ -842,7 +842,7 @@ li{
   margin: 10px;
 }
 
-#dashboard-card{
+.dashboard-card{
   border: 2px solid black;
   padding: 15px;
   border-radius: 12px;
