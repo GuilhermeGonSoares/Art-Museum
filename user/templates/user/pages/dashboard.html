@@ -3,7 +3,7 @@
 {% block title %}Dashboard | {% endblock title %}
 {% block content %}
 {% include 'templates/partials/messages.html' %}
-    <div class="main-content center container">
+    <div class="main-content center container" id="dashboard-card">
         <h2>Bem vindo ao seu dashboard {% if user.first_name %}{{ user.first_name }}{% else %}{{user.username}}{% endif %}!</h2>
         <div class='login-message'>
             <h4>Ver todas as pinturas publicadas. <a href="{% url 'painting:home' %}">Clique aqui.</a></h4>
