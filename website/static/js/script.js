@@ -58,6 +58,26 @@ function resetSessionDashboard() {
     })
 }
 
+function searchInFormPaintings(input_id, select_id){
+    let input, filter, select, option, i, txtValue;
+    input = document.getElementById(input_id);
+    filter = input.value.toUpperCase();
+    select = document.getElementById(select_id);
+    option = select.getElementsByTagName('option');
+
+    for (i = 0; i < option.length; i++){
+        txtValue = option[i].textContent || option[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1){
+            option[i].style.display = "";
+        } else {
+            option[i].style.display = "none";
+        }
+    }
+}
+
+
+
+
 my_scope();
 
 const current_page = document.location.href
