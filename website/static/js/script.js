@@ -52,7 +52,7 @@ function resetSession() {
     })
 }
 function resetSessionDashboard() {
-    const link = document.querySelector('#dashboard-button')
+    const link = document.querySelector('#dashboard-button-main')
     link.addEventListener("click", function(event){   
         sessionStorage.clear();
     })

@@ -6,8 +6,8 @@
             <label for="{{field.id_for_label}}">{{field.label}}</label>
 
             {% if field.name == 'author' %}
-                Não achou o pintor na lista?
-                <a id="create_author" href="{% url 'user:painting_author_create' %} ">Adicione</a> 
+                <p class="church-select">Não achou o pintor na lista?
+                <a id="create_author" href="{% url 'user:painting_author_create' %} ">Adicione</a></p> 
     
                 <input type="text" id="search_author" onkeyup="searchInFormPaintings('search_author', 'id_author')" placeholder = "Procure pelo pintor...">
                 {{field}} 

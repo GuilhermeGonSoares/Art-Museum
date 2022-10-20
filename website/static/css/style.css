@@ -109,6 +109,7 @@ p {
   flex-direction: column;
   display: flex;
   min-width: 60rem;
+  border-bottom: 3px solid var(--color-primary);
 }
 
 .main-header.container {
@@ -124,7 +125,7 @@ p {
 
 .main-logo {
   font-size: 4rem;
-  color: var(--color-white);
+  color: var(--color-primary);
   text-decoration: none;
   display: flex;
   flex-flow: row nowrap;
@@ -612,6 +613,7 @@ p {
   font-size: 15px;
   transition: all 300ms ease-in-out;
   cursor: pointer;
+  border: 1px solid var(--color-primary);
 }
 
 .img-main {
@@ -661,7 +663,7 @@ p {
   width: 70rem;
 }
 
-.login-and-register {
+.gray-box {
   border-style: solid;
   border-width: 2px;
   border-color: #000;
@@ -670,16 +672,12 @@ p {
   padding: 2rem;
 }
 
-.login-and-register h2 {
+.gray-box h2 {
   padding-bottom: 2rem;
 }
 
-.login-and-register label {
+.gray-box label {
   padding-bottom: 5px;
-}
-
-.login-and-register .form-group {
-  padding-bottom: 20px;
 }
 
 .navbar {
@@ -729,10 +727,6 @@ p {
   width: auto;
   margin-right: 10px;
   margin-bottom: 10px;
-}
-
-.church-select {
-  margin-bottom: 15px;
 }
 
 #page-container {
@@ -808,7 +802,7 @@ li{
   border-radius: 12px;
 }
 
-#dashboard-button{
+.dashboard-button{
   color: var(--color-primary);
   background-color: var(--color-light-gray);
   border: 1px solid var(--color-primary-hover);
@@ -816,12 +810,22 @@ li{
   width: fit-content;
   border-radius: 12px;
 }
-#dashboard-button-container{
+
+#dashboard-button-main{
+  color: var(--color-primary);
+  background-color: var(--color-light-gray);
+  border: 1px solid var(--color-primary-hover);
+  padding: 8px;
+  width: fit-content;
+  border-radius: 12px;
+}
+
+.dashboard-button-container{
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  padding: 0;
 }
 
 .main-table-name:hover {background-color: var(--color-primary-light-hover);}
@@ -842,7 +846,7 @@ li{
   margin: 10px;
 }
 
-#dashboard-card{
+.dashboard-card{
   border: 2px solid black;
   padding: 15px;
   border-radius: 12px;
@@ -850,6 +854,25 @@ li{
   height: 70vh;
   width: 80%;
 }
+.dashboard-card h3{
+  margin-top: 8rem;
+}
+
+
+#form-painting p{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: var(--color-gray-5);
+}
+
+.church-select{
+  color: #000;
+}
+
+#form-painting h2{
+  margin: 0;
+}
+
 
 .link-to-button  {
     background-color: var(--color-primary-dark);
@@ -896,4 +919,53 @@ li{
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+#see-all{
+    margin-bottom: 4rem;
+}
+
+.dashboard-button-dark{
+  color: var(--color-white);
+  background-color: gray;
+  border: 1px solid black;
+  padding: 8px;
+  width: fit-content;
+  border-radius: 12px;
+  margin: 0.25rem;
+
+}
+.dashboard-button-dark-selected{
+  color: var(--color-white);
+  background-color: black;
+  border: 1px solid var(--color-primary);
+  padding: 8px;
+  width: fit-content;
+  border-radius: 12px;
+  margin: 0.25rem;
+  filter: brightness(3);
+}
+
+.dashboard-button-dark:hover{
+  filter: brightness(0.6);
+}
+#form-painting{
+  width: 80rem;
+}
+
+
+#search_church{
+  margin-bottom: 2rem;
+}
+
+#dashboard-option{
+  margin-bottom: 25px;
+}
+
+#dashboard-back{
+  background-color: var(--color-white);
+}
+
+.create_painting img{
+  max-width: 64rem;
 }
