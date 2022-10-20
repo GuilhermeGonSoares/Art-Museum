@@ -11,7 +11,8 @@
                 {{field}}  
 
             {% elif field.name == 'church' %}
-                <p class="church-select">Deseja adicionar uma nova igreja? <a href="{% url 'user:painting_church_create' %} ">Sim</a></p>
+                <p class="church-select">Deseja adicionar uma nova igreja?
+                <a id="create_church" href="{% url 'user:painting_church_create' %} ">Sim</a></p>
                 {{field}}
                 
             {% else %}
