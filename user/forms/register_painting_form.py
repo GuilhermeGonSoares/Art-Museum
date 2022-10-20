@@ -1,4 +1,6 @@
 
+from cProfile import label
+
 from django import forms
 from museum.models import Author, Church, Painting
 
@@ -28,10 +30,23 @@ class RegisterPaintingForm(forms.ModelForm):
 
     author = forms.ModelMultipleChoiceField(
         required=False,
+        label="Pintor",
         queryset = Author.objects.all(),
-        widget = forms.CheckboxSelectMultiple(attrs={
+        help_text='Segure o "Control" ou "Command"(no Mac), para selecionar mais de um.',
+        widget = forms.SelectMultiple(attrs={
             'classe':'author-field'
         }),
+    
+    )
+    
+    church = forms.ModelChoiceField(
+        required=False,
+        label="Igreja",
+        empty_label="Desconhecida",
+        help_text="Selecione uma ou nenhuma igreja",
+        queryset=Church.objects.all(),
+        widget=forms.SelectMultiple(),
+
     )
 
     class Meta:

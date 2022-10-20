@@ -6,12 +6,17 @@
             <label for="{{field.id_for_label}}">{{field.label}}</label>
 
             {% if field.name == 'author' %}
-                Deseja adicionar um novo autor?
-                <a id="create_author" href="{% url 'user:painting_author_create' %} ">Sim</a>
-                {{field}}  
+                Não achou o pintor na lista?
+                <a id="create_author" href="{% url 'user:painting_author_create' %} ">Adicione</a> 
+    
+                <input type="text" id="search_author" onkeyup="searchInFormPaintings('search_author', 'id_author')" placeholder = "Procure pelo pintor...">
+                {{field}} 
 
             {% elif field.name == 'church' %}
-                <p class="church-select">Deseja adicionar uma nova igreja? <a href="{% url 'user:painting_church_create' %} ">Sim</a></p>
+                <p class="church-select">Não achou a igreja na lista?
+                <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>
+                <input type="text" id="search_church" onkeyup="searchInFormPaintings('search_church', 'id_church')" placeholder = "Procure pela igreja...">
+                
                 {{field}}
                 
             {% else %}

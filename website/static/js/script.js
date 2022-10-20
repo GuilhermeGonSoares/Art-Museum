@@ -14,15 +14,19 @@ function my_scope() {
 function form_data() {
     const form = document.querySelector('.create_painting')
     if (form) {
-        let link = document.querySelector('#create_author')
-        link.addEventListener('click', function (event) {
-
+        let link_author = document.querySelector('#create_author')
+        let link_church = document.querySelector('#create_church')
+        link_author.addEventListener('click', function () {
             sessionStorage.setItem("name", form.name.value);
             sessionStorage.setItem("date", form.date.value);
             sessionStorage.setItem("summary", form.summary.value);
             sessionStorage.setItem("description", form.description.value);
-            sessionStorage.setItem("cover", form.cover.value);
-            
+        });
+        link_church.addEventListener('click', function () {
+            sessionStorage.setItem("name", form.name.value);
+            sessionStorage.setItem("date", form.date.value);
+            sessionStorage.setItem("summary", form.summary.value);
+            sessionStorage.setItem("description", form.description.value);
         });
 
     } 
@@ -35,8 +39,7 @@ function loadForm(){
             form.name.value = sessionStorage.getItem("name");
             form.date.value = sessionStorage.getItem("date");
             form.summary.value = sessionStorage.getItem("summary");
-            form.description.value = sessionStorage.getItem("description");
-            form.cover.value = sessionStorage.getItem("cover");
+            form.description.value = sessionStorage.getItem("description"); 
         });
     }
 }
@@ -50,11 +53,30 @@ function resetSession() {
 }
 function resetSessionDashboard() {
     const link = document.querySelector('#dashboard-button')
-    link.addEventListener("click", function(event){
-        
+    link.addEventListener("click", function(event){   
         sessionStorage.clear();
     })
 }
+
+function searchInFormPaintings(input_id, select_id){
+    let input, filter, select, option, i, txtValue;
+    input = document.getElementById(input_id);
+    filter = input.value.toUpperCase();
+    select = document.getElementById(select_id);
+    option = select.getElementsByTagName('option');
+
+    for (i = 0; i < option.length; i++){
+        txtValue = option[i].textContent || option[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1){
+            option[i].style.display = "";
+        } else {
+            option[i].style.display = "none";
+        }
+    }
+}
+
+
+
 
 my_scope();
 
@@ -64,6 +86,7 @@ if (current_page.includes("painting/create")){
     form_data();
     resetSession();
 }
+
 if (current_page === "http://localhost:8081/user/dashboard/"){
     resetSessionDashboard();
 }
