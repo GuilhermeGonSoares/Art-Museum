@@ -11,6 +11,15 @@ function my_scope() {
     }
 }
 
+function confirmCancel() {
+    addEventListener('click', function (event) {
+        const confirmed = confirm("Deseja cancelar?")
+        if (confirmed) {
+            history.back();
+        }
+    })
+}
+
 function form_data() {
     const form = document.querySelector('.create_painting')
     if (form) {

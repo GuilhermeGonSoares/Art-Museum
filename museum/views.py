@@ -110,6 +110,10 @@ def engravings(request: HttpRequest) -> HttpResponse:
             'gravuras': '-selected',
         })
 
+@require_GET
+def detail_engraving(request: HttpRequest, id_engraving:int) -> HttpResponse:
+    ...
+
 
 @require_GET
 def search(request: HttpRequest)-> HttpResponse:
