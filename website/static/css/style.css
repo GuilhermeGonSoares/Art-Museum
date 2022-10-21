@@ -701,6 +701,14 @@ p {
 .painting-modification {
   display: flex;
   justify-content: space-between;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 2px;
+  background: var(--color-white);
+  height: 2.8rem;
+  border: 1px solid black;
+  border-radius: 12px;
 }
 .painting-edit {
   display: flex;
@@ -792,19 +800,10 @@ th {
   color: var(--color-info-dark);
 }
 
-li{
-  padding: 0.5rem;
-  padding-left: 1rem;
-  margin-bottom: 2px;
-  background: var(--color-white);
-  height: 2.8rem;
-  border: 1px solid black;
-  border-radius: 12px;
-}
 
 .dashboard-button{
   color: var(--color-primary);
-  background-color: var(--color-white);
+  background-color: white;
   border: 1px solid var(--color-primary-hover);
   padding: 8px;
   width: fit-content;
@@ -967,12 +966,4 @@ li{
 
 .create_painting img{
   max-width: 64rem;
-}
-
-.create_painting li{
-  background: none;
-  height: 2.8rem;
-  border: none;
-  margin: 0;
-  padding: 0;
 }
