@@ -6,7 +6,6 @@
     <!-- <h2>Pintores encontrados pela busca: {{search_result}}</h2> -->
         {% if painters %}
         <div class= "search-page">
-
             <table class="table">
                 <thead>
                     <tr>
@@ -17,7 +16,7 @@
                 <tbody>
                     {% for painter, qtd_paintings in painters %}
                         <tr>
-                            <td class="main-table-name"><a href="{% url 'painting:painter' painter.id %}">{{painter.name}}</a></td>
+                            <td class="main-table-name"><a class="table-link" href="{% url 'painting:painter' painter.id %}">{{painter.name}}</a></td>
                             <td>{{qtd_paintings}}</td>
                         </tr>
                     {% endfor %}

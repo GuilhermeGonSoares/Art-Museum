@@ -19,7 +19,7 @@
             <tbody>
                 {% for church, qtd_paintings in churches %}
                     <tr>
-                        <td class="main-table-name"><a href="{% url 'painting:church' church.id %}">{{church.name}}</a></td>
+                        <td class="main-table-name"><a class="table-link" href="{% url 'painting:church' church.id %}">{{church.name}}</a></td>
                         <td>
                             {% if church.city %}
                                 {{church.city}}
