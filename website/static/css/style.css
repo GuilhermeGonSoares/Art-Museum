@@ -938,12 +938,11 @@ li{
 .dashboard-button-dark-selected{
   color: var(--color-white);
   background-color: black;
-  border: 1px solid var(--color-primary);
+  border: 2px solid var(--color-primary);
   padding: 8px;
   width: fit-content;
   border-radius: 12px;
   margin: 0.25rem;
-  filter: brightness(3);
 }
 
 .dashboard-button-dark:hover{
