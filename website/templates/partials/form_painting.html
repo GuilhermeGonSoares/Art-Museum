@@ -15,12 +15,15 @@
             {% elif field.name == 'church' %}
                 <p class="church-select">Não achou a igreja na lista?
                 <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>
-                <!--
-                    <input type="text" id="search_church" onkeyup="searchInFormPaintings('search_church', 'id_church')" placeholder = "Procure pela igreja...">
-                -->
-                
                 {{field}}
-                
+            {% elif field.name == 'engraving' %}
+            <div class="dropdown">
+                <button onclick="dropdownSelect()" class="dropbtn">Dropdown</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                    {{field}}
+                </div>
+              </div>
             {% else %}
                 {{field}}
             {% endif %}

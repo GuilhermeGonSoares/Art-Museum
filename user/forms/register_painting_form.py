@@ -1,7 +1,7 @@
 
 
 from django import forms
-from museum.models import Author, Church, Painting
+from museum.models import Author, Church, Engraving, Painting
 from utils.django_form import date_validade
 
 
@@ -59,6 +59,12 @@ class RegisterPaintingForm(forms.ModelForm):
         }),
         validators=[date_validade]
     )
+    engraving = forms.ModelMultipleChoiceField(
+        required=False,
+        label="Gravura",
+        queryset = Engraving.objects.all(),
+        help_text='É permitido selecionar nenhum ou mais de uma gravura',    
+    )
 
     class Meta:
         model = Painting
@@ -67,6 +73,7 @@ class RegisterPaintingForm(forms.ModelForm):
             'date',
             'author',
             'church',
+            'engraving',
             'summary',
             'description',
             'cover',
@@ -84,6 +91,8 @@ class RegisterPaintingForm(forms.ModelForm):
                 'class': 'span-2'
             })
         }
+
+
 
 class RegisterAuthorForm(forms.ModelForm):
 
@@ -112,6 +121,9 @@ class RegisterAuthorForm(forms.ModelForm):
             'name',
             'biography'
         ]
+    
+    
+        
 
 class RegisterChurchForm(forms.ModelForm):
     

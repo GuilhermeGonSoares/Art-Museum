@@ -75,6 +75,11 @@ function searchInFormPaintings(input_id, select_id){
     }
 }
 
+function dropdownSelect() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+
 function desmarcarCampoSelectMultiple() {
     let select = document.getElementById('id_author');
     let option = select.getElementsByTagName('option');
