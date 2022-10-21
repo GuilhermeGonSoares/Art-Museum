@@ -4,7 +4,7 @@
 
 <div class="main-content center container">
     <h2>Gravuras encontradas pela busca: {{search_result}}</h2>
-    {% if churches %}
+    {% if engravings %}
     <div class="search-page"> 
         
         <table class="table">
@@ -16,9 +16,9 @@
                 </tr>
             </thead>
             <tbody>
-                {% for engraving, qtd_paintings in churches %}
+                {% for engraving, qtd_paintings in engravings %}
                     <tr>
-                        <td class="main-table-name"><a href="{% url 'painting:church' church.id %}">{{engraving.name}}</a></td>
+                        <td class="main-table-name"><a href="">{{engraving.name}}</a></td>
                                               
                         <td>
                             {% if engraving.book %}
