@@ -19,6 +19,8 @@ def home(request: HttpRequest) -> HttpResponse:
     return render(request, 'museum/pages/home.html', {
         'page':page,
         'obras':'-selected',
+        'search_action': 'painting:search',
+        'placeholder': 'Pesquise as obras pelo nome ou pelo resumo',
     })
 
 @require_GET
@@ -33,6 +35,7 @@ def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
     return render(request, 'museum/pages/detail_painting.html', {
         'painting': painting,
         'isDetailPage': True,
+        
     })
 
 @require_GET
@@ -48,21 +51,35 @@ def churches(request:HttpRequest) -> HttpResponse:
             'churches': churches_paintings,
             'filterChurch': 'selected',
             'igrejas': '-selected',
+            'search_action': 'painting:search',
+            'placeholder': 'Pesquise as igrejas pelo nome, cidade ou estado',
         })
 
 
 @require_GET
 def detail_church(request: HttpRequest, id_church: int) -> HttpResponse:
+    filter = request.GET.get('filter', '')
     current_page = int(request.GET.get('page', 1))
     paintings = Painting.objects.filter(church__id=id_church, is_published=True).order_by('-id')
+    
     if not paintings:
         raise Http404("there are no paintings related to this church id")
     church = paintings.first().church
+    
+    if filter == 'churches':
+        search = request.GET.get('q', '')
+        paintings = paintings.filter(Q(
+            Q(name__icontains=search) | Q(summary__icontains=search)
+        ))
+    
     page = pagination(paintings, current_page)
     return render(request, 'museum/pages/church.html', {
         'page':page,
         'church': church,
         'filterChurch': 'selected',
+        'placeholder': 'Pesquise pelas obras dessa igreja.',
+        'limparPesquisa': True if filter == 'churches' else False,
+        'search_result': search if filter == 'churches' else False,
         
     })
 
@@ -78,10 +95,13 @@ def painters(request: HttpRequest) -> HttpResponse:
             'painters': painter_paintings,
             'filterPainter': 'selected',
             'pintores': '-selected',
+            'search_action': 'painting:search',
+            'placeholder': 'Pesquise os pintores pelo nome',
         })
 
 @require_GET
 def detail_painter(request: HttpRequest, id_painter: int)-> HttpResponse:
+    filter = request.GET.get('filter', '')
     try:
         painter = Author.objects.get(pk=id_painter)
         paintings_this_painter = painter.painting_set.filter(is_published=True).order_by('-id')
@@ -89,11 +109,22 @@ def detail_painter(request: HttpRequest, id_painter: int)-> HttpResponse:
         raise Http404("Painter doesn't found in this database!")
     
     current_page = int(request.GET.get('page', 1))
+    
+    if filter == 'painters':
+        search = request.GET.get('q', '')
+        paintings_this_painter = paintings_this_painter.filter(Q(
+            Q(name__icontains=search) | Q(summary__icontains=search)
+        ))
+
     page = pagination(paintings_this_painter, current_page)
     return render(request, 'museum/pages/painter.html', {
         'painter': painter,
         'page': page,
         'filterPainter': 'selected',
+        'placeholder': 'Pesquise pelas obras desse pintor.',
+        'limparPesquisa': True if filter == 'painters' else False,
+        'search_result': search if filter == 'painters' else False,
+
     })
 
 @require_GET
@@ -108,6 +139,7 @@ def engravings(request: HttpRequest) -> HttpResponse:
             'engravings': engraving_paintings,
             'filterEngraving': 'selected',
             'gravuras': '-selected',
+            'search_action': 'painting:search',
         })
 
 @require_GET
@@ -136,6 +168,7 @@ def search(request: HttpRequest)-> HttpResponse:
             'is_search': True,
             'filter': filter,
             'obras': '-selected',
+            'placeholder': 'Pesquise as obras pelo nome ou pelo resumo',
         })
 
     if filter == 'churches':
@@ -158,6 +191,7 @@ def search(request: HttpRequest)-> HttpResponse:
             'search_result': search,
             'filterChurch': 'selected',
             'igrejas': '-selected',
+            'placeholder': 'Pesquise as igrejas pelo nome, cidade ou estado',
         })
     
     if filter == "painters":
@@ -176,6 +210,7 @@ def search(request: HttpRequest)-> HttpResponse:
             'search_result': search,
             'filterPainter': 'selected',
             'pintores': '-selected',
+            'placeholder': 'Pesquise os pintores pelo nome',
         })
 
 @require_GET

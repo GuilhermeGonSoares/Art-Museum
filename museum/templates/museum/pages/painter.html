@@ -8,6 +8,10 @@
         <h1 id="painter-name">{{ painter.name }}</h1>
         <i class="fa-solid fa-paintbrush fa-lg logo-info"></i>
     </div>
+    {% if limparPesquisa is True %}
+        <h2>Pesquisa realizada: {{search_result}}</h2>
+        <h2><a href="{% url 'painting:painter' painter.id %}">Limpar Busca</a></h2>
+    {% endif %}
     
     {% if page.total_paintings == 1 %}
         <h2 class="gray-text">Obra deste pintor:</h2>
