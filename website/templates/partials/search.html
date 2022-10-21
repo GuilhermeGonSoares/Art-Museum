@@ -6,11 +6,11 @@
             <a class="dashboard-button-dark{{pintores}}" href="{% url 'painting:painter_all' %}"> Pintores </a>
         </div>
         <form action="{% url 'painting:search' %}" method="GET" class="search-form">
-            <select name="filter" required id="filter">
+            <!-- <select name="filter" required id="filter">
                 <option {{ filterPainting }} value="paintings">Obras</option>
                 <option {{ filterChurch }} value="churches">Igrejas</option>
                 <option {{ filterPainter }} value="painters">Pintores</option>
-            </select>
+            </select> -->
             <input type="search" class="search-input" name="q" value="" required>
             <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
         </form>
