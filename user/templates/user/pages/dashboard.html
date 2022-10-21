@@ -6,12 +6,12 @@
     <div class="main-content center container dashboard-card">
         <h2>Bem vindo ao seu dashboard {% if user.first_name %}{{ user.first_name }}{% else %}{{user.username}}{% endif %}!</h2>
         <div class='login-message'>
-            <h4>Ver todas as pinturas publicadas. <a href="{% url 'painting:home' %}">Clique aqui.</a></h4>
+            <h4>Ver todas as suas pinturas publicadas. <a href="{% url 'user:paintings_published' %}">Clique aqui.</a></h4>
         </div>
         
         <div class="authors-dashboard-container">
             <div class='login-message center' id="dashboard-button-container">
-                <a class="dashboard-button" href="{% url 'user:painting_create' %}"> 
+                <a class="dashboard-button" onclick="sessionStorage.clear()" href="{% url 'user:painting_create' %}"> 
                     <span> Criar nova pintura </span>
                 </a>
             </div>

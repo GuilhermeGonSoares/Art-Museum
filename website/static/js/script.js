@@ -52,7 +52,7 @@ function resetSession() {
     })
 }
 function resetSessionDashboard() {
-    const link = document.querySelector('#dashboard-button-main')
+    const link = document.querySelector('.dashboard-button')
     link.addEventListener("click", function(event){   
         sessionStorage.clear();
     })
@@ -75,7 +75,17 @@ function searchInFormPaintings(input_id, select_id){
     }
 }
 
-
+function desmarcarCampoSelectMultiple() {
+    let select = document.getElementById('id_author');
+    let option = select.getElementsByTagName('option');
+    for(let i = 0; i < option.length; i++){
+        option[i].addEventListener('mousedown', function(event){
+            option[i].selected = !option[i].selected;
+            event.preventDefault();
+        })
+    }
+    
+}
 
 
 my_scope();
@@ -85,8 +95,8 @@ if (current_page.includes("painting/create")){
     loadForm();
     form_data();
     resetSession();
+    
 }
-
-if (current_page === "http://localhost:8081/user/dashboard/"){
-    resetSessionDashboard();
+if (current_page.includes("user/painting")){
+    desmarcarCampoSelectMultiple();
 }

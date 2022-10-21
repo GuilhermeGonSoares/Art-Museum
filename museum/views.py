@@ -18,6 +18,7 @@ def home(request: HttpRequest) -> HttpResponse:
     page = pagination(paintings, current_page)
     return render(request, 'museum/pages/home.html', {
         'page':page,
+        'obras':'-selected',
     })
 
 @require_GET
@@ -46,6 +47,7 @@ def churches(request:HttpRequest) -> HttpResponse:
     return render(request, 'museum/pages/search_church.html',{
             'churches': churches_paintings,
             'filterChurch': 'selected',
+            'igrejas': '-selected',
         })
 
 
@@ -74,6 +76,7 @@ def painters(request: HttpRequest) -> HttpResponse:
     return render(request, 'museum/pages/search_painter.html',{
             'painters': painter_paintings,
             'filterPainter': 'selected',
+            'pintores': '-selected',
         })
 
 @require_GET

@@ -32,20 +32,17 @@ class RegisterPaintingForm(forms.ModelForm):
         required=False,
         label="Pintor",
         queryset = Author.objects.all(),
-        help_text='Segure o "Control" ou "Command"(no Mac), para selecionar mais de um.',
-        widget = forms.SelectMultiple(attrs={
-            'classe':'author-field'
-        }),
-    
+        help_text='É permitido selecionar nenhum ou mais de um pintor',
+        
     )
     
     church = forms.ModelChoiceField(
         required=False,
         label="Igreja",
         empty_label="Desconhecida",
-        help_text="Selecione uma ou nenhuma igreja",
+        help_text="Selecione uma",
         queryset=Church.objects.all(),
-        widget=forms.SelectMultiple(),
+        widget=forms.Select(),
 
     )
 

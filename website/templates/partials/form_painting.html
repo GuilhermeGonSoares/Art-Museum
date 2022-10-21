@@ -15,7 +15,9 @@
             {% elif field.name == 'church' %}
                 <p class="church-select">Não achou a igreja na lista?
                 <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>
-                <input type="text" id="search_church" onkeyup="searchInFormPaintings('search_church', 'id_church')" placeholder = "Procure pela igreja...">
+                <!--
+                    <input type="text" id="search_church" onkeyup="searchInFormPaintings('search_church', 'id_church')" placeholder = "Procure pela igreja...">
+                -->
                 
                 {{field}}
                 

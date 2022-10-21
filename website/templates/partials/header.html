@@ -8,8 +8,10 @@
         </h1>
     </div>
     <div class="navbar">
+        <div class="navbar-item">
+            <a href="{% url 'painting:home' %}"><i class="fas fa-house"></i> Home</a>
+        </div>
         {% if user.is_authenticated %}
-
         <div class="navbar-item">
             <a href="{% url 'user:dashboard' %}"><i class="fas fa-book-open"></i> DashBoard</a>
         </div>

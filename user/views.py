@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from museum.models import Painting
+from utils.pagination import pagination
 
 from .forms import (LoginForm, RegisterAuthorForm, RegisterChurchForm,
                     RegisterForm, RegisterPaintingForm)
@@ -237,4 +238,19 @@ def painting_church_create(request:HttpRequest) -> HttpResponse:
     return render(request, 'user/pages/dashboard_church.html', {
         'form': form,
         'search': False,
+    })
+
+@require_GET
+@login_required(login_url='user:login')
+def painting_user_published(request: HttpRequest) -> HttpResponse:
+    current_page = int(request.GET.get('page', 1))
+    user = request.user
+    paintings = Painting.objects.filter(is_published=True, post_author=user.id).order_by('-id')
+
+    page = pagination(paintings, current_page)
+
+    return render(request, 'user/pages/paintings_published.html', {
+        'page': page,
+        'search': False,
+        'usuario': user.first_name if user.first_name else user.username
     })
