@@ -1,19 +1,21 @@
 <div class="search-container">
     <div class="container">
         <div class="center" id="see-all">
-            <a class="dashboard-button-dark{{obras}}"  href="{% url 'painting:home' %}"> Obras </a>
+            <a class="dashboard-button-dark{{obras}}" href="{% url 'painting:home' %}"> Obras </a>
             <a class="dashboard-button-dark{{igrejas}}" href="{% url 'painting:church_all' %}"> Igrejas </a>
             <a class="dashboard-button-dark{{pintores}}" href="{% url 'painting:painter_all' %}"> Pintores </a>
+            <a class="dashboard-button-dark{{gravuras}}" href="{% url 'painting:engraving_all' %}"> Gravuras </a>
         </div>
         <form action="{% url 'painting:search' %}" method="GET" class="search-form">
             <select hidden name="filter" required id="filter">
                 <option {{ filterPainting }} value="paintings">Obras</option>
                 <option {{ filterChurch }} value="churches">Igrejas</option>
                 <option {{ filterPainter }} value="painters">Pintores</option>
+                <option {{ filterEngraving }} value="engravings">Gravuras</option>
             </select>
             <input type="search" class="search-input" name="q" value="" required>
             <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
         </form>
     </div>
-    
+
 </div>

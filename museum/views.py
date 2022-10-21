@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_GET, require_POST
 from utils.pagination import pagination
 
-from .models import Author, Church, Painting
+from .models import Author, Church, Engraving, Painting
 
 
 @require_GET
@@ -63,6 +63,7 @@ def detail_church(request: HttpRequest, id_church: int) -> HttpResponse:
         'page':page,
         'church': church,
         'filterChurch': 'selected',
+        
     })
 
 @require_GET
@@ -96,6 +97,21 @@ def detail_painter(request: HttpRequest, id_painter: int)-> HttpResponse:
     })
 
 @require_GET
+def engravings(request: HttpRequest) -> HttpResponse:
+    engraving_paintings = []
+    engravings = Engraving.objects.filter(painting__is_published = True).distinct().order_by('-id')
+    for engraving in engravings:
+        paintings_number = engraving.painting_set.filter(is_published=True).count()
+        engraving_paintings.append((engraving, paintings_number))
+    print(engraving_paintings)
+    return render(request, 'museum/pages/search_engraving.html',{
+            'engravings': engraving_paintings,
+            'filterEngraving': 'selected',
+            'gravuras': '-selected',
+        })
+
+
+@require_GET
 def search(request: HttpRequest)-> HttpResponse:
     filter = request.GET.get("filter", "paintings")
     search = request.GET.get("q", "")
@@ -114,8 +130,8 @@ def search(request: HttpRequest)-> HttpResponse:
             'page': page,
             'search_result': search,
             'is_search': True,
-            'search_form': search,
             'filter': filter,
+            'obras': '-selected',
         })
 
     if filter == 'churches':
@@ -137,6 +153,7 @@ def search(request: HttpRequest)-> HttpResponse:
             'churches': churches_with_paintings_published,
             'search_result': search,
             'filterChurch': 'selected',
+            'igrejas': '-selected',
         })
     
     if filter == "painters":
@@ -154,6 +171,7 @@ def search(request: HttpRequest)-> HttpResponse:
             'painters': painters_with_paintings_published,
             'search_result': search,
             'filterPainter': 'selected',
+            'pintores': '-selected',
         })
 
 @require_GET

@@ -15,12 +15,9 @@
             {% elif field.name == 'church' %}
                 <p class="church-select">Não achou a igreja na lista?
                 <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>
-                <!--
-                    <input type="text" id="search_church" onkeyup="searchInFormPaintings('search_church', 'id_church')" placeholder = "Procure pela igreja...">
-                -->
-                
                 {{field}}
-                
+            {% elif field.name == 'engraving' %}
+                A sua obra possui gravuras relacionadas a ela? <a href="">Clique aqui</a> para adicioná-las.
             {% else %}
                 {{field}}
             {% endif %}

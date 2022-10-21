@@ -26,6 +26,7 @@ class Church(models.Model):
 class Engraving(models.Model):
     name = models.CharField(max_length=50)
     book = models.CharField(max_length=50, blank=True)
+    cover = models.ImageField(upload_to='engravings/cover/%Y/%m/%d/', )
     
     author = models.ManyToManyField(
         Author, blank=True, default=None
