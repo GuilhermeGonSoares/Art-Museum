@@ -17,13 +17,7 @@
                 <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>
                 {{field}}
             {% elif field.name == 'engraving' %}
-            <div class="dropdown">
-                <button onclick="dropdownSelect()" class="dropbtn">Dropdown</button>
-                <div id="myDropdown" class="dropdown-content">
-                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-                    {{field}}
-                </div>
-              </div>
+                A sua obra possui gravuras relacionadas a ela? <a href="">Clique aqui</a> para adicioná-las.
             {% else %}
                 {{field}}
             {% endif %}

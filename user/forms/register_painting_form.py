@@ -59,12 +59,7 @@ class RegisterPaintingForm(forms.ModelForm):
         }),
         validators=[date_validade]
     )
-    engraving = forms.ModelMultipleChoiceField(
-        required=False,
-        label="Gravura",
-        queryset = Engraving.objects.all(),
-        help_text='É permitido selecionar nenhum ou mais de uma gravura',    
-    )
+    
 
     class Meta:
         model = Painting
