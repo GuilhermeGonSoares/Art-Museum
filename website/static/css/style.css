@@ -41,8 +41,6 @@
 
   --spacing-gutter-medium: 3rem;
   --spacing-gutter-large: 4rem;
-
-
 }
 
 * {
@@ -74,7 +72,7 @@ h6 {
   font-family: var(--font-headings);
 }
 
-h2{
+h2 {
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -84,28 +82,29 @@ img {
 }
 
 a,
-.plaintext-button{
+.plaintext-button {
   color: var(--color-primary);
   text-decoration: none;
   text-align: center;
   transition: all 300ms ease-in-out;
 }
 
-.table-link{
+.table-link {
   display: block;
   color: var(--color-primary);
   text-decoration: none;
   text-align: center;
   transition: all 300ms ease-in-out;
-  
 }
 
-.table-link:hover{
+.table-link:hover {
   filter: none;
 }
 
 a:hover,
-.plaintext-button:hover{filter: brightness(1.4);}
+.plaintext-button:hover {
+  filter: brightness(1.4);
+}
 
 p {
   word-break: normal;
@@ -285,10 +284,9 @@ p {
   font-size: 1.6rem;
 }
 
-.no-filter:hover{
+.no-filter:hover {
   filter: none;
 }
-
 
 .painting-footer a {
   background: var(--color-primary-dark);
@@ -332,7 +330,6 @@ p {
   height: 2.5rem;
 
   border-top: 4px solid var(--color-primary);
-  
 }
 
 .main-footer a {
@@ -362,7 +359,6 @@ p {
   padding: 0 2rem;
 }
 
-
 .pagination-content {
   display: flex;
   flex-flow: row wrap;
@@ -371,7 +367,7 @@ p {
 .pagination .page-item {
   border-radius: 20px;
   background: var(--color-gray-3);
-  
+
   padding: 0.5rem 1rem;
 }
 
@@ -774,51 +770,48 @@ p {
   text-align: -webkit-center;
 }
 
-.search-page{
+.search-page {
   display: flex;
   justify-content: center;
 }
 
-.table, th, td{
+.table,
+th,
+td {
   text-align: center;
   border-collapse: collapse;
 }
-.table{
-  width: 50%;
+.table {
   border-radius: 10px;
   border-collapse: separate;
   border-spacing: 5px 8px;
 }
 
-th, td{
+th,
+td {
   padding: 10px;
   border-radius: 12px;
   background-color: var(--color-light-gray);
-  width: 30%;
-
   overflow: hidden;
 }
 
-td{
-  cursor:not-allowed;
+td {
+  cursor: not-allowed;
 }
-
 
 th {
   background-color: rgb(141, 187, 230);
   color: black;
 }
 
-
-.main-table-name{
+.main-table-name {
   padding: 0;
   cursor: pointer;
   font-weight: bold;
   color: var(--color-info-dark);
 }
 
-
-.dashboard-button{
+.dashboard-button {
   color: var(--color-primary);
   background-color: white;
   border: 1px solid var(--color-primary-hover);
@@ -827,7 +820,7 @@ th {
   border-radius: 12px;
 }
 
-#dashboard-button-main{
+#dashboard-button-main {
   color: var(--color-primary);
   background-color: var(--color-light-gray);
   border: 1px solid var(--color-primary-hover);
@@ -836,7 +829,7 @@ th {
   border-radius: 12px;
 }
 
-.dashboard-button-container{
+.dashboard-button-container {
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;
@@ -848,7 +841,7 @@ th {
   background-color: var(--color-primary-light-hover);
 }
 
-.center-flex{
+.center-flex {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -856,15 +849,15 @@ th {
   justify-content: center;
 }
 
-.gray-text{
+.gray-text {
   color: var(--color-gray-5);
 }
 
-.logo-info{
+.logo-info {
   margin: 10px;
 }
 
-.dashboard-card{
+.dashboard-card {
   border: 2px solid black;
   padding: 15px;
   border-radius: 12px;
@@ -872,34 +865,32 @@ th {
   height: 70vh;
   width: 80%;
 }
-.dashboard-card h3{
+.dashboard-card h3 {
   margin-top: 8rem;
 }
 
-
-#form-painting p{
+#form-painting p {
   margin-top: 10px;
   margin-bottom: 10px;
   color: var(--color-gray-5);
 }
 
-.church-select{
+.church-select {
   color: #000;
 }
 
-#form-painting h2{
+#form-painting h2 {
   margin: 0;
 }
 
-
-.link-to-button  {
-    background-color: var(--color-primary-dark);
-    color: white;
-    padding: 1rem 2rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-  }
+.link-to-button {
+  background-color: var(--color-primary-dark);
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -911,8 +902,8 @@ th {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
@@ -939,11 +930,11 @@ th {
   cursor: pointer;
 }
 
-#see-all{
-    margin-bottom: 4rem;
+#see-all {
+  margin-bottom: 4rem;
 }
 
-.dashboard-button-dark{
+.dashboard-button-dark {
   color: var(--color-white);
   background-color: gray;
   border: 1px solid black;
@@ -951,9 +942,8 @@ th {
   width: fit-content;
   border-radius: 12px;
   margin: 0.25rem;
-
 }
-.dashboard-button-dark-selected{
+.dashboard-button-dark-selected {
   color: var(--color-white);
   background-color: black;
   border: 2px solid var(--color-primary);
@@ -963,26 +953,25 @@ th {
   margin: 0.25rem;
 }
 
-.dashboard-button-dark:hover{
+.dashboard-button-dark:hover {
   filter: brightness(0.6);
 }
-#form-painting{
+#form-painting {
   width: 80rem;
 }
 
-
-#search_church{
+#search_church {
   margin-bottom: 2rem;
 }
 
-#dashboard-option{
+#dashboard-option {
   margin-bottom: 25px;
 }
 
-#dashboard-back{
+#dashboard-back {
   background-color: var(--color-white);
 }
 
-.create_painting img{
+.create_painting img {
   max-width: 64rem;
 }
