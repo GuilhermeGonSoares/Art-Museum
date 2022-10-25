@@ -5,15 +5,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
-from museum.models import Painting
+from museum.models import Engraving, Painting
 from utils.pagination import pagination
 
 from .forms import (LoginForm, RegisterAuthorForm, RegisterChurchForm,
-                    RegisterForm, RegisterPaintingForm)
+                    RegisterEngravingForm, RegisterForm, RegisterPaintingForm)
 
 
 #UTILIZAR A SESSÃO DO USUÁRIO PARA PODER TRAFEGAR DADOS DE UMA VIEW PARA OUTRA
@@ -100,6 +100,9 @@ def logout_user(request: HttpRequest)-> HttpResponse:
 @login_required(login_url='user:login')
 def dashboard(request:HttpRequest) -> HttpResponse:
     user = request.user
+    if request.session.get('engravings'):
+        del(request.session['engravings']) 
+
     paintings = Painting.objects.filter(
         is_published=False, post_author=user
     ).order_by('-id')
@@ -113,6 +116,10 @@ def dashboard(request:HttpRequest) -> HttpResponse:
 @require_http_methods(['GET', 'POST'])
 @login_required(login_url='user:login')
 def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
+    request.session['painting_edit_id'] = id
+    
+    engravings_id = request.session.get('engravings', None)
+    
     try:
         user = request.user
         painting = Painting.objects.get(
@@ -124,24 +131,32 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
     except ObjectDoesNotExist:
         raise Http404("Painter doesn't found in this database!")
     
+    if engravings_id is None:
+        engravings = painting.engraving.all() 
+        
+    if engravings_id != None:
+        engravings = __load_engraving(engravings_id)
+
 
     form = RegisterPaintingForm(
             data=request.POST or None,
             files=request.FILES or None,
             instance=painting
         )
-
-    request.session['painting_edit_id'] = id
     
     if form.is_valid():
         authors = form.cleaned_data['author']
         pant = form.save(commit=False)
         pant.author.set(authors)
+        pant.engraving.set(engravings)
         pant.post_author = user
         pant.is_published = False
         pant.save()
 
         del(request.session['painting_edit_id'])
+        if request.session.get('engravings'):
+            del(request.session['engravings'])
+        
         messages.success(request, 'Pintura alterada com sucesso!')
         return redirect(reverse('user:painting_edit', args=(id,)))
 
@@ -150,6 +165,7 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
         'method': 'Editar',
         'form': form,
         'search': False,
+        'engravings': engravings,
         
     })
 
@@ -157,9 +173,13 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
 @login_required(login_url='user:login')
 def painting_create(request:HttpRequest)-> HttpResponse:
     session_id = request.session.get('painting_edit_id', '')
+    engravings_id = request.session.get('engravings', [])
+    
     if session_id:
         del(request.session['painting_edit_id'])
-    
+      
+    engravings = __load_engraving(engravings_id) 
+
     user = request.user
     form = RegisterPaintingForm(
             data=request.POST or None,
@@ -167,22 +187,27 @@ def painting_create(request:HttpRequest)-> HttpResponse:
     )    
     
     if form.is_valid():
-
         authors = form.cleaned_data['author']
         pant = form.save(commit=False)
         pant.post_author = user
         pant.is_published = False
         pant.save()
-        form.save_m2m()
-
+        
+        for author in authors:
+            pant.author.add(author)
+        for engraving in engravings:
+            pant.engraving.add(engraving)
+        
         messages.success(request, 'Pintura cadastrada com sucesso!')
+        if request.session.get('engravings'):
+            del(request.session['engravings'])
         return redirect('user:dashboard')
-
 
     return render(request, 'user/pages/dashboard_painting.html', {
         'method': 'Criar',
         'form': form,
         'search': False,
+        'engravings': engravings,
     })
 
 
@@ -254,3 +279,61 @@ def painting_user_published(request: HttpRequest) -> HttpResponse:
         'search': False,
         'usuario': user.first_name if user.first_name else user.username
     })
+
+@require_GET
+@login_required(login_url='user:login')
+def engravings(request: HttpRequest) -> HttpResponse:
+    engraving_paintings = []
+    engravings = Engraving.objects.all().order_by('-id')
+    for engraving in engravings:
+        paintings_number = engraving.painting_set.filter(is_published=True).count()
+        engraving_paintings.append((engraving, paintings_number))
+    
+    return render(request, 'user/pages/all_engravings.html',{
+            'engravings': engraving_paintings,
+            'search': False,
+        }) 
+
+@require_http_methods(['GET', 'POST'])
+@login_required(login_url='user:login')
+def engraving_create(request:HttpRequest) -> HttpResponse:
+    form = RegisterEngravingForm(
+        data=request.POST or None,
+        files=request.FILES or None)
+    
+    
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Igreja cadastrada com sucesso")
+        
+        return redirect('user:painting_engraving_all')
+
+    return render(request, 'user/pages/dashboard_engraving.html', {
+        'form': form,
+        'search': False,
+    })
+
+@require_POST
+@login_required(login_url='user:login')
+def engraving_create_data(request:HttpRequest) -> HttpResponse:
+    engravings_id = request.POST.getlist('engraving', [])
+    request.session['engravings'] = engravings_id
+    id = request.session.get('painting_edit_id', '')
+    
+    if id:
+        return redirect(reverse('user:painting_edit', args=(id,)))
+
+    return redirect('user:painting_create')
+
+
+def __load_engraving(list_id):
+    engravings_list = []
+    try:
+        for id in list_id:
+            engraving = Engraving.objects.get(pk=int(id))
+            engravings_list.append(engraving)
+        return engravings_list
+    
+    except ObjectDoesNotExist:
+        raise Http404("Gravuras não encontradas")
+

@@ -758,12 +758,14 @@ p {
 .table, th, td{
   text-align: center;
   border-collapse: collapse;
+  
 }
 .table{
   width: 50%;
   border-radius: 10px;
   border-collapse: separate;
   border-spacing: 5px 8px;
+  
 }
 
 th, td{
@@ -771,8 +773,8 @@ th, td{
   border-radius: 12px;
   background-color: var(--color-light-gray);
   width: 30%;
-
   overflow: hidden;
+  background-size: 50%;
 }
 
 td{
@@ -969,5 +971,6 @@ li{
 .create_painting img{
   max-width: 64rem;
 }
-
-
+.painting-gravuras{
+  margin-top: 10%;
+}

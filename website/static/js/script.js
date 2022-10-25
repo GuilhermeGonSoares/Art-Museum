@@ -89,13 +89,70 @@ function searchInFormPaintings(input_id, select_id){
 function desmarcarCampoSelectMultiple() {
     let select = document.getElementById('id_author');
     let option = select.getElementsByTagName('option');
+    let selected = document.getElementById('author_selected');
+    const authors_selected = [];
     for(let i = 0; i < option.length; i++){
         option[i].addEventListener('mousedown', function(event){
+            if (!option[i].selected){
+                authors_selected.push(option[i].textContent);
+                selected.value = authors_selected.join();
+
+            } else{
+                let pos = authors_selected.indexOf(option[i].textContent);
+                if(pos > -1){
+                    authors_selected.splice(pos,1);
+                }
+                selected.value = authors_selected.join();
+            }
+            
             option[i].selected = !option[i].selected;
+            
             event.preventDefault();
         })
     }
     
+}
+
+function showHideTable() {
+    let btn = document.getElementById('show_image')
+    let imageColumn = document.querySelectorAll('#image_visibility')
+    let tagI = document.createElement('i')
+    tagI.className = "fas fa-eye-slash";
+    btn.appendChild(tagI);
+    
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        for (imagem of imageColumn){
+            if (imagem.style.visibility === 'visible'){
+                imagem.style.visibility = ' ';
+                tagI.className = "fas fa-eye-slash";
+                
+            } else {
+                imagem.style.visibility = 'visible';
+                tagI.className = "fas fa-eye";
+                btn.text
+            }
+        }
+    })
+}
+
+function searchElementTable() {
+    let input, filter, line, name_engraving, i, txtValue;
+    input = document.getElementById('search_engraving');
+    filter = input.value.toUpperCase();
+    line = document.querySelectorAll('#linha_tabela')
+
+    for (i = 0; i < line.length; i++){
+        name_engraving = line[i].getElementsByClassName('main-table-name')[0]
+        
+        txtValue = name_engraving.textContent || name_engraving.innerText;
+        
+        if (txtValue.toUpperCase().indexOf(filter) > -1){
+            line[i].style.display = "";
+        } else {
+            line[i].style.display = "none";
+        }
+    }
 }
 
 
@@ -110,4 +167,8 @@ if (current_page.includes("painting/create")){
 }
 if (current_page.includes("user/painting")){
     desmarcarCampoSelectMultiple();
+}
+
+if (current_page.includes("user/engraving/all")){
+    showHideTable();
 }

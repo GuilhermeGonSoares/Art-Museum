@@ -19,9 +19,9 @@ class RegisterPaintingForm(forms.ModelForm):
     summary = forms.CharField(
         required=False,
         min_length=10,
-        max_length=250,
+        max_length=350,
         label='Resumo',
-        widget=forms.TextInput(attrs={
+        widget=forms.Textarea(attrs={
             'placeholder': 'Breve resumo da obra',
             'class': 'span-2'
         })
@@ -67,8 +67,8 @@ class RegisterPaintingForm(forms.ModelForm):
             'name',
             'date',
             'author',
-            'church',
             'engraving',
+            'church',
             'summary',
             'description',
             'cover',
@@ -129,3 +129,20 @@ class RegisterChurchForm(forms.ModelForm):
             'city',
             'state',
         ]
+
+class RegisterEngravingForm(forms.ModelForm):
+
+    class Meta:
+        model = Engraving
+        fields = [
+            'name',
+            'book',
+            'author',
+            'cover',
+        ]
+        
+        widgets = {
+            'cover': forms.FileInput(attrs={
+                'class': 'span-2'
+            })
+        }
