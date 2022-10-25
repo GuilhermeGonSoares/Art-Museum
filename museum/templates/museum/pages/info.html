@@ -1,0 +1,42 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %} info | {% endblock title %}
+{% block content %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="info-page">
+        <img id='unb-logo' src= "{% static '/static/images/unb-logo.png' %}" alt="UnB logo" />
+    
+        <div class="gray-box flex-center justify info-text", id="info-message">
+            <p> Bem vindos! O presente site é um dos resultados direto do projeto de pesquisa
+                 “Um Barroco narrativo: uma análise iconológica da hagiografia de Santa Teresa dÁvila
+                  nos painéis da Igreja da Ordem Terceira do Carmo do Recife, Capitania de Pernambuco”
+                   realizado entre os anos 2016 e 2108 por meio do Programa de Iniciação Científica
+                    da  Universidade de Brasília (UnB) sob orientação do professor André Cabral Honor
+                     (DHIS/PPGHIS/UnB).
+            </p>
+    
+        </div>
+    
+        <div class="gray-box flex-center justify info-text", id="info-thanks">
+        <p>
+            Agradecimento especial aos meus grandes amigos Yan e Guilherme,
+            que são responsáveis pela criação e manutenção do presente site.
+        </p>
+        </div>
+    </div>
+
+    
+</body>
+</html>
+
+{% endblock content %}

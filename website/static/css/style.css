@@ -975,3 +975,26 @@ th {
 .create_painting img {
   max-width: 64rem;
 }
+
+.info-text{
+  width: 50%;
+  align-self: center;
+  margin-top: 2rem;
+}
+
+#unb-logo{
+  height: 10rem;
+  align-self: center;
+}
+
+#info-page{
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-start {
+  display: flex;
+  justify-content: start;
+  margin-right: 20px;
+  padding-bottom: 10px;
+}
