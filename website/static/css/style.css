@@ -240,6 +240,7 @@ p {
 
 .painting-author {
   padding: 0 var(--spacing-gutter-medium);
+  display: flex;
 }
 
 .painting-content {
