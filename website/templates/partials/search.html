@@ -5,7 +5,7 @@
             <a class="dashboard-button-dark{{igrejas}}" href="{% url 'painting:church_all' %}"> Igrejas </a>
             <a class="dashboard-button-dark{{pintores}}" href="{% url 'painting:painter_all' %}"> Pintores </a>
             <a class="dashboard-button-dark{{gravuras}}" href="{% url 'painting:engraving_all' %}"> Gravuras </a>
-            <a class="dashboard-button-dark" href="{% url 'painting:info' %}"> Sobre</a>
+            <a class="dashboard-button-dark{{sobre}}" href="{% url 'painting:info' %}"> Sobre </a>
         </div>
 
         {% if searchbar is not False %}

@@ -140,6 +140,7 @@ def engravings(request: HttpRequest) -> HttpResponse:
             'filterEngraving': 'selected',
             'gravuras': '-selected',
             'search_action': 'painting:search',
+            'placeholder': 'Pesquise a gravura pelo nome ou livro',
         })
 
 @require_GET
@@ -232,4 +233,5 @@ def detail_painting_not_published(request: HttpRequest, painting_id: int) -> Htt
 def info(request: HttpRequest) -> HttpResponse:
     return render(request, 'museum/pages/info.html', {
             'searchbar': False,
+            'sobre': '-selected',
             })
