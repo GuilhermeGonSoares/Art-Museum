@@ -120,7 +120,7 @@ p {
   align-self: center;
   flex-direction: column;
   display: flex;
-  min-width: 60rem;
+  min-width: 30%;
   border-bottom: 4px solid var(--color-primary);
 }
 
