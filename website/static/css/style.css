@@ -773,6 +773,8 @@ p {
 .search-page {
   display: flex;
   justify-content: center;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .table,
@@ -780,7 +782,6 @@ th,
 td {
   text-align: center;
   border-collapse: collapse;
-  
 }
 .table {
   border-radius: 10px;
@@ -795,12 +796,21 @@ td {
   border-radius: 12px;
   background-color: var(--color-light-gray);
   width: 30%;
-  overflow: hidden;
-  background-size: 50%;
+  
+  
 }
 
 td {
   cursor: not-allowed;
+}
+
+#image_visibility {
+  width: 10%;
+  height: 10%;
+}
+#image_visibility img {
+  width: 10%;
+  height: 10%;
 }
 
 th {

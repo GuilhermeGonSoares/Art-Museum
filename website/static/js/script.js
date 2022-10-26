@@ -52,6 +52,19 @@ function loadForm(){
         });
     }
 }
+
+function loadEngraving(){
+    window.addEventListener('load', function(e){
+        e.preventDefault();
+        let imageColumn = document.querySelectorAll('#image_visibility');
+        let coluna = document.createElement('td');
+        coluna.style.background = '#e0e0e0';
+        for (imagem of imageColumn){
+            imagem.parentNode.insertBefore(coluna.cloneNode(), imagem)
+        }
+        });
+}
+
 function resetSession() {
     const form = document.querySelector('.create_painting')
     form.addEventListener("submit", function(event){
@@ -84,8 +97,6 @@ function searchInFormPaintings(input_id, select_id){
     }
 }
 
-
-
 function desmarcarCampoSelectMultiple() {
     let select = document.getElementById('id_author');
     let option = select.getElementsByTagName('option');
@@ -95,9 +106,11 @@ function desmarcarCampoSelectMultiple() {
         option[i].addEventListener('mousedown', function(event){
             if (!option[i].selected){
                 authors_selected.push(option[i].textContent);
+                option[i].style.background = "hsl(206,100%,52%)";
                 selected.value = authors_selected.join(', ');
 
             } else{
+                option[i].style.background = "";
                 let pos = authors_selected.indexOf(option[i].textContent);
                 if(pos > -1){
                     authors_selected.splice(pos,1);
@@ -114,20 +127,26 @@ function desmarcarCampoSelectMultiple() {
 }
 
 function showHideTable() {
-    let btn = document.getElementById('show_image')
-    let imageColumn = document.querySelectorAll('#image_visibility')
-    let tagI = document.createElement('i')
+    const btn = document.getElementById('show_image');
+    const imageColumn = document.querySelectorAll('#image_visibility');
+    const tagI = document.createElement('i');
     tagI.className = "fas fa-eye-slash";
     btn.appendChild(tagI);
+    
+    const coluna = document.createElement('td');
+    coluna.style.background = '#e0e0e0';
     
     btn.addEventListener('click', function(e) {
         e.preventDefault();
         for (imagem of imageColumn){
+            const newColuna = coluna.cloneNode()
             if (imagem.style.display != 'none'){
                 imagem.style.display = 'none';
+                imagem.parentNode.insertBefore(newColuna, imagem)
                 tagI.className = "fas fa-eye-slash";
                 
             } else {
+                imagem.parentNode.removeChild(imagem.parentNode.firstElementChild)
                 imagem.style.display = '';
                 tagI.className = "fas fa-eye";
                 btn.text
@@ -168,7 +187,11 @@ if (current_page.includes("painting/create")){
 if (current_page.includes("user/painting")){
     desmarcarCampoSelectMultiple();
 }
+if (current_page.includes("user/engraving/create")){
+    desmarcarCampoSelectMultiple();
+}
 
 if (current_page.includes("user/engraving/all")){
     showHideTable();
+    loadEngraving();
 }
