@@ -1,0 +1,10 @@
+<form action="{% if search_action %}{% url search_action %}{% endif %} " method="GET" class="search-form">
+    <select hidden name="filter" required id="filter">
+        <option {{ filterPainting }} value="paintings">Obras</option>
+        <option {{ filterChurch }} value="churches">Igrejas</option>
+        <option {{ filterPainter }} value="painters">Pintores</option>
+        <option {{ filterEngraving }} value="engravings">Gravuras</option>
+    </select>
+    <input placeholder="{{placeholder}}" type="search" class="search-input" name="q" value="" required>
+    <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+</form>

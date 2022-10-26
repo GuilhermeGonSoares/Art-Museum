@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="main-content center container">
-    <h2>Gravuras encontradas pela busca: {{search_result}}</h2>
+    <!-- <h2>Gravuras encontradas pela busca: {{search_result}}</h2> -->
     {% if engravings %}
     <div class="search-page"> 
         
@@ -18,7 +18,7 @@
             <tbody>
                 {% for engraving, qtd_paintings in engravings %}
                     <tr>
-                        <td class="main-table-name"><a href="">{{engraving.name}}</a></td>
+                        <td class="main-table-name"><a class="table-link" href="">{{engraving.name}}</a></td>
                                               
                         <td>
                             {% if engraving.book %}

@@ -5,17 +5,14 @@
             <a class="dashboard-button-dark{{igrejas}}" href="{% url 'painting:church_all' %}"> Igrejas </a>
             <a class="dashboard-button-dark{{pintores}}" href="{% url 'painting:painter_all' %}"> Pintores </a>
             <a class="dashboard-button-dark{{gravuras}}" href="{% url 'painting:engraving_all' %}"> Gravuras </a>
+            <a class="dashboard-button-dark" href="{% url 'painting:info' %}"> Sobre</a>
         </div>
-        <form action="{% if search_action %}{% url search_action %}{% endif %} " method="GET" class="search-form">
-            <select hidden name="filter" required id="filter">
-                <option {{ filterPainting }} value="paintings">Obras</option>
-                <option {{ filterChurch }} value="churches">Igrejas</option>
-                <option {{ filterPainter }} value="painters">Pintores</option>
-                <option {{ filterEngraving }} value="engravings">Gravuras</option>
-            </select>
-            <input placeholder="{{placeholder}}" type="search" class="search-input" name="q" value="" required>
-            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
-        </form>
+
+        {% if searchbar is not False %}
+        {% include 'templates/partials/searchbar.html' %}
+        {% endif %}
+
+
     </div>
 
 </div>
