@@ -780,11 +780,13 @@ th,
 td {
   text-align: center;
   border-collapse: collapse;
+  
 }
 .table {
   border-radius: 10px;
   border-collapse: separate;
   border-spacing: 5px 8px;
+  
 }
 
 th,
@@ -792,7 +794,9 @@ td {
   padding: 10px;
   border-radius: 12px;
   background-color: var(--color-light-gray);
+  width: 30%;
   overflow: hidden;
+  background-size: 50%;
 }
 
 td {
@@ -997,4 +1001,7 @@ th {
   justify-content: start;
   margin-right: 20px;
   padding-bottom: 10px;
+}
+.painting-gravuras{
+  margin-top: 10%;
 }

@@ -8,16 +8,31 @@
             {% if field.name == 'author' %}
                 <p class="church-select">Não achou o pintor na lista?
                 <a id="create_author" href="{% url 'user:painting_author_create' %} ">Adicione</a></p> 
-    
                 <input type="text" id="search_author" onkeyup="searchInFormPaintings('search_author', 'id_author')" placeholder = "Procure pelo pintor...">
-                {{field}} 
+                {{field}}
+                <p class="church-select">Pintores selecionados:
+                <input type="text" id="author_selected" disabled placeholder="Nenhum">
 
             {% elif field.name == 'church' %}
                 <p class="church-select">Não achou a igreja na lista?
                 <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>
                 {{field}}
-            {% elif field.name == 'engraving' %}
-                A sua obra possui gravuras relacionadas a ela? <a href="">Clique aqui</a> para adicioná-las.
+            {% elif field.name == 'engraving' %}          
+                    <p>A sua obra possui gravuras relacionadas a ela? <a href="{% url 'user:painting_engraving_all' %}">Clique aqui</a> para adicioná-las ou editá-las.</p>
+                
+                    <div class="painting-gravuras">
+                    {% if engravings %}
+                        <p style="text-decoration:underline; color:black;">Gravuras selecionadas:</p>
+                    {% else %}
+                        <p style="text-decoration:underline; color:black;" >Nenhuma gravura selecionada!</p>
+                    {% endif %}
+                        <ul>
+                            {% for engraving in engravings %}
+                                <li>{{engraving.name}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                
             {% else %}
                 {{field}}
             {% endif %}
@@ -52,6 +67,7 @@
 
     <div class="form-content form-content-grid">
         <div class="form-group">
+            <a class="link-to-button" onclick="confirmCancel()">Cancelar</a>
             <button class="plaintext-button" type="submit">Enviar</button>
         </div>
     </div>

@@ -31,8 +31,7 @@
                 Desconhecido
             {% endif %}
         </span>
-        
-        
+                
         <span class="painting-author-item">   
             <i class="fas fa-church"></i>
                 {% if painting.church is not None %}
@@ -43,6 +42,17 @@
                     <span>Igreja desconhecida</span>
                 {% endif %}
         </span>
+        <span class="painting-author-item">
+            {% for engraving in painting.engraving.all %}
+                <i class="fas fa-brush"></i>
+                    <a href="#">{{engraving}}</a>
+                    <br>
+            {%empty%}
+                <i class="fas fa-brush"></i>
+                    Desconhecido
+            {% endfor %}
+        </span>
+
     </div>
 
     <div class="painting-content justify">

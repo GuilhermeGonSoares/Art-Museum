@@ -11,9 +11,10 @@ urlpatterns = [
     path('painter/all/', views.painters, name='painter_all'),
     path('engraving/all/', views.engravings, name='engraving_all'),
     path('painting/<int:painting_id>/', views.detail_painting, name='detail'),
-    path('user/dashboard/painting/<int:painting_id>/', views.detail_painting_not_published, name='detail_not_published'),
     path('church/<int:id_church>/', views.detail_church, name='church'),
     path('painter/<int:id_painter>/', views.detail_painter, name='painter'),
+    path('engraving/<int:id_engraving>/', views.detail_engraving, name='engraving'),
+    path('user/dashboard/painting/<int:painting_id>/', views.detail_painting_not_published, name='detail_not_published'),
     path('info/', views.info, name='info'),
 ]
 

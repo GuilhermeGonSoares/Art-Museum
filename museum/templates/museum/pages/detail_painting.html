@@ -3,6 +3,11 @@
 {% block content %}
 
 <div class="main-content main-content-detail container" id="details-page">
+    {% if edit is True %}
+        <div class="login-message">
+            <h2><a href="{% url 'user:dashboard' %}">Dashboard</a></h2>
+        </div>
+    {% endif %}
     {% include 'museum/partials/painting.html' %}
 </div>
     {% if edit is True %}

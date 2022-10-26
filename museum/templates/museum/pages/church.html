@@ -16,8 +16,11 @@
         {% if church.state %}   
              <h3>, {{ church.state }}</h3>
         {% endif %}
-    </div>    
-
+    </div>
+    {% if limparPesquisa is True %}
+        <h2>Pesquisa realizada: {{search_result}}</h2>
+        <h2><a href="{% url 'painting:church' church.id %}">Limpar Busca</a></h2>
+    {% endif %}  
 </div>
     {% if page.total_paintings == 1 %}
         <h2 class="gray-text">Pintura dessa igreja</h2>
