@@ -124,7 +124,7 @@ function showHideTable() {
         e.preventDefault();
         for (imagem of imageColumn){
             if (imagem.style.visibility === 'visible'){
-                imagem.style.visibility = ' ';
+                imagem.style.visibility = 'hidden';
                 tagI.className = "fas fa-eye-slash";
                 
             } else {
