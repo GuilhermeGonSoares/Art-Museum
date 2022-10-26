@@ -28,7 +28,7 @@
                     {% for engraving, qtd_paintings in engravings %}
                     <tr id='linha_tabela'>
                             
-                            <td id="image_visibility" style="visibility:hidden;"><img src="{{engraving.cover.url}}" alt=""></td>                           
+                            <td id="image_visibility" style="display:none;"><img src="{{engraving.cover.url}}" alt=""></td>                           
                             
                             <td><input type="checkbox" id="engraving_{{engraving.id}}" name="engraving" value="{{engraving.id}}"></td>
                             <td class="main-table-name"><a href="">{{engraving.name}}</a></td>                                                    
@@ -48,7 +48,9 @@
                 </tbody>
             </table>
         </div>
-        <button type="submit">Enviar</button>
+        <div class="form-content">
+            <button style="margin-top:5%" class="plaintext-button" type="submit">Enviar</button>
+        </div>
         
     </form>
         {% else %}
