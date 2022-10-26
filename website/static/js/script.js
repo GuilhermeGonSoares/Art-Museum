@@ -95,7 +95,7 @@ function desmarcarCampoSelectMultiple() {
         option[i].addEventListener('mousedown', function(event){
             if (!option[i].selected){
                 authors_selected.push(option[i].textContent);
-                selected.value = authors_selected.join();
+                selected.value = authors_selected.join(', ');
 
             } else{
                 let pos = authors_selected.indexOf(option[i].textContent);
@@ -123,12 +123,12 @@ function showHideTable() {
     btn.addEventListener('click', function(e) {
         e.preventDefault();
         for (imagem of imageColumn){
-            if (imagem.style.visibility === 'visible'){
-                imagem.style.visibility = ' ';
+            if (imagem.style.display != 'none'){
+                imagem.style.display = 'none';
                 tagI.className = "fas fa-eye-slash";
                 
             } else {
-                imagem.style.visibility = 'visible';
+                imagem.style.display = '';
                 tagI.className = "fas fa-eye";
                 btn.text
             }

@@ -117,7 +117,6 @@ def dashboard(request:HttpRequest) -> HttpResponse:
 @login_required(login_url='user:login')
 def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
     request.session['painting_edit_id'] = id
-    
     engravings_id = request.session.get('engravings', None)
     
     try:
@@ -137,6 +136,7 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
     if engravings_id != None:
         engravings = __load_engraving(engravings_id)
 
+    painters = painting.author.all() if painting.author.all().count() > 0 else None
 
     form = RegisterPaintingForm(
             data=request.POST or None,
@@ -166,6 +166,7 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
         'form': form,
         'search': False,
         'engravings': engravings,
+        'painters': painters
         
     })
 
