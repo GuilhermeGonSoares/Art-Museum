@@ -388,6 +388,10 @@ p {
   margin-bottom: var(--spacing-gutter-medium);
 }
 
+.form-content-church{
+  width: 60%;
+}
+
 .form-content label,
 .form-content .help-text,
 .errorlist {
@@ -888,6 +892,22 @@ th {
   margin-top: 10px;
   margin-bottom: 10px;
   color: var(--color-gray-5);
+}
+
+.help-text {
+  text-align: justify;
+}
+
+#form-church {
+  width: 70rem;
+}
+
+#form-church .form-group{
+  margin-bottom: 5%;
+}
+
+#form-church .form-group label{
+  text-align: justify;
 }
 
 .church-select {
