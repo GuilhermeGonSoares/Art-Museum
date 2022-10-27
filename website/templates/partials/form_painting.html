@@ -1,5 +1,14 @@
 <form class="create_painting" action="{{form_action}}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    {% if form.errors %}
+        <div class="form-content form-content-grid">
+            <div class="form-group">
+                <div class="message message-error">
+                    Por favor corrija os erros no formulário
+                </div>
+            </div>
+        </div>
+    {% endif %}
     <div class="form-content form-content-grid">
         {% for field in form %}
         <div class="form-group {{field.field.widget.attrs.class}}">
@@ -22,7 +31,7 @@
                 <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>
                 {{field}}
             {% elif field.name == 'engraving' %}          
-                    <p>A sua obra possui gravuras relacionadas a ela? <a href="{% url 'user:painting_engraving_all' %}">Clique aqui</a> para adicioná-las ou editá-las.</p>
+                    <p>A sua obra possui gravuras relacionadas a ela? <a id="create_engraving" href="{% url 'user:painting_engraving_all' %}">Clique aqui</a> para adicioná-las ou editá-las.</p>
                 
                     <div class="painting-gravuras">
                     {% if engravings %}
@@ -58,16 +67,6 @@
         {% endif %}
         {% endfor %}
     </div>
-
-    {% if form.errors %}
-    <div class="form-content form-content-grid">
-        <div class="form-group">
-            <div class="message message-error">
-                Por favor corrija os erros no formulário
-            </div>
-        </div>
-    </div>
-    {% endif %}
 
     <div class="form-content form-content-grid">
         <div class="form-group">

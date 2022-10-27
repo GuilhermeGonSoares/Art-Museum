@@ -20,35 +20,64 @@ function confirmCancel() {
     })
 }
 
+function setDataForm(form){
+    sessionStorage.setItem("load", true)
+    sessionStorage.setItem("name", form.name.value);
+    sessionStorage.setItem("date", form.date.value);
+    sessionStorage.setItem("summary", form.summary.value);
+    sessionStorage.setItem("description", form.description.value);
+    sessionStorage.setItem("church", form.church.value);
+    const options = form.author.querySelectorAll('option')
+    const authors = []
+    for(op of options){
+        if (op.selected){
+            authors.push(op.value)
+        }
+    }
+    sessionStorage.setItem("authors", authors);
+
+}
+
 function form_data() {
     const form = document.querySelector('.create_painting')
     if (form) {
-        let link_author = document.querySelector('#create_author')
-        let link_church = document.querySelector('#create_church')
+        const link_author = document.querySelector('#create_author')
+        const link_church = document.querySelector('#create_church')
+        const link_engraving = document.querySelector('#create_engraving')
+        
         link_author.addEventListener('click', function () {
-            sessionStorage.setItem("name", form.name.value);
-            sessionStorage.setItem("date", form.date.value);
-            sessionStorage.setItem("summary", form.summary.value);
-            sessionStorage.setItem("description", form.description.value);
+            setDataForm(form);         
         });
         link_church.addEventListener('click', function () {
-            sessionStorage.setItem("name", form.name.value);
-            sessionStorage.setItem("date", form.date.value);
-            sessionStorage.setItem("summary", form.summary.value);
-            sessionStorage.setItem("description", form.description.value);
+            setDataForm(form);
+        });
+        link_engraving.addEventListener('click', function () {
+            setDataForm(form);
         });
 
     } 
 }
 function loadForm(){
     const form = document.querySelector('.create_painting')
-    if (form) {
+    const options = form.author.querySelectorAll('option')
+    if (sessionStorage.getItem("load")) {
         window.addEventListener('load', function(event) {
             event.preventDefault();
             form.name.value = sessionStorage.getItem("name");
             form.date.value = sessionStorage.getItem("date");
             form.summary.value = sessionStorage.getItem("summary");
             form.description.value = sessionStorage.getItem("description"); 
+            form.church.value = sessionStorage.getItem("church");
+            authors_id = sessionStorage.getItem("authors").split(',')
+            for(op of options){
+                if (authors_id.includes(op.value)){
+                    console.log(op)
+                    op.selected = true
+                    op.style.background = "hsl(206,100%,52%)"
+                } else {
+                    op.selected = false
+                }
+            }       
         });
     }
 }
@@ -178,17 +207,16 @@ function searchElementTable() {
 my_scope();
 
 const current_page = document.location.href
-if (current_page.includes("painting/create")){
+if (current_page.includes('user/dashboard')){
+    sessionStorage.clear()
+}
+
+if (current_page.includes("user/painting/create") || (current_page.includes("user/painting") && current_page.includes("edit"))){
     loadForm();
     form_data();
     resetSession();
+    desmarcarCampoSelectMultiple();
     
-}
-if (current_page.includes("user/painting")){
-    desmarcarCampoSelectMultiple();
-}
-if (current_page.includes("user/engraving/create")){
-    desmarcarCampoSelectMultiple();
 }
 
 if (current_page.includes("user/engraving/all")){
