@@ -1,0 +1,45 @@
+{% extends 'templates/pages/global.html' %}
+
+{% block title %}Dashboard | {% endblock title %}
+{% block content %}
+{% include 'templates/partials/messages.html' %}
+    <div class="main-content center container dashboard-card">
+        <h2>Bem vindo ao seu dashboard {% if user.first_name %}{{ user.first_name }}{% else %}{{user.username}}{% endif %}!</h2>
+        <div class='login-message'>
+            <h4>Ver todas as suas pinturas publicadas. <a href="{% url 'user:paintings_published' %}">Clique aqui.</a></h4>
+        </div>
+        
+        <div class="authors-dashboard-container">
+            <div class='login-message center' id="dashboard-button-container">
+                <a class="dashboard-button" onclick="sessionStorage.clear()" href="{% url 'user:painting_create' %}"> 
+                    <span> Criar nova pintura </span>
+                </a>
+            </div>
+            <h3>Suas pinturas que não foram publicadas:</h3>
+            <ul>
+                {% for painting in paintings %}
+                    <div class="painting-list-not-published">
+                        <li>
+                            <div class="painting-modification">
+                                <a href="{% url 'painting:detail_not_published' painting.id %}">{{painting.name}}</a>
+                                <div class="painting-edit">
+                                    <i class="fas fa-pen"></i>
+                                    <a href="{% url 'user:painting_edit' painting.id %}">Editar</a>
+                                    <form class = "form-delete" action="{% url 'user:painting_delete' painting.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <i class="fas fa-trash"></i>
+                                        <button id = "button-delete" class="plaintext-button" type="submit">Excluir</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                {%empty%}
+                    <h3>Nenhuma pintura cadastrada. Crie o seu post.</h3>
+                {% endfor %}
+            </ul>
+        </div> 
+    </div>
+
+
+{% endblock content %}

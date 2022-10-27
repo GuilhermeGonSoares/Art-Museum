@@ -3,8 +3,43 @@
         <h1>
             <a class="main-logo" href="{% url 'painting:home' %}">
                 <i class="fas fa-palette main-logo-icon"></i>
-                <span>Art Museum</span>
+                <span>RafArte</span>
             </a>
         </h1>
     </div>
+    
+
+    <div class="navbar">
+
+        <div class="navbar-item">
+            <a href="{% url 'painting:info' %}"><i class="fas fa-info"></i> Sobre</a>
+        </div>
+        <div class="navbar-item">
+            <a href="{% url 'painting:home' %}"><i class="fas fa-house"></i> Home</a>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="navbar-item">
+            <a href="{% url 'user:dashboard' %}"><i class="fas fa-book-open"></i> DashBoard</a>
+        </div>
+        <div class="navbar-item">
+            <form action="{% url 'user:logout' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="username" value="{{request.user.username}}">
+                
+                <button class="plaintext-button" type="submit"><i class="fas fa-right-from-bracket"></i> Deslogar</button>
+            </form>
+        </div>
+    {% endif %}
+    {% if not user.is_authenticated %}
+        <div class="navbar-item">
+            
+            <a href="{% url 'user:login' %}"><i class="fas fa-user"></i> Logar</a>
+        </div>
+        <div class="navbar-item">
+            <a href="{% url 'user:register' %}"> <i class="fa-solid fa-registered"></i> Registrar</a>
+        </div>
+        
+    {% endif %}
+    </div>
+    
 </header>

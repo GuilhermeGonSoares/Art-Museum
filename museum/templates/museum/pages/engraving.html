@@ -1,0 +1,47 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %}{{church.name}} | {% endblock title %}
+{% block content %}
+
+<div class="text-secondary-page">
+    <div class="center-flex" id="church-name">
+        <i class="fa-solid fa-church fa-lg logo-info"></i>
+        <h1>{{ church.name }}</h1>
+    </div>
+    
+    <div class="center-flex" id="church-location">
+        {% if church.city %}
+        <i class="fa-solid fa-flag logo-info"></i>
+        <h3>{{ church.city }}</h3>
+        {% endif %}
+        {% if church.state %}   
+             <h3>, {{ church.state }}</h3>
+        {% endif %}
+    </div>    
+
+</div>
+    {% if page.total_paintings == 1 %}
+        <h2 class="gray-text">Pintura dessa igreja</h2>
+        <br>
+        <div class="main-content  container" id="one-item">
+            {% for painting in page.paintings %} 
+                
+                    {% include 'museum/partials/painting.html' %}
+                
+            {% endfor %}
+        </div>
+    {% else %}
+        <h2 class="gray-text">Lista das pinturas dessa igreja</h2>
+        <br>
+        <div class="main-content main-content-list container" id="church-page">
+            {% for painting in page.paintings %}
+                {% include 'museum/partials/painting.html' %}
+            {% endfor %}
+        </div>
+        <div class="container">
+            {% include 'templates/partials/pagination.html' %}
+        </div>
+    {% endif %}
+
+    
+
+{% endblock content %}

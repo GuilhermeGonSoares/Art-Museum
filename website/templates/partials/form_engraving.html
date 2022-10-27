@@ -1,0 +1,53 @@
+<form class="form_author_create" action="{% url 'user:painting_engraving_create' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-content form-content-grid">
+        {% for field in form %}
+        <div class="form-group {{field.field.widget.attrs.class}}">
+            <label for="{{field.id_for_label}}">{{field.label}}</label>
+            {% if field.name == 'author' %}
+                <p class="church-select">Não achou o pintor na lista?
+                <a id="create_author" href="{% url 'user:painting_author_create' %} ">Adicione</a></p> 
+                <input type="text" id="search_author" onkeyup="searchInFormPaintings('search_author', 'id_author')" placeholder = "Procure pelo pintor...">
+                {{field}}
+                <p class="church-select">Pintores selecionados:
+                {% if painters %}
+                    <input type="text" id="author_selected" disabled placeholder="{{painters}}">
+                {% else %}
+                    <input type="text" id="author_selected" disabled placeholder="Nenhum">
+                {% endif %}
+            {% else %}
+                {{field}}
+            {% endif %}
+
+            {% if field.help_text %}
+            <p class="help-text">{{field.help_text}}</p>
+            {% endif %}
+
+            {{field.errors}}
+        </div>
+        {% if field.name == 'cover' and field.value.url %}
+        <div class="span-2">
+            <img src="{{field.value.url}}" alt="Capa para {{painting.name}}">
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if form.errors %}
+    <div class="form-content form-content-grid">
+        <div class="form-group">
+            <div class="message message-error">
+                Por favor corrijas os erros no formulário
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="form-content form-content-grid">
+        <div class="form-group">
+            <a class="link-to-button" onclick="history.back()">Cancelar</a>
+            <button id="confirm-author-create" class="plaintext-button" type="submit">Enviar</button>
+        </div>
+    </div>
+
+</form>

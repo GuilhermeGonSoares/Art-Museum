@@ -1,0 +1,51 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %}Home | {% endblock title %}
+{% block content %}
+
+<div class="main-content center container">
+    <!-- <h2>Igrejas encontradas pela busca: {{search_result}}</h2> -->
+    {% if churches %}
+    <div class="search-page"> 
+        
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Igreja</th>
+                <th scope="col">Cidade</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Obras</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for church, qtd_paintings in churches %}
+                    <tr>
+                        <td class="main-table-name"><a class="table-link" href="{% url 'painting:church' church.id %}">{{church.name}}</a></td>
+                        <td>
+                            {% if church.city %}
+                                {{church.city}}
+                            {% else %}
+                                ---
+                            {% endif %}
+                        </td>                      
+                        <td>
+                            {% if church.state %}
+                                {{church.state}}
+                            {% else %}
+                                ---
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{qtd_paintings}}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        {% else %}
+            <h1>Nenhuma igreja encontrada com essa busca</h1>
+        {% endif %}
+</div>
+    
+{% endblock content %}

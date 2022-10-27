@@ -1,0 +1,17 @@
+{% extends 'templates/pages/global.html' %}
+
+{% block title %}Painting register | {% endblock title %}
+{% block content %}
+    <div class="main-content center container gray-box" id="form-painting">
+        <h2>{{method}} uma pintura</h2>
+        <div class="login-message">
+            <h3 id="dashboard-option"><a class="dashboard-button" id="dashboard-back" href="{% url 'user:dashboard' %}">Dashboard</a></h3>
+        </div>
+        {% include 'templates/partials/messages.html' %}
+        <div class="left">
+            {% include 'templates/partials/form_painting.html' %}
+        </div>
+    </div>
+
+
+{% endblock content %}

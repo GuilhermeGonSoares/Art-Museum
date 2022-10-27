@@ -7,7 +7,8 @@ from django.db import models
 #pintura -> ManyToMany -> autor
 class Author(models.Model):
     name = models.CharField(max_length=50)
-
+    biography = models.TextField(blank=True)
+    
     def __str__(self) -> str:
         return self.name
 
@@ -25,6 +26,7 @@ class Church(models.Model):
 class Engraving(models.Model):
     name = models.CharField(max_length=50)
     book = models.CharField(max_length=50, blank=True)
+    cover = models.ImageField(upload_to='engravings/cover/%Y/%m/%d/')
     
     author = models.ManyToManyField(
         Author, blank=True, default=None
@@ -36,7 +38,7 @@ class Engraving(models.Model):
 
 class Painting(models.Model):
     name = models.CharField(max_length=50)
-    date = models.DateField(null=True, blank=True)
+    date = models.CharField(max_length=10, null=True, blank=True)
     description = models.TextField(blank=True)
     cover = models.ImageField(upload_to='museum/cover/%Y/%m/%d/')
     post_date = models.DateField(auto_now=True)

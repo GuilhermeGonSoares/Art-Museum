@@ -1,0 +1,44 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %}Home | {% endblock title %}
+{% block content %}
+
+<div class="main-content center container">
+    <h2>Gravuras encontradas pela busca: {{search_result}}</h2>
+    {% if engravings %}
+    <div class="search-page"> 
+        
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Gravura</th>
+                <th scope="col">Livro</th> 
+                <th scope="col">Obras</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for engraving, qtd_paintings in engravings %}
+                    <tr>
+                        <td class="main-table-name"><a href="">{{engraving.name}}</a></td>
+                                              
+                        <td>
+                            {% if engraving.book %}
+                                {{engraving.book}}
+                            {% else %}
+                                ---
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{qtd_paintings}}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        {% else %}
+            <h1>Nenhuma gravura encontrada com essa busca</h1>
+        {% endif %}
+</div>
+    
+{% endblock content %}

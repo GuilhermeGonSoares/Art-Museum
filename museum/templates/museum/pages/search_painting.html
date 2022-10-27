@@ -1,0 +1,28 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %}Home | {% endblock title %}
+{% block content %}
+
+<!-- <h2>Pinturas encontradas pela busca: {{search_result}}</h2> -->
+
+{% if page.total_paintings > 0 %}
+    {% if page.total_paintings == 1 %}
+        <div class="main-content  container" id="one-item">
+            {% for painting in page.paintings %}           
+                    {% include 'museum/partials/painting.html' %}        
+            {% endfor %}
+        </div>
+    
+    {% else %}
+        <div class="main-content main-content-list container">
+            {% for painting in page.paintings %} 
+                {% include 'museum/partials/painting.html' %}
+            {% endfor %}
+        </div>
+        <div class="container">
+            {% include 'templates/partials/pagination.html' %}
+        </div>
+    {% endif %}
+{% else %}
+    <h1 class="main-content  container" id="one-item" >Nenhuma pintura encontrada pela busca!</h1>
+{% endif %}
+{% endblock content %}

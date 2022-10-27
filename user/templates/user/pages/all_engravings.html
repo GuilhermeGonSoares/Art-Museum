@@ -1,0 +1,66 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %}Gravuras | {% endblock title %}
+{% block content %}
+
+<div class="main-content center container">
+    <div class="search-container">
+        <div class="container">
+            <input type="text" id="search_engraving" onkeyup="searchElementTable()"
+                placeholder="Procure pela gravura...">
+            <h3>Não encontrou a gravura na lista? <a href="{% url 'user:painting_engraving_create' %}">Adicione</a></h3>
+        </div>
+    </div>
+    <h2>Todas as gravuras cadastradas: {{search_result}}</h2>
+    {% if engravings %}
+    <form action="{% url 'user:engraving_create_data' %}" method="POST">
+        {% csrf_token %}
+        <div class="search-page">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th id="column_image" scope="col"><button id="show_image" type="button"></button></th>
+                        <th scope="col">Escolhas</th>
+                        <th scope="col">Gravura</th>
+                        <th scope="col">Livro</th>
+                        <th scope="col">Obras</th>
+                    </tr>
+                </thead>
+            
+                <tbody class="table-body-wrapper">
+                    {% for engraving, qtd_paintings in engravings %}
+                    <tr id='linha_tabela'>
+
+                        <td id="image_visibility" style="display:none;">
+                            <img src="{{engraving.cover.url}}" alt="">
+                        </td>
+
+                        <td><input type="checkbox" id="engraving_{{engraving.id}}" name="engraving"
+                                value="{{engraving.id}}"></td>
+                        <td class="main-table-name"><a href="">{{engraving.name}}</a></td>
+                        <td>
+                            {% if engraving.book %}
+                            {{engraving.book}}
+                            {% else %}
+                            ---
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{qtd_paintings}}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="form-content">
+            <button style="margin-top:5%" class="plaintext-button" type="submit">Enviar</button>
+        </div>
+
+    </form>
+    {% else %}
+    <h1>Nenhuma gravura encontrada com essa busca</h1>
+    {% endif %}
+</div>
+
+{% endblock content %}

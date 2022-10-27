@@ -1,23 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     {% include 'templates/partials/head.html' %}
-    <title>{% block title %}{% endblock title %} Art-Museum</title>
+    <title>{% block title %}{% endblock title %} RafArte</title>
+
 </head>
 
 <body>
-    {% include 'templates/partials/header.html' %}
+    <div id="page-container">
+        <div id="content-wrap">
+            {% include 'templates/partials/header.html' %}
+        
+            {% if search is not False %}
+                {% include 'templates/partials/search.html' %}
+            {% else %}
+                <div class="top-space">
+                </div>
+            
+            {% endif %}
+        
+            <main class="main-content-container">
+                {% block content %}{% endblock content %}
+                <!--{% include 'templates/partials/pagination.html' %}-->
+        
+            </main>
 
-    {% include 'templates/partials/search.html' %}
-
-    <main class="main-content-container">
-        {% block content %}{% endblock content %}
-        <!--{% include 'templates/partials/pagination.html' %}-->
-
-    </main>
-
-    {% include 'templates/partials/footer.html' %}
+        </div>
+        {% include 'templates/partials/footer.html' %} 
+    </div>
+    <script src="{% static 'static/js/script.js' %}"></script>
 
 </body>
 
