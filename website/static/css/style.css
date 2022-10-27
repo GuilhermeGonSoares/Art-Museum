@@ -454,6 +454,7 @@ p {
   border: 1px solid var(--color-dark-text);
   background: var(--color-gray-2);
   color: var(--color-dark-text);
+  text-align: center;
 }
 
 .message-error {
@@ -776,6 +777,8 @@ p {
 .search-page {
   display: flex;
   justify-content: center;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .table,
@@ -783,7 +786,6 @@ th,
 td {
   text-align: center;
   border-collapse: collapse;
-  
 }
 .table {
   border-radius: 10px;
@@ -803,6 +805,15 @@ td {
 
 td {
   cursor: not-allowed;
+}
+
+#image_visibility {
+  width: 10%;
+  height: 10%;
+}
+#image_visibility img {
+  width: 10%;
+  height: 10%;
 }
 
 th {

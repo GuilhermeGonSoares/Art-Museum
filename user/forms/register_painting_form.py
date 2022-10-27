@@ -1,16 +1,26 @@
 
 
+from collections import defaultdict
+
 from django import forms
+from django.core.exceptions import ValidationError
 from museum.models import Author, Church, Engraving, Painting
 from utils.django_form import date_validade
 
 
+#CADA CAMPO PODE TER UMA LISTA DE ERROS
+#UTILIZANDO O defaultdict PARA JA DEIXAR O VALOR DA CHAVE=[] POR DEFAULT
+#COM O DICIONÁRIO DE ERROS NOS CONSEGUIMOS MANDAR TODOS OS ERROS DE UMA VEZ PARA O USUÁRIO
 class RegisterPaintingForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs) 
+        self.__erros = defaultdict(list)
+    
     name = forms.CharField(
         required=True,
         min_length=4,
         max_length=50,
-        label="Nome",
+        label="Nome da obra",
         widget=forms.TextInput(attrs={
             'placeholder': 'Nome da pintura'
         })
@@ -75,7 +85,8 @@ class RegisterPaintingForm(forms.ModelForm):
         ]
         labels = {
             'description': 'Descrição',
-            'cover': 'Imagem'
+            'cover': 'Imagem',
+            'engraving': 'Gravuras',
         }
         widgets = {
             'description': forms.Textarea(attrs={
@@ -86,6 +97,19 @@ class RegisterPaintingForm(forms.ModelForm):
                 'class': 'span-2'
             })
         }
+    def clean(self):
+        super_clean = super().clean()
+        cleaned_data = self.cleaned_data
+        name = cleaned_data.get('name')
+        summary = cleaned_data.get('summary')
+        
+        if name == summary:
+            self.__erros['summary'].append('Resumo não pode ser igual ao nome da obra')
+
+        if self.__erros:
+            raise ValidationError(self.__erros)
+
+        return super_clean
 
 
 
