@@ -1,6 +1,6 @@
 <form action="{% url 'user:painting_church_create' %}" method="POST">
     {% csrf_token %}
-    <div class="form-content form-content-grid">
+    <div class="form-content form-content-church">
         {% for field in form %}
             <div class="form-group {{field.field.widget.attrs.class}}">
                 <label for="{{field.id_for_label}}">{{field.label}}</label>

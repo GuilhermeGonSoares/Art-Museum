@@ -5,7 +5,7 @@ from collections import defaultdict
 from django import forms
 from django.core.exceptions import ValidationError
 from museum.models import Author, Church, Engraving, Painting
-from utils.django_form import date_validade
+from utils.django_form import check_exist_name, date_validade
 
 
 #CADA CAMPO PODE TER UMA LISTA DE ERROS
@@ -70,7 +70,6 @@ class RegisterPaintingForm(forms.ModelForm):
         validators=[date_validade]
     )
     
-
     class Meta:
         model = Painting
         fields = [
@@ -122,7 +121,8 @@ class RegisterAuthorForm(forms.ModelForm):
         label='Nome:',
         widget=forms.TextInput(attrs={
             'placeholder': 'Nome do pintor'
-        })
+        }),
+        validators=[check_exist_name]
     )
     biography = forms.CharField(
         required=False,
@@ -145,7 +145,34 @@ class RegisterAuthorForm(forms.ModelForm):
         
 
 class RegisterChurchForm(forms.ModelForm):
-    
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs) 
+        self.__erros_church = defaultdict(list)
+
+    name = forms.CharField(
+        min_length=4,
+        max_length=100,
+        required=True,
+        label='Nome',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Nome da igreja'
+        }),
+        help_text='Nome da igreja que a pintura se encontra.'
+    )
+
+    city = forms.CharField(
+        min_length=3,
+        max_length=50,
+        required=False,
+        label='Cidade',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Cidade que a igreja se encontra'
+        }),
+        help_text='Este campo não é obrigatório.'
+    )
+
+
     class Meta:
         model = Church
         fields = [
@@ -153,6 +180,47 @@ class RegisterChurchForm(forms.ModelForm):
             'city',
             'state',
         ]
+        labels={
+            'state': 'Estado'
+        }
+        widgets={
+            'state': forms.Select(
+                choices=(
+                    (None, 'Desconhecido'), ('Acre', 'AC'),('Alagoas', 'AL'), ('Amapá', 'AP'),
+                    ('Amazonas', 'AM'), ('Bahia', 'BA'), ('Ceará', 'CE'), ('Espirito Santo','ES'),
+                    ('Goiás', 'GO'), ('Maranhão', 'MA'), ('Mato Grosso', 'MT'), ('Mato Grosso do Sul', 'MS'),
+                    ('Minas Gerais', 'MG'), ('Pará', 'PA'), ('Paraíba', 'PB'), ('Paraná', 'PR'),
+                    ('Pernambuco', 'PE'), ('Piauí', 'PI'), ('Rio de Janeiro', 'RJ'), ('Rio Grande Do Norte', 'RN'),
+                    ('Rio Grande do Sul', 'RS'), ('Rondônia', 'RO'), ('Roraima', 'RR'), ('Santa Catarina', 'SC'),
+                    ('São Paulo', 'SP'), ('Sergipe', 'SE'), ('Tocantins','TO')
+                )
+            )
+        }
+        help_texts={
+            'state': 'Este campo não é obrigatório.'
+        }
+
+    def clean(self):
+        super_clean = super().clean()
+        cd = self.cleaned_data
+
+        if self.__erros_church:
+            raise ValidationError(self.__erros_church)
+
+        return super_clean
+
+    def clean_state(self):
+        state = self.cleaned_data.get('state')
+        print(state)
+        states_list = ['', 'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Espírito Santo',
+        'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco',
+        'Piauí', 'Rio de Janeiro', 'Rio Grande Do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins']
+        
+        if state not in states_list:
+            print(state)
+            self.__erros_church['state'].append('Selecione o estado válido.')
+
+        return state
 
 class RegisterEngravingForm(forms.ModelForm):
 

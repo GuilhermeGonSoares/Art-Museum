@@ -1,7 +1,8 @@
 import re
-from tokenize import group
 
 from django.core.exceptions import ValidationError
+from django.db.models import Q
+from museum.models import *
 
 
 def strong_password(password):
@@ -44,3 +45,20 @@ def verify_roman(number):
         return True
 
     return False
+
+def check_exist_name(name):
+    authors = Author.objects.filter(name__icontains=name)
+    if authors:
+        raise ValidationError(
+            ('Já existe esse pintor cadastrado. Procure por: %(value)s'),
+            params={'value': authors.first()},
+            code='invalid'
+        )
+
+def check_exist_church(name, city, state):
+    churchs = Church.objects.filter(Q(
+        Q(name__icontains=name) & Q(state__icontains=state) & Q(city__icontains=city)
+    ))
+    for church in churchs:
+        city = church.city
+        
