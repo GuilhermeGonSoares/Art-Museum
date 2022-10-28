@@ -164,7 +164,6 @@ function showHideTable() {
     
     const coluna = document.createElement('td');
     coluna.style.background = '#e0e0e0';
-    
     btn.addEventListener('click', function(e) {
         e.preventDefault();
         for (imagem of imageColumn){

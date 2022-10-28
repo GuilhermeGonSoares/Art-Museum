@@ -1036,3 +1036,7 @@ th {
 .painting-gravuras{
   margin-top: 10%;
 }
+
+.table {
+  transition: 'width 1.5s ease, max-width 1.5s ease';
+}
