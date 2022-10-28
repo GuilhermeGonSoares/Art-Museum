@@ -87,7 +87,7 @@ function loadEngraving(){
         e.preventDefault();
         let imageColumn = document.querySelectorAll('#image_visibility');
         let coluna = document.createElement('td');
-        coluna.style.background = '#e0e0e0';
+        coluna.style.background = 'rgb(247, 247, 247)';
         for (imagem of imageColumn){
             imagem.parentNode.insertBefore(coluna.cloneNode(), imagem)
         }
@@ -163,13 +163,13 @@ function showHideTable() {
     btn.appendChild(tagI);
     
     const coluna = document.createElement('td');
-    coluna.style.background = '#e0e0e0';
+    coluna.style.background = 'rgb(247, 247, 247)';
     
     btn.addEventListener('click', function(e) {
         e.preventDefault();
         for (imagem of imageColumn){
             const newColuna = coluna.cloneNode()
-            if (imagem.style.display != 'none'){
+            if (imagem.style.display !== 'none'){
                 imagem.style.display = 'none';
                 imagem.parentNode.insertBefore(newColuna, imagem)
                 tagI.className = "fas fa-eye-slash";
