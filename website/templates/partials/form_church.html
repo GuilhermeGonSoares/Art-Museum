@@ -4,7 +4,7 @@
         {% for field in form %}
             <div class="form-group {{field.field.widget.attrs.class}}">
                 <label for="{{field.id_for_label}}">{{field.label}}</label>
-                
+                <input type="hidden" id="cities" name="variable" value="{{cities}}">
                 {{field}}
                 
                 {% if field.help_text %}
@@ -33,5 +33,4 @@
           <button class="plaintext-button" type="submit">Enviar</button>
         </div>
     </div>
-
 </form>

@@ -2,6 +2,7 @@ import re
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from genericpath import exists
 from museum.models import *
 
 
@@ -48,7 +49,7 @@ def verify_roman(number):
 
 def check_exist_name(name):
     authors = Author.objects.filter(name__icontains=name)
-    if authors:
+    if authors.exists():
         raise ValidationError(
             ('Já existe esse pintor cadastrado. Procure por: %(value)s'),
             params={'value': authors.first()},
@@ -59,6 +60,7 @@ def check_exist_church(name, city, state):
     churchs = Church.objects.filter(Q(
         Q(name__icontains=name) & Q(state__icontains=state) & Q(city__icontains=city)
     ))
-    for church in churchs:
-        city = church.city
+    if churchs.exists():
+        return churchs.first()
+    return False
         

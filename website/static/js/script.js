@@ -163,8 +163,7 @@ function showHideTable() {
     btn.appendChild(tagI);
     
     const coluna = document.createElement('td');
-    coluna.style.background = 'rgb(247, 247, 247)';
-    
+    coluna.style.background = '#e0e0e0';
     btn.addEventListener('click', function(e) {
         e.preventDefault();
         for (imagem of imageColumn){
@@ -202,6 +201,50 @@ function searchElementTable() {
         }
     }
 }
+function limparSelect(select_city) {
+    const allOptions = select_city.querySelectorAll('option')
+    if (allOptions.length > 1){
+        for (let i = 1; i <= allOptions.length; i++){
+            console.log(allOptions)
+            select_city.options.remove(allOptions[i])
+        }
+    }
+}
+
+
+function createOptionsCidade(select_city, estado){
+    let cidades = JSON.parse(document.getElementById('cities').value)[estado];
+    const op = document.createElement('option');
+
+    for (cid of cidades){
+        optionCreate = op.cloneNode()
+        optionCreate.value = cid
+        optionCreate.textContent = cid
+        select_city.appendChild(optionCreate)
+    } 
+}
+
+function listaCidadesBrasil() {
+    const select_church = document.getElementById('id_state');
+    const select_city = document.getElementById('id_city');
+    select_church.addEventListener('change', function(e){
+
+        e.preventDefault();
+        if(select_church.value !== ''){
+            console.log("limpar select")
+            limparSelect(select_city);
+            let estado = select_church.selectedOptions[0].text;
+            console.log("colocar options")
+            createOptionsCidade(select_city, estado);
+            select_city.style.visibility='visible'
+            select_city.parentNode.style.visibility='visible'
+        } else {
+            select_city.style.visibility='hidden'
+            select_city.parentNode.style.visibility='hidden'
+        }
+    });
+
+}
 
 
 my_scope();
@@ -222,4 +265,8 @@ if (current_page.includes("user/painting/create") || (current_page.includes("use
 if (current_page.includes("user/engraving/all")){
     showHideTable();
     loadEngraving();
+}
+
+if (current_page.includes('church/create')){
+    listaCidadesBrasil();
 }
