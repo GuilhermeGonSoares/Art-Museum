@@ -1,3 +1,5 @@
+import json
+from collections import defaultdict
 from http.client import HTTPResponse
 
 from django.contrib import messages
@@ -10,6 +12,7 @@ from django.urls import reverse
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from museum.models import Engraving, Painting
+from pyUFbr.baseuf import ufbr
 from utils.pagination import pagination
 
 from .forms import (LoginForm, RegisterAuthorForm, RegisterChurchForm,
@@ -249,10 +252,10 @@ def painting_delete(request:HttpRequest, id:int)-> HttpResponse:
 @login_required(login_url='user:login')
 def painting_church_create(request:HttpRequest) -> HttpResponse:
     id = request.session.get('painting_edit_id', '')
-
     form = RegisterChurchForm(data=request.POST or None)
 
     if form.is_valid():
+        print(form.cleaned_data['city'])
         form.save()
         messages.success(request, "Igreja cadastrada com sucesso")
         #TENTAR ARMAZENAR NO SESSION OS DADOS QUE ESTAVAM NO FORMULÁRIO ANTES DE CRIAR O AUTOR
@@ -260,10 +263,16 @@ def painting_church_create(request:HttpRequest) -> HttpResponse:
             return redirect(reverse('user:painting_edit', args=(id,)))
         
         return redirect('user:painting_create')
+    cities = {}
+    for state in ufbr.list_uf:
+        cities[state]= ufbr.list_cidades(state)
 
+    citiesJson = json.dumps(cities)
+    
     return render(request, 'user/pages/dashboard_church.html', {
         'form': form,
         'search': False,
+        'cities': citiesJson,
     })
 
 @require_GET

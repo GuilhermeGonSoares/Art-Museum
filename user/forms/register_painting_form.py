@@ -5,7 +5,9 @@ from collections import defaultdict
 from django import forms
 from django.core.exceptions import ValidationError
 from museum.models import Author, Church, Engraving, Painting
-from utils.django_form import check_exist_name, date_validade
+from pyUFbr.baseuf import ufbr
+from utils.django_form import (check_exist_church, check_exist_name,
+                               date_validade)
 
 
 #CADA CAMPO PODE TER UMA LISTA DE ERROS
@@ -161,32 +163,22 @@ class RegisterChurchForm(forms.ModelForm):
         help_text='Nome da igreja que a pintura se encontra.'
     )
 
-    city = forms.CharField(
-        min_length=3,
-        max_length=50,
-        required=False,
-        label='Cidade',
-        widget=forms.TextInput(attrs={
-            'placeholder': 'Cidade que a igreja se encontra'
-        }),
-        help_text='Este campo não é obrigatório.'
-    )
-
 
     class Meta:
         model = Church
         fields = [
             'name',
-            'city',
             'state',
+            'city',
         ]
         labels={
-            'state': 'Estado'
+            'state': 'Estado',
+            'city': 'Cidade'
         }
         widgets={
             'state': forms.Select(
                 choices=(
-                    (None, 'Desconhecido'), ('Acre', 'AC'),('Alagoas', 'AL'), ('Amapá', 'AP'),
+                    (None, '-- Selecione o estado --'), ('Acre', 'AC'),('Alagoas', 'AL'), ('Amapá', 'AP'),
                     ('Amazonas', 'AM'), ('Bahia', 'BA'), ('Ceará', 'CE'), ('Espirito Santo','ES'),
                     ('Goiás', 'GO'), ('Maranhão', 'MA'), ('Mato Grosso', 'MT'), ('Mato Grosso do Sul', 'MS'),
                     ('Minas Gerais', 'MG'), ('Pará', 'PA'), ('Paraíba', 'PB'), ('Paraná', 'PR'),
@@ -194,15 +186,37 @@ class RegisterChurchForm(forms.ModelForm):
                     ('Rio Grande do Sul', 'RS'), ('Rondônia', 'RO'), ('Roraima', 'RR'), ('Santa Catarina', 'SC'),
                     ('São Paulo', 'SP'), ('Sergipe', 'SE'), ('Tocantins','TO')
                 )
+            ),
+            'city': forms.Select(
+                choices=(
+                    (None, '-- Selecione a cidade --'),
+                    
+                ),
+                attrs={
+                    'class': 'esconder-campo'
+                }
             )
         }
         help_texts={
-            'state': 'Este campo não é obrigatório.'
+            'state': 'Este campo não é obrigatório.',
+            'city': 'Este campo não é obrigatório.'
+
         }
 
     def clean(self):
         super_clean = super().clean()
         cd = self.cleaned_data
+        name = cd.get('name')
+        city = cd.get('city')
+        state = cd.get('state')
+        exist_church = check_exist_church(name, city, state)
+
+        if city == '' or city is None:
+            self.__erros_church['city'].append('Selecionar cidade é obrigatório')
+
+        if exist_church is not False:
+            self.__erros_church['name'].append(f'Igreja já cadastrada. Procure por: {exist_church}')
+
 
         if self.__erros_church:
             raise ValidationError(self.__erros_church)
@@ -211,13 +225,11 @@ class RegisterChurchForm(forms.ModelForm):
 
     def clean_state(self):
         state = self.cleaned_data.get('state')
-        print(state)
-        states_list = ['', 'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Espírito Santo',
+        states_list = ['Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Espírito Santo',
         'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco',
         'Piauí', 'Rio de Janeiro', 'Rio Grande Do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins']
         
         if state not in states_list:
-            print(state)
             self.__erros_church['state'].append('Selecione o estado válido.')
 
         return state

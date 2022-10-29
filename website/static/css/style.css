@@ -1040,3 +1040,6 @@ th {
 .table {
   transition: 'width 1.5s ease, max-width 1.5s ease';
 }
+.esconder-campo{
+  visibility: hidden;
+}
