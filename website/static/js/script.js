@@ -205,7 +205,6 @@ function limparSelect(select_city) {
     const allOptions = select_city.querySelectorAll('option')
     if (allOptions.length > 1){
         for (let i = 1; i <= allOptions.length; i++){
-            console.log(allOptions)
             select_city.options.remove(allOptions[i])
         }
     }
@@ -227,14 +226,23 @@ function createOptionsCidade(select_city, estado){
 function listaCidadesBrasil() {
     const select_church = document.getElementById('id_state');
     const select_city = document.getElementById('id_city');
-    select_church.addEventListener('change', function(e){
-
-        e.preventDefault();
-        if(select_church.value !== ''){
-            console.log("limpar select")
+    const errorMessage = document.querySelector('.message-error');
+    if (errorMessage !== null){
+        window.addEventListener('load', function(e){
+            e.preventDefault();
             limparSelect(select_city);
             let estado = select_church.selectedOptions[0].text;
-            console.log("colocar options")
+            createOptionsCidade(select_city, estado);
+            select_city.style.visibility='visible'
+            select_city.parentNode.style.visibility='visible'
+        })
+    }
+
+    select_church.addEventListener('change', function(e){
+        e.preventDefault();
+        if(select_church.value !== ''){
+            limparSelect(select_city);
+            let estado = select_church.selectedOptions[0].text;
             createOptionsCidade(select_city, estado);
             select_city.style.visibility='visible'
             select_city.parentNode.style.visibility='visible'
@@ -243,8 +251,8 @@ function listaCidadesBrasil() {
             select_city.parentNode.style.visibility='hidden'
         }
     });
-
 }
+
 
 
 my_scope();
