@@ -18,8 +18,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th id="column_image" scope="col"><button id="show_image" type="button"></button></th>
-                        <th scope="col">Escolhas</th>
+                        <th scope="col">Selecionar</th>
                         <th scope="col">Gravura</th>
                         <th scope="col">Livro</th>
                         <th scope="col">Obras</th>
@@ -30,13 +29,20 @@
                     {% for engraving, qtd_paintings in engravings %}
                     <tr id='linha_tabela'>
 
-                        <td id="image_visibility" style="display:none;">
-                            <img src="{{engraving.cover.url}}" alt="">
-                        </td>
-
                         <td><input type="checkbox" id="engraving_{{engraving.id}}" name="engraving"
                                 value="{{engraving.id}}"></td>
-                        <td class="main-table-name"><a href="">{{engraving.name}}</a></td>
+                                
+                        <td class="main-table-name test-main">
+                            <a href=""> {{engraving.name}} </a>  
+                            <i class="fa-solid fa-eye"></i>
+                            <div class="image-container"> 
+                                <img class="image-hover" src="{{engraving.cover.url}}" alt="">
+                             </div>
+                            
+                        </td>
+                            
+
+
                         <td>
                             {% if engraving.book %}
                             {{engraving.book}}
