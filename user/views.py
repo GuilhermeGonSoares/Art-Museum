@@ -121,6 +121,7 @@ def dashboard(request:HttpRequest) -> HttpResponse:
 def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
     request.session['painting_edit_id'] = id
     engravings_id = request.session.get('engravings', None)
+    is_engraving = request.session.get('is_engraving', '')
     
     try:
         user = request.user
@@ -139,7 +140,7 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
     if engravings_id != None:
         engravings = __load_engraving(engravings_id)
 
-    painters = painting.author.all() if painting.author.all().count() > 0 else None
+    painters = ', '.join([p.name for p in painting.author.all()]) if painting.author.all().count() > 0 else None
 
     form = RegisterPaintingForm(
             data=request.POST or None,
@@ -178,7 +179,8 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
 def painting_create(request:HttpRequest)-> HttpResponse:
     session_id = request.session.get('painting_edit_id', '')
     engravings_id = request.session.get('engravings', [])
-    
+    is_engraving = request.session.get('is_engraving', '')
+
     if session_id:
         del(request.session['painting_edit_id'])
       
@@ -219,11 +221,21 @@ def painting_create(request:HttpRequest)-> HttpResponse:
 @login_required(login_url='user:login')
 def painting_author_create(request:HttpRequest) -> HTTPResponse:
     id = request.session.get('painting_edit_id', '')
+    engraving = request.session.get('is_engraving', '')
+
     form = RegisterAuthorForm(data=request.POST or None)
     if form.is_valid():
-        form.save()
+        author = form.save(commit=False)
+        if engraving:
+            author.is_engraving = True
+            
+        author.save()
         messages.success(request, "Autor cadastrado com sucesso")
         #TENTAR ARMAZENAR NO SESSION OS DADOS QUE ESTAVAM NO FORMULÁRIO ANTES DE CRIAR O AUTOR
+        if engraving:
+            del(request.session['is_engraving'])
+            return redirect('user:painting_engraving_create')
+
         if id:
             return redirect(reverse('user:painting_edit', args=(id,)))
         
@@ -311,11 +323,13 @@ def engraving_create(request:HttpRequest) -> HttpResponse:
         data=request.POST or None,
         files=request.FILES or None)
     
+    request.session['is_engraving'] = True
     
     if form.is_valid():
         form.save()
         messages.success(request, "Igreja cadastrada com sucesso")
         
+        del(request.session['is_engraving'])
         return redirect('user:painting_engraving_all')
 
     return render(request, 'user/pages/dashboard_engraving.html', {

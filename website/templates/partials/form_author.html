@@ -1,5 +1,16 @@
 <form class="form_author_create" action="{% url 'user:painting_author_create' %}" method="POST">
     {% csrf_token %}
+    
+    {% if form.errors %}
+    <div class="form-content form-content-grid">
+        <div class="form-group">
+            <div class="message message-error">
+                Por favor corrijas os erros no formulário
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
     <div class="form-content form-content-grid">
         {% for field in form %}
         <div class="form-group {{field.field.widget.attrs.class}}">
@@ -16,15 +27,7 @@
         {% endfor %}
     </div>
 
-    {% if form.errors %}
-    <div class="form-content form-content-grid">
-        <div class="form-group">
-            <div class="message message-error">
-                Por favor corrijas os erros no formulário
-            </div>
-        </div>
-    </div>
-    {% endif %}
+    
 
     <div class="form-content form-content-grid">
         <div class="form-group">

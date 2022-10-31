@@ -131,13 +131,17 @@ function desmarcarCampoSelectMultiple() {
     let option = select.getElementsByTagName('option');
     let selected = document.getElementById('author_selected');
     const authors_selected = [];
+    window.addEventListener('load', function(e){
+        for(let i = 0; i < select.selectedOptions.length; i++){
+            authors_selected.push(select.selectedOptions[i].textContent)
+        }
+    })
     for(let i = 0; i < option.length; i++){
         option[i].addEventListener('mousedown', function(event){
             if (!option[i].selected){
                 authors_selected.push(option[i].textContent);
                 option[i].style.background = "hsl(206,100%,52%)";
                 selected.value = authors_selected.join(', ');
-
             } else{
                 option[i].style.background = "";
                 let pos = authors_selected.indexOf(option[i].textContent);
@@ -145,6 +149,9 @@ function desmarcarCampoSelectMultiple() {
                     authors_selected.splice(pos,1);
                 }
                 selected.value = authors_selected.join();
+            }
+            if (authors_selected.length === 0){
+                selected.value = 'Nenhum';
             }
             
             option[i].selected = !option[i].selected;
@@ -253,8 +260,6 @@ function listaCidadesBrasil() {
     });
 }
 
-
-
 my_scope();
 
 const current_page = document.location.href
@@ -266,8 +271,12 @@ if (current_page.includes("user/painting/create") || (current_page.includes("use
     loadForm();
     form_data();
     resetSession();
-    desmarcarCampoSelectMultiple();
-    
+    desmarcarCampoSelectMultiple(); 
+}
+
+if(current_page.includes('engraving/create')){
+    desmarcarCampoSelectMultiple(); 
+
 }
 
 if (current_page.includes("user/engraving/all")){

@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
 from utils.pagination import pagination
 
@@ -230,6 +230,7 @@ def detail_painting_not_published(request: HttpRequest, painting_id: int) -> Htt
         
     })
 
+@require_GET
 def info(request: HttpRequest) -> HttpResponse:
     return render(request, 'museum/pages/info.html', {
             'searchbar': False,

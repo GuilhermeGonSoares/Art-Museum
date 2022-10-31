@@ -43,7 +43,7 @@ class RegisterPaintingForm(forms.ModelForm):
     author = forms.ModelMultipleChoiceField(
         required=False,
         label="Pintor",
-        queryset = Author.objects.all(),
+        queryset = Author.objects.filter(is_engraving=False),
         help_text='É permitido selecionar nenhum ou mais de um pintor',
         
     )
@@ -237,6 +237,34 @@ class RegisterChurchForm(forms.ModelForm):
         return state
 
 class RegisterEngravingForm(forms.ModelForm):
+    name = forms.CharField(
+        min_length=4,
+        max_length=100,
+        label='Nome',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Nome da gravura'
+        }),
+        help_text='Digite o nome da gravura'
+    )
+
+    book = forms.CharField(
+        required=False,
+        min_length=4,
+        max_length=100,
+        label='Livro',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Digite o nome do livro'
+        }),
+        help_text='Livro que contém a gravura'
+    )
+
+    author = forms.ModelMultipleChoiceField(
+        required=False,
+        label="Pintor",
+        queryset = Author.objects.filter(is_engraving=True),
+        help_text='É permitido selecionar nenhum ou mais de um pintor',
+        
+    )
 
     class Meta:
         model = Engraving
