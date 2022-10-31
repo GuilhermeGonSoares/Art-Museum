@@ -5,9 +5,14 @@
 <div class="main-content center container">
     <div class="search-container">
         <div class="container">
-            <input type="text" id="search_engraving" onkeyup="searchElementTable()"
-                placeholder="Procure pela gravura...">
-            <h3>Não encontrou a gravura na lista? <a href="{% url 'user:painting_engraving_create' %}">Adicione</a></h3>
+
+            <form action="" class="search-form">
+                <input type="text" id="search_engraving" onkeyup="searchElementTable()" 
+            placeholder="Procure pela gravura..." class="search-input">
+            <i class="fas fa-search search-button"></i>
+            </form>
+             
+            <h3 id="text-engraving">Não encontrou a gravura na lista? <a href="{% url 'user:painting_engraving_create' %}">Adicione</a></h3>
         </div>
     </div>
     <h2>Todas as gravuras cadastradas: {{search_result}}</h2>
