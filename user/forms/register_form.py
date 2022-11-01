@@ -17,7 +17,7 @@ class RegisterForm(forms.ModelForm):
             'min_length': 'Usuário deve ter no mínimo 4 caracteres',
             'max_length': 'Usuário pode ter no máximo 20 caracteres',
         },
-        min_length=4, max_length=20,
+        min_length=3, max_length=20,
         widget= forms.TextInput(
             attrs={
                 'placeholder': 'Seu usuário'
@@ -31,7 +31,8 @@ class RegisterForm(forms.ModelForm):
             attrs={
                 'placeholder': 'Ex.: Rafael'
             }
-        )
+        ),
+        min_length=3, max_length=20
     )
     last_name = forms.CharField(
         error_messages={'required': 'Escreva seu sobrenome'},
@@ -40,7 +41,8 @@ class RegisterForm(forms.ModelForm):
             attrs={
                 'placeholder': 'Ex.: Lima'
             }
-        )
+        ),
+        min_length=3, max_length=50
     )
     password = forms.CharField(
         widget = forms.PasswordInput(attrs={
@@ -96,6 +98,7 @@ class RegisterForm(forms.ModelForm):
                 ('E-mail já cadastrado! Por favor, cadastre um e-mail diferente.'),
                 code='invalid'
             )
+        return email
 
     def clean(self):
         #OBS1: self.data => nos pegamos os dados crus do formulário sem nenhuma limpeza
@@ -115,4 +118,6 @@ class RegisterForm(forms.ModelForm):
                 'password': password_confirmation_error,
                 'password2': password_confirmation_error
             })
+        
+        return cleaned_data
     

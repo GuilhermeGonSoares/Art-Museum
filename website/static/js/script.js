@@ -131,13 +131,17 @@ function desmarcarCampoSelectMultiple() {
     let option = select.getElementsByTagName('option');
     let selected = document.getElementById('author_selected');
     const authors_selected = [];
+    window.addEventListener('load', function(e){
+        for(let i = 0; i < select.selectedOptions.length; i++){
+            authors_selected.push(select.selectedOptions[i].textContent)
+        }
+    })
     for(let i = 0; i < option.length; i++){
         option[i].addEventListener('mousedown', function(event){
             if (!option[i].selected){
                 authors_selected.push(option[i].textContent);
                 option[i].style.background = "hsl(206,100%,52%)";
                 selected.value = authors_selected.join(', ');
-
             } else{
                 option[i].style.background = "";
                 let pos = authors_selected.indexOf(option[i].textContent);
@@ -145,6 +149,9 @@ function desmarcarCampoSelectMultiple() {
                     authors_selected.splice(pos,1);
                 }
                 selected.value = authors_selected.join();
+            }
+            if (authors_selected.length === 0){
+                selected.value = 'Nenhum';
             }
             
             option[i].selected = !option[i].selected;
@@ -205,7 +212,6 @@ function limparSelect(select_city) {
     const allOptions = select_city.querySelectorAll('option')
     if (allOptions.length > 1){
         for (let i = 1; i <= allOptions.length; i++){
-            console.log(allOptions)
             select_city.options.remove(allOptions[i])
         }
     }
@@ -227,14 +233,23 @@ function createOptionsCidade(select_city, estado){
 function listaCidadesBrasil() {
     const select_church = document.getElementById('id_state');
     const select_city = document.getElementById('id_city');
-    select_church.addEventListener('change', function(e){
-
-        e.preventDefault();
-        if(select_church.value !== ''){
-            console.log("limpar select")
+    const errorMessage = document.querySelector('.message-error');
+    if (errorMessage !== null){
+        window.addEventListener('load', function(e){
+            e.preventDefault();
             limparSelect(select_city);
             let estado = select_church.selectedOptions[0].text;
-            console.log("colocar options")
+            createOptionsCidade(select_city, estado);
+            select_city.style.visibility='visible'
+            select_city.parentNode.style.visibility='visible'
+        })
+    }
+
+    select_church.addEventListener('change', function(e){
+        e.preventDefault();
+        if(select_church.value !== ''){
+            limparSelect(select_city);
+            let estado = select_church.selectedOptions[0].text;
             createOptionsCidade(select_city, estado);
             select_city.style.visibility='visible'
             select_city.parentNode.style.visibility='visible'
@@ -243,9 +258,7 @@ function listaCidadesBrasil() {
             select_city.parentNode.style.visibility='hidden'
         }
     });
-
 }
-
 
 my_scope();
 
@@ -258,8 +271,12 @@ if (current_page.includes("user/painting/create") || (current_page.includes("use
     loadForm();
     form_data();
     resetSession();
-    desmarcarCampoSelectMultiple();
-    
+    desmarcarCampoSelectMultiple(); 
+}
+
+if(current_page.includes('engraving/create')){
+    desmarcarCampoSelectMultiple(); 
+
 }
 
 if (current_page.includes("user/engraving/all")){

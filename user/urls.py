@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/create/', views.login_create, name='login_create'),
     path('logout/', views.logout_user, name='logout'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('edit/', views.edit_user, name='edit'),
     path('painting/create/', views.painting_create, name='painting_create'),
     path('painting/published/', views.painting_user_published, name='paintings_published'),
     path('author/create/', views.painting_author_create, name='painting_author_create'),

@@ -1,4 +1,3 @@
-from email.policy import default
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -8,6 +7,7 @@ from django.db import models
 class Author(models.Model):
     name = models.CharField(max_length=50)
     biography = models.TextField(blank=True)
+    is_engraving = models.BooleanField(default=False)
     
     def __str__(self) -> str:
         return self.name

@@ -1,0 +1,71 @@
+<div class="center painting painting-list-item" id="card">
+    <!--
+    <div class="painting-cover">
+        {% if isDetailPage is not True %}
+            <a class="no-filter" href="{% url 'painting:detail' painting.id %}">
+                <img src="{{ painting.cover.url }}" alt="temporario" class="img-main">  
+            </a>
+        {% else %}
+            <img src="{{ painting.cover.url }}" alt="temporario" class="img-main no-filter">
+        {% endif %}
+    </div>
+    -->
+
+    <div class="painting-title-container">
+        <h2 class="painting-title">{{ engraving.name | linebreaks }}</h2>
+    </div>
+
+    <div class="painting-author center-flex">
+        <span class="painting-author-item">
+            {% for author in engraving.author.all %}
+                <i class="fas fa-paintbrush"></i>
+                    <a href="{% url 'painting:painter' author.id %}">{{author}}</a>
+                    <br>
+            {%empty%}
+                <i class="fas fa-paintbrush"></i>
+                    Desconhecido
+            {% endfor %}
+        </span>
+        <span class="painting-author-item">
+            <i class="fas fa-calendar-alt"></i>
+            {% if engranving.book %}
+                {{ engranving.book }}
+            {% else %}
+                Desconhecido
+            {% endif %}
+        </span>
+                
+        
+        <span class="painting-author-item">
+            {% for painting in engraving.painting_set.all %}
+                <i class="fas fa-brush"></i>
+                    <a href="#">{{painting}}</a>
+                    <br>
+            {%empty%}
+                <i class="fas fa-brush"></i>
+                    Desconhecido
+            {% endfor %}
+        </span>
+
+    </div>
+
+    <div class="painting-content justify">
+        <p>{{ painting.summary }}</p>
+    </div>
+
+    <div class="painting-meta-container">
+        <div class="painting-meta painting-preparation">
+            <h3 class="painting-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
+            <div class="painting-meta-text">
+                {{painting.post_author.username}}
+            </div>
+        </div>
+        <div class="painting-meta painting-servings">
+            <h3 class="painting-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
+            <div class="painting-meta-text">
+                {{painting.post_date}}
+            </div>
+        </div>
+    </div>    
+
+</div>

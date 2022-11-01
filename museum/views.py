@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
 from utils.pagination import pagination
 
@@ -35,6 +35,7 @@ def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
     return render(request, 'museum/pages/detail_painting.html', {
         'painting': painting,
         'isDetailPage': True,
+        'searchbar': False,
         
     })
 
@@ -134,7 +135,7 @@ def engravings(request: HttpRequest) -> HttpResponse:
     for engraving in engravings:
         paintings_number = engraving.painting_set.filter(is_published=True).count()
         engraving_paintings.append((engraving, paintings_number))
-    print(engraving_paintings)
+    
     return render(request, 'museum/pages/search_engraving.html',{
             'engravings': engraving_paintings,
             'filterEngraving': 'selected',
@@ -230,6 +231,7 @@ def detail_painting_not_published(request: HttpRequest, painting_id: int) -> Htt
         
     })
 
+@require_GET
 def info(request: HttpRequest) -> HttpResponse:
     return render(request, 'museum/pages/info.html', {
             'searchbar': False,

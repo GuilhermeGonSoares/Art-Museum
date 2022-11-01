@@ -43,7 +43,7 @@ class RegisterPaintingForm(forms.ModelForm):
     author = forms.ModelMultipleChoiceField(
         required=False,
         label="Pintor",
-        queryset = Author.objects.all(),
+        queryset = Author.objects.filter(is_engraving=False),
         help_text='É permitido selecionar nenhum ou mais de um pintor',
         
     )
@@ -178,13 +178,13 @@ class RegisterChurchForm(forms.ModelForm):
         widgets={
             'state': forms.Select(
                 choices=(
-                    (None, '-- Selecione o estado --'), ('Acre', 'AC'),('Alagoas', 'AL'), ('Amapá', 'AP'),
-                    ('Amazonas', 'AM'), ('Bahia', 'BA'), ('Ceará', 'CE'), ('Espirito Santo','ES'),
-                    ('Goiás', 'GO'), ('Maranhão', 'MA'), ('Mato Grosso', 'MT'), ('Mato Grosso do Sul', 'MS'),
-                    ('Minas Gerais', 'MG'), ('Pará', 'PA'), ('Paraíba', 'PB'), ('Paraná', 'PR'),
-                    ('Pernambuco', 'PE'), ('Piauí', 'PI'), ('Rio de Janeiro', 'RJ'), ('Rio Grande Do Norte', 'RN'),
-                    ('Rio Grande do Sul', 'RS'), ('Rondônia', 'RO'), ('Roraima', 'RR'), ('Santa Catarina', 'SC'),
-                    ('São Paulo', 'SP'), ('Sergipe', 'SE'), ('Tocantins','TO')
+                    (None, '-- Selecione o estado --'), ('AC', 'AC'),('AL', 'AL'), ('AP', 'AP'),
+                    ('AM', 'AM'), ('BA', 'BA'), ('CE', 'CE'), ('DF', 'DF'), ('ES','ES'),
+                    ('GO', 'GO'), ('MA', 'MA'), ('MT', 'MT'), ('MS', 'MS'),
+                    ('MG', 'MG'), ('PA', 'PA'), ('PB', 'PB'), ('PR', 'PR'),
+                    ('PE', 'PE'), ('PI', 'PI'), ('RJ', 'RJ'), ('RN', 'RN'),
+                    ('RS', 'RS'), ('RO', 'RO'), ('RR', 'RR'), ('SC', 'SC'),
+                    ('SP', 'SP'), ('SE', 'SE'), ('TO','TO')
                 )
             ),
             'city': forms.Select(
@@ -198,8 +198,8 @@ class RegisterChurchForm(forms.ModelForm):
             )
         }
         help_texts={
-            'state': 'Este campo não é obrigatório.',
-            'city': 'Este campo não é obrigatório.'
+            'state': 'Selecione o estado.',
+            'city': 'Selecione a cidade.'
 
         }
 
@@ -217,6 +217,9 @@ class RegisterChurchForm(forms.ModelForm):
         if exist_church is not False:
             self.__erros_church['name'].append(f'Igreja já cadastrada. Procure por: {exist_church}')
 
+        cidades_desse_estado = ufbr.list_cidades(state)
+        if city != '' and city not in cidades_desse_estado:
+            self.__erros_church['city'].append('Essa cidade não pertence a esse estado')
 
         if self.__erros_church:
             raise ValidationError(self.__erros_church)
@@ -225,9 +228,8 @@ class RegisterChurchForm(forms.ModelForm):
 
     def clean_state(self):
         state = self.cleaned_data.get('state')
-        states_list = ['Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Espírito Santo',
-        'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco',
-        'Piauí', 'Rio de Janeiro', 'Rio Grande Do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins']
+        states_list = ['AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT',
+        'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO']
         
         if state not in states_list:
             self.__erros_church['state'].append('Selecione o estado válido.')
@@ -235,6 +237,34 @@ class RegisterChurchForm(forms.ModelForm):
         return state
 
 class RegisterEngravingForm(forms.ModelForm):
+    name = forms.CharField(
+        min_length=4,
+        max_length=100,
+        label='Nome',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Nome da gravura'
+        }),
+        help_text='Digite o nome da gravura'
+    )
+
+    book = forms.CharField(
+        required=False,
+        min_length=4,
+        max_length=100,
+        label='Livro',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Digite o nome do livro'
+        }),
+        help_text='Livro que contém a gravura'
+    )
+
+    author = forms.ModelMultipleChoiceField(
+        required=False,
+        label="Pintor",
+        queryset = Author.objects.filter(is_engraving=True),
+        help_text='É permitido selecionar nenhum ou mais de um pintor',
+        
+    )
 
     class Meta:
         model = Engraving
