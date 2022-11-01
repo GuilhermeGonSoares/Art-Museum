@@ -153,8 +153,9 @@ def detail_engraving(request: HttpRequest, id_engraving:int) -> HttpResponse:
     except ObjectDoesNotExist:
         raise Http404("Gravura não encontrada")
     
-    return render(request, 'museum/pages/engraving.html', {
-        'engraving': engraving
+    return render(request, 'museum/pages/detail_engraving.html', {
+        'engraving': engraving,
+        'search': False,
     })
 
 @require_GET

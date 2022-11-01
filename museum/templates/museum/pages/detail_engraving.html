@@ -4,23 +4,20 @@
 
 <div class="text-secondary-page">
     <div class="center-flex" id="church-name">
-        <h1>{{ engraving.name }}</h1>
+        <h1>Nome: {{ engraving.name }}</h1>
     </div>
     
     <div class="center-flex" id="church-location">
         
-        <h3>{{ engraving.book }}</h3>
+        <h3>Livro: {{ engraving.book }}</h3>
     </div>    
 
 </div>
-        <h2 class="gray-text">Lista das pinturas dessa igreja</h2>
-        <br>
-        <div class="main-content main-content-list container" id="church-page">
+        <div class="main-content  container" id="one-item">
             {% if engraving %}
                 {% include 'museum/partials/engraving.html' %}
             {% endif %}
-            
-        </div>
 
+        </div>
 
 {% endblock content %}
