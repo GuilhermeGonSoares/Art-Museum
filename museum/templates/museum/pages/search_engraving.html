@@ -18,7 +18,7 @@
             <tbody>
                 {% for engraving, qtd_paintings in engravings %}
                     <tr>
-                        <td class="main-table-name"><a class="table-link" href="">{{engraving.name}}</a></td>
+                        <td class="main-table-name"><a class="table-link" href="{% url 'painting:engraving' engraving.id %}">{{engraving.name}}</a></td>
                                               
                         <td>
                             {% if engraving.book %}

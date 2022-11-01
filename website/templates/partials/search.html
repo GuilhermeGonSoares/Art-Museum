@@ -1,11 +1,11 @@
 <div class="search-container">
     <div class="container">
         <div class="center" id="see-all">
+            <a class="dashboard-button-dark{{sobre}}" href="{% url 'painting:info' %}"> Sobre </a>
             <a class="dashboard-button-dark{{obras}}" href="{% url 'painting:home' %}"> Obras </a>
             <a class="dashboard-button-dark{{igrejas}}" href="{% url 'painting:church_all' %}"> Igrejas </a>
             <a class="dashboard-button-dark{{pintores}}" href="{% url 'painting:painter_all' %}"> Pintores </a>
             <a class="dashboard-button-dark{{gravuras}}" href="{% url 'painting:engraving_all' %}"> Gravuras </a>
-            <a class="dashboard-button-dark{{sobre}}" href="{% url 'painting:info' %}"> Sobre </a>
         </div>
 
         {% if searchbar is not False %}
