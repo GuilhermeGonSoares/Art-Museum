@@ -1065,14 +1065,13 @@ i:hover + .image-container .image-hover {
 }
 
 .avatar{
-  height: 13rem;
   background-color: black;
   width: 13rem;
+  height: 13rem;
   border-radius: 100px;
   justify-self: flex-start;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
 }
@@ -1094,4 +1093,17 @@ i:hover + .image-container .image-hover {
 .center-flex-main{
   margin-left: auto;
   margin-right: auto;
+}
+
+.dashboard-info{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.user-info{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  justify-content: space-evenly;
 }
