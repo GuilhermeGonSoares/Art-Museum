@@ -1041,14 +1041,20 @@ th {
 }
 
 * {box-sizing: border-box}
-.mySlides1 {display: none}
+.mySlides1 {
+
+  height: 30rem;
+  width: 80rem;
+  background-color: var(--color-gray-2);
+  display: none;
+}
 
 .mySlides1 img {
   vertical-align: middle;
-  height: 30rem;
-  object-fit: contain;
-  width: 80rem;
-  background-color: var(--color-gray-2);
+  object-fit: cover;
+  height: 100%;
+  max-width: 40rem;
+
 }
 
 /* Slideshow container */
@@ -1056,6 +1062,7 @@ th {
   max-width: 1000px;
   position: relative;
   margin: auto;
+
 }
 
 /* Next & previous buttons */
@@ -1087,4 +1094,9 @@ th {
 .prev:hover, .next:hover {
   background-color: #f1f1f1;
   color: black;
+}
+
+.info-engraving{
+  display: flex;
+  flex-direction: column;
 }

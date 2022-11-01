@@ -5,7 +5,15 @@
 <div class="slideshow-container">
     {% for engraving in painting.engraving.all %}
         <div class="mySlides1">
-            <img src="{{engraving.cover.url}}" >
+            <a href=""><img src="{{engraving.cover.url}}" ></a>
+            <div class="info-engraving">
+                {{engraving.name}}
+                {% for author in engraving.author.all %}
+                <div class="author-engraving">
+                    <i class="fas fa-paintbrush"></i>{{author.name}}
+                </div>
+                {% endfor %}
+            </div>
         </div>
     {% endfor %}
     <a class="prev" onclick="plusSlides(-1, 0)">&#10094;</a>
