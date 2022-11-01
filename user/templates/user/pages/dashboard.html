@@ -4,11 +4,22 @@
 {% block content %}
 {% include 'templates/partials/messages.html' %}
     <div class="main-content center container dashboard-card">
-        <h2>Bem vindo ao seu dashboard {% if user.first_name %}{{ user.first_name }}{% else %}{{user.username}}{% endif %}!</h2>
+
+        <div class="dashboard-header">
+
+            <div class="avatar center-flex">
+                <div class="avatar-photo center-flex">
+                    text
+                </div>
+            </div>
+            <h2 class="dash-message">Bem vindo ao seu dashboard {% if user.first_name %}{{ user.first_name }}{% else %}{{user.username}}{% endif %}!</h2>
+        </div>
+
         <div class='login-message'>
             <h4>Ver todas as suas pinturas publicadas. <a href="{% url 'user:paintings_published' %}">Clique aqui.</a></h4>
         </div>
-        
+
+
         <div class="authors-dashboard-container">
             <div class='login-message center' id="dashboard-button-container">
                 <a class="dashboard-button" onclick="sessionStorage.clear()" href="{% url 'user:painting_create' %}"> 

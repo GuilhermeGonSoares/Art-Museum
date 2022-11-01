@@ -1062,3 +1062,21 @@ i:hover + .image-container .image-hover {
 #text-engraving{
   margin-top: 3rem;
 }
+
+.avatar{
+  height: 10rem;
+  background-color: black;
+  width: 10rem;
+  border-radius: 50px;
+  justify-self: flex-start;
+}
+
+.dashboard-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.dash-message{
+  align-self: center;
+  justify-self: center;
+}
