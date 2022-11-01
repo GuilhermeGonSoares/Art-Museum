@@ -1,0 +1,23 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %}{{engraving.name}} | {% endblock title %}
+{% block content %}
+
+<div class="text-secondary-page">
+    <div class="center-flex" id="church-name">
+        <h1>Nome: {{ engraving.name }}</h1>
+    </div>
+    
+    <div class="center-flex" id="church-location">
+        
+        <h3>Livro: {{ engraving.book }}</h3>
+    </div>    
+
+</div>
+        <div class="main-content  container" id="one-item">
+            {% if engraving %}
+                {% include 'museum/partials/engraving.html' %}
+            {% endif %}
+
+        </div>
+
+{% endblock content %}

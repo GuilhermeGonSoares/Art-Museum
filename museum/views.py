@@ -146,8 +146,17 @@ def engravings(request: HttpRequest) -> HttpResponse:
 
 @require_GET
 def detail_engraving(request: HttpRequest, id_engraving:int) -> HttpResponse:
-    ...
-
+    try:
+        engraving = Engraving.objects.get(pk=id_engraving)
+        if not engraving.painting_set.filter(is_published=True).exists():
+            raise Http404("Gravura não encontrada")
+    except ObjectDoesNotExist:
+        raise Http404("Gravura não encontrada")
+    
+    return render(request, 'museum/pages/detail_engraving.html', {
+        'engraving': engraving,
+        'search': False,
+    })
 
 @require_GET
 def search(request: HttpRequest)-> HttpResponse:
