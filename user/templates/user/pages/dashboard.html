@@ -11,7 +11,30 @@
                 <div class="avatar-photo center-flex">
                     text
                 </div>
+                <a class="center-flex-main" href=""><i class="fa-solid fa-pencil"></i></a>
             </div>
+
+            <div class="dashboard-info">
+                <div class="user-info center-flex-main">
+                    <h4>Nome </h4> 
+                    <p> {{user.get_full_name}}</p>  
+                </div>
+
+                <div class="user-info center-flex-main">
+                    
+                    <h4>E-mail </h4>
+                    <p> {{user.email}} </p>
+                </div>
+
+                <div class="user-info center-flex-main">
+                    <h4> Usuário </h4> 
+                    <p> {{user.username}}</p>
+                </div>
+            </div>
+
+            
+            
+            <a class="dashboard-button-dark center-flex-main" href="{% url 'user:edit' %}">Editar</a>
         </div>
         
         <div class="dashboard-content">

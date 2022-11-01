@@ -1065,24 +1065,33 @@ i:hover + .image-container .image-hover {
 }
 
 .avatar{
-  height: 10rem;
+  height: 13rem;
   background-color: black;
-  width: 10rem;
-  border-radius: 50px;
+  width: 13rem;
+  border-radius: 100px;
   justify-self: flex-start;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard-header{
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
   width: 35rem;
   border-right: 2px solid var(--color-gray-1);
   margin-right: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .dash-message{
   align-self: center;
   justify-self: center;
+}
+
+.center-flex-main{
+  margin-left: auto;
+  margin-right: auto;
 }
