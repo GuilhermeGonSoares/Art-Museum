@@ -35,6 +35,7 @@ def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
     return render(request, 'museum/pages/detail_painting.html', {
         'painting': painting,
         'isDetailPage': True,
+        'searchbar': False,
         
     })
 
@@ -134,7 +135,7 @@ def engravings(request: HttpRequest) -> HttpResponse:
     for engraving in engravings:
         paintings_number = engraving.painting_set.filter(is_published=True).count()
         engraving_paintings.append((engraving, paintings_number))
-    print(engraving_paintings)
+    
     return render(request, 'museum/pages/search_engraving.html',{
             'engravings': engraving_paintings,
             'filterEngraving': 'selected',

@@ -1,0 +1,18 @@
+{% extends 'templates/pages/global.html' %}
+
+{% block title %}Login | {% endblock title %}
+<div id="login-box">
+{% block content %}
+    <div class="center container gray-box" id="login-page">
+
+        <h2>Editar perfil</h2>
+        <br>
+        {% include 'templates/partials/messages.html' %}
+        {% include 'templates/partials/form.html' %}
+        <div class="form-group">
+            <a class="link-to-button" onclick="history.back()">Cancelar</a>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

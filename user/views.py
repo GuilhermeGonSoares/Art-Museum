@@ -3,7 +3,8 @@ from collections import defaultdict
 from http.client import HTTPResponse
 
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import (authenticate, login, logout,
+                                 update_session_auth_hash)
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpRequest, HttpResponse
@@ -15,14 +16,18 @@ from museum.models import Engraving, Painting
 from pyUFbr.baseuf import ufbr
 from utils.pagination import pagination
 
-from .forms import (LoginForm, RegisterAuthorForm, RegisterChurchForm,
-                    RegisterEngravingForm, RegisterForm, RegisterPaintingForm)
+from .forms import (ChangePasswordForm, LoginForm, RegisterAuthorForm,
+                    RegisterChurchForm, RegisterEngravingForm, RegisterForm,
+                    RegisterPaintingForm)
 
 
 #UTILIZAR A SESSÃO DO USUÁRIO PARA PODER TRAFEGAR DADOS DE UMA VIEW PARA OUTRA
 #UMA VEZ QUE SÃO VIEWS DIFERENTES. CADA UMA COM SUA RESPONSABILIDADE
 @require_GET
 def register(request: HttpRequest)-> HttpResponse:
+    if request.user.is_authenticated:
+        return redirect('user:dashboard')
+
     register_form = request.session.get('register_form_data', None)
     
     form = RegisterForm(register_form)
@@ -55,6 +60,9 @@ def register_create(request: HttpRequest)-> HttpResponse:
 
 @require_GET
 def login_view(request:HttpRequest)-> HttpResponse:
+    if request.user.is_authenticated:
+        return redirect('user:dashboard')
+
     login_form = LoginForm()
     
     return render(request, 'user/pages/login.html',{
@@ -99,10 +107,38 @@ def logout_user(request: HttpRequest)-> HttpResponse:
     messages.success(request, 'Usuário deslogado com sucesso')
     return redirect('user:login')
 
+@login_required(login_url='user:login')
+def edit_user(request):
+    user = request.user
+    if request.method == 'POST':
+        form = ChangePasswordForm(data=request.POST or None)
+        
+        if form.is_valid():
+            user.first_name = form.cleaned_data.get('first_name', '')
+            user.last_name = form.cleaned_data.get('last_name', '')
+            user.set_password(form.cleaned_data.get('password'))
+            user.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Usuário alterado com sucesso!")
+
+    else:
+        form = ChangePasswordForm(data=request.POST or None, initial={
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+        })
+
+    return render(request, 'user/pages/edit_user.html', {
+        'form_action': 'user:edit',
+        'search': False,
+        'form': form,
+    })
+    
+
 @require_GET
 @login_required(login_url='user:login')
 def dashboard(request:HttpRequest) -> HttpResponse:
     user = request.user
+
     if request.session.get('engravings'):
         del(request.session['engravings']) 
 
@@ -267,7 +303,7 @@ def painting_church_create(request:HttpRequest) -> HttpResponse:
     form = RegisterChurchForm(data=request.POST or None)
 
     if form.is_valid():
-        print(form.cleaned_data['city'])
+        
         form.save()
         messages.success(request, "Igreja cadastrada com sucesso")
         #TENTAR ARMAZENAR NO SESSION OS DADOS QUE ESTAVAM NO FORMULÁRIO ANTES DE CRIAR O AUTOR

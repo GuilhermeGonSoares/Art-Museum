@@ -1,4 +1,5 @@
 <div class="center painting painting-list-item" id="card">
+    <!--
     <div class="painting-cover">
         {% if isDetailPage is not True %}
             <a class="no-filter" href="{% url 'painting:detail' painting.id %}">
@@ -8,13 +9,15 @@
             <img src="{{ painting.cover.url }}" alt="temporario" class="img-main no-filter">
         {% endif %}
     </div>
+    -->
+
     <div class="painting-title-container">
-        <h2 class="painting-title">{{ painting.name | linebreaks }}</h2>
+        <h2 class="painting-title">{{ engraving.name | linebreaks }}</h2>
     </div>
 
     <div class="painting-author center-flex">
         <span class="painting-author-item">
-            {% for author in painting.author.all %}
+            {% for author in engraving.author.all %}
                 <i class="fas fa-paintbrush"></i>
                     <a href="{% url 'painting:painter' author.id %}">{{author}}</a>
                     <br>
@@ -25,27 +28,18 @@
         </span>
         <span class="painting-author-item">
             <i class="fas fa-calendar-alt"></i>
-            {% if painting.date %}
-                {{ painting.date }}
+            {% if engranving.book %}
+                {{ engranving.book }}
             {% else %}
                 Desconhecido
             {% endif %}
         </span>
                 
-        <span class="painting-author-item">   
-            <i class="fas fa-church"></i>
-                {% if painting.church is not None %}
-                    <a href="{% url 'painting:church' painting.church.id %}">
-                        <span>{{ painting.church.name }}</span>
-                    </a>
-                {% else %}
-                    <span>Igreja desconhecida</span>
-                {% endif %}
-        </span>
+        
         <span class="painting-author-item">
-            {% for engraving in painting.engraving.all %}
+            {% for painting in engraving.painting_set.all %}
                 <i class="fas fa-brush"></i>
-                    <a href="#">{{engraving}}</a>
+                    <a href="#">{{painting}}</a>
                     <br>
             {%empty%}
                 <i class="fas fa-brush"></i>
@@ -72,25 +66,6 @@
                 {{painting.post_date}}
             </div>
         </div>
-    </div>
-
-
-    {% if isDetailPage is not True %}
-    <footer class="painting-footer">
-        <a class="painting-read-more button button-dark button-full-width" href="{% url 'painting:detail' painting.id %}">
-            <i class="fas fa-eye"></i>
-            <span>ver mais...</span>
-        </a>
-    </footer>
-    {% endif %}
-
-    
-    {% if isDetailPage is True %}
-        <div class="painting-description justify">
-            {{ painting.description | linebreaks}}
-        </div>
-    {% endif %}
-
-    
+    </div>    
 
 </div>

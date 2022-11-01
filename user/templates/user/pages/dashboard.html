@@ -7,6 +7,8 @@
         <h2>Bem vindo ao seu dashboard {% if user.first_name %}{{ user.first_name }}{% else %}{{user.username}}{% endif %}!</h2>
         <div class='login-message'>
             <h4>Ver todas as suas pinturas publicadas. <a href="{% url 'user:paintings_published' %}">Clique aqui.</a></h4>
+            <h4>Deseja editar suas informações? <a href="{% url 'user:edit' %}">Clique aqui.</a></h4>
+
         </div>
         
         <div class="authors-dashboard-container">
