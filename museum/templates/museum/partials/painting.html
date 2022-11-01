@@ -91,6 +91,8 @@
         </div>
     {% endif %}
 
-    
+    {% if painting.engraving.all.count > 0 %}
+        {% include 'museum/partials/sliderShow.html' %}
+    {% endif %}
 
 </div>
