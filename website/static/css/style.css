@@ -882,11 +882,12 @@ th {
 
 .dashboard-card {
   border: 2px solid black;
-  padding: 15px;
+  padding: 0;
   border-radius: 12px;
   background-color: var(--color-light-gray);
   height: 70vh;
   width: 80%;
+  display: flex;
 }
 .dashboard-card h3 {
   margin-top: 8rem;
@@ -1069,11 +1070,16 @@ i:hover + .image-container .image-hover {
   width: 10rem;
   border-radius: 50px;
   justify-self: flex-start;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .dashboard-header{
-  display: flex;
-  justify-content: space-between;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  width: 35rem;
+  border-right: 2px solid var(--color-gray-1);
+  margin-right: 15rem;
 }
 
 .dash-message{
