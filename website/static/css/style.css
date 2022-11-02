@@ -1065,10 +1065,6 @@ i:hover + .image-container .image-hover {
 }
 
 .avatar{
-  background-color: black;
-  width: 13rem;
-  height: 13rem;
-  border-radius: 100px;
   justify-self: flex-start;
   margin-left: auto;
   margin-right: auto;
@@ -1076,8 +1072,46 @@ i:hover + .image-container .image-hover {
   flex-direction: column;
 }
 
+.avatar-photo-container{
+  width: 13.5rem;
+  height: 13.5rem;
+  border: 3px solid var(--color-primary);
+  border-radius: 100px;
+}
+
+.avatar-photo{
+  width: 13rem;
+  height: 13rem;
+  border-radius: 100px;
+  object-fit: cover;
+  transition: all 300ms;
+}
+
+.avatar-icon{
+  position: absolute;
+  transition: all 1s;
+  opacity: 0;
+}
+
+.avatar-photo:hover{
+  filter: brightness(0.2);
+}
+
+.avatar-icon:hover{
+  opacity: 1;
+}
+
+.avatar-icon:hover + .avatar-photo{
+  filter: brightness(0.2);
+}
+
+ .avatar-photo:hover ~ .avatar-icon{
+  opacity: 1;
+}
+
 .dashboard-header{
   width: 35rem;
+  margin: 2rem 0;
   border-right: 2px solid var(--color-gray-1);
   margin-right: 15rem;
   display: flex;
