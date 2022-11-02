@@ -1,4 +1,4 @@
-<div class="center painting painting-list-item" id="card">
+<div class="center painting painting-list-item card">
     <div class="painting-cover">
         {% if isDetailPage is not True %}
             <a class="no-filter" href="{% url 'painting:detail' painting.id %}">
@@ -89,10 +89,10 @@
         <div class="painting-description justify">
             {{ painting.description | linebreaks}}
         </div>
-    {% endif %}
-
-    {% if painting.engraving.all.count > 0 %}
+        
+        {% if painting.engraving.all.count > 0 %}
         {% include 'museum/partials/sliderShow.html' %}
+        {% endif %}
     {% endif %}
 
 </div>
