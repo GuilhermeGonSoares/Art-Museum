@@ -7,7 +7,7 @@
         <div class="mySlides1">
             <a href=""><img src="{{engraving.cover.url}}" ></a>
             <div class="info-engraving">
-                {{engraving.name}}
+                <h2> {{engraving.name}} </h2>
                 {% for author in engraving.author.all %}
                 <div class="author-engraving">
                     <i class="fas fa-paintbrush"></i>{{author.name}}
