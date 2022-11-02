@@ -10,10 +10,19 @@
         <div class="dashboard-header">
 
             <div class="avatar center-flex">
-                    <a class="avatar-photo-container" href="">
+                    <a class="avatar-photo-container open-button" onclick="openForm()">
                         <img class="avatar-photo" src= "{% static '/static/images/unb-logo.png' %}" alt="UnB logo" />
                         <i class="fa-lg fa-solid fa-pencil avatar-icon"></i>
+                        
                     </a>
+                    <!-- The form -->
+                    <div class="form-popup" id="myForm">
+                        <form class="form-container">
+                        <h4>Trocar avatar</h4>
+                    
+                        <button type="button" class="btn cancel plaintext-button" onclick="closeForm()">Fechar</button>
+                        </form>
+                    </div>
                 
             </div>
 
@@ -82,5 +91,16 @@
 
     </div>
 
+
+
+<script>
+    function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
 
 {% endblock content %}

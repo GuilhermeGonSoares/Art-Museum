@@ -1201,3 +1201,30 @@ i:hover + .image-container .image-hover {
   display: flex;
   flex-direction: column;
 }
+
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  cursor: pointer;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+}
+
+/* Add styles to the form container */
+.form-container {
+  position: absolute;
+  left: 10.8%;
+  width: 23%;
+  height: 21.5rem;
+  top: 20%;
+  padding: 10px;
+  background-color: white;
+  opacity: 0.95;
+}
+
+#myForm{
+  transition: all 500ms;
+}
