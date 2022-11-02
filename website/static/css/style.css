@@ -986,7 +986,7 @@ th {
 .dashboard-button-dark-selected {
   color: var(--color-white);
   background-color: black;
-  border: 2px solid var(--color-primary);
+  border: 1.5px solid var(--color-primary);
   padding: 8px;
   width: fit-content;
   border-radius: 12px;
