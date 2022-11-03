@@ -390,7 +390,7 @@ p {
   margin-bottom: var(--spacing-gutter-medium);
 }
 
-.form-content-church{
+.form-content-church {
   width: 60%;
 }
 
@@ -791,10 +791,9 @@ p {
   border-radius: 10px;
   border-collapse: separate;
   border-spacing: 5px 8px;
-  
 }
 
-#column_image{
+#column_image {
   width: 80rem;
 }
 
@@ -907,11 +906,11 @@ th {
   width: 70rem;
 }
 
-#form-church .form-group{
+#form-church .form-group {
   margin-bottom: 5%;
 }
 
-#form-church .form-group label{
+#form-church .form-group label {
   text-align: justify;
 }
 
@@ -1016,30 +1015,30 @@ th {
   max-width: 64rem;
 }
 
-.info-text{
+.info-text {
   width: 60%;
   align-self: center;
   margin-top: 2rem;
 }
 
-#unb-logo{
+#unb-logo {
   height: 10rem;
   align-self: center;
 }
 
-#info-page{
+#info-page {
   display: flex;
   flex-direction: column;
 }
 
-.painting-gravuras{
+.painting-gravuras {
   margin-top: 10%;
 }
 
 .table {
   margin-bottom: 20rem;
 }
-.esconder-campo{
+.esconder-campo {
   visibility: hidden;
 }
 .image-container {
@@ -1060,11 +1059,11 @@ i:hover + .image-container .image-hover {
   opacity: 0.6;
 }
 
-#text-engraving{
+#text-engraving {
   margin-top: 3rem;
 }
 
-.avatar{
+.avatar {
   justify-self: flex-start;
   margin-left: auto;
   margin-right: auto;
@@ -1072,14 +1071,14 @@ i:hover + .image-container .image-hover {
   flex-direction: column;
 }
 
-.avatar-photo-container{
+.avatar-photo-container {
   width: 13.5rem;
   height: 13.5rem;
   border: 3px solid var(--color-primary);
   border-radius: 100px;
 }
 
-.avatar-photo{
+.avatar-photo {
   width: 13rem;
   height: 13rem;
   border-radius: 100px;
@@ -1087,7 +1086,7 @@ i:hover + .image-container .image-hover {
   transition: all 500ms;
 }
 
-.avatar-icon{
+.avatar-icon {
   position: absolute;
   transition: all 500ms;
   pointer-events: none;
@@ -1096,15 +1095,15 @@ i:hover + .image-container .image-hover {
   top: 50%;
 }
 
-.avatar-photo:hover{
+.avatar-photo:hover {
   filter: brightness(0.3);
 }
 
- .avatar-photo:hover ~ .avatar-icon{
+.avatar-photo:hover ~ .avatar-icon {
   opacity: 1;
 }
 
-.dashboard-header{
+.dashboard-header {
   width: 35rem;
   margin: 2rem 0;
   border-right: 2px solid var(--color-gray-1);
@@ -1113,35 +1112,36 @@ i:hover + .image-container .image-hover {
   justify-content: space-evenly;
 }
 
-.dash-message{
+.dash-message {
   align-self: center;
   justify-self: center;
   margin-top: 5rem;
 }
 
-.center-flex-main{
+.center-flex-main {
   margin-left: auto;
   margin-right: auto;
 }
 
-.dashboard-info{
+.dashboard-info {
   display: flex;
   flex-direction: column;
-
 }
 
-.dashboard-content{
+.dashboard-content {
   margin-left: auto;
   margin-right: auto;
 }
 
-.user-info{
+.user-info {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
   justify-content: space-evenly;
 }
-* {box-sizing: border-box}
+* {
+  box-sizing: border-box;
+}
 
 .mySlides1 {
   height: 30rem;
@@ -1169,7 +1169,7 @@ i:hover + .image-container .image-hover {
   opacity: 1;
 }
 
-.mySlides1 a{
+.mySlides1 a {
   filter: none;
 }
 
@@ -1178,11 +1178,11 @@ i:hover + .image-container .image-hover {
   max-width: 1000px;
   position: relative;
   margin: auto;
-
 }
 
 /* Next & previous buttons */
-.prev, .next {
+.prev,
+.next {
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -1202,21 +1202,21 @@ i:hover + .image-container .image-hover {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
-.prev{
+.prev {
   left: 0;
 }
 
 /* On hover, add a grey background color */
-.prev:hover, .next:hover {
+.prev:hover,
+.next:hover {
   background-color: #f1f1f1;
   color: black;
 }
 
-.info-engraving{
+.info-engraving {
   display: flex;
   flex-direction: column;
 }
-
 
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
@@ -1240,22 +1240,16 @@ i:hover + .image-container .image-hover {
   opacity: 0.95;
 }
 
-#myForm{
+#myForm {
   transition: all 500ms;
 }
 
-.author-engraving i{
+.author-engraving i {
   margin: 0.5rem;
-
 }
 
 .mySlides1,
 .info-engraving,
-.author-engraving{
+.author-engraving {
   justify-content: space-evenly;
-  
-}
-
-#card{
-  height: auto;
 }
