@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
+
 from utils.pagination import pagination
 
 from .models import Author, Church, Engraving, Painting
@@ -14,6 +15,8 @@ from .models import Author, Church, Engraving, Painting
 def home(request: HttpRequest) -> HttpResponse:
     current_page = int(request.GET.get('page', 1))
     paintings = Painting.objects.filter(is_published=True).order_by('-id')
+    paintings = paintings.select_related('church', 'post_author')
+    paintings = paintings.prefetch_related('engraving', 'author')
 
     page = pagination(paintings, current_page)
     return render(request, 'museum/pages/home.html', {
