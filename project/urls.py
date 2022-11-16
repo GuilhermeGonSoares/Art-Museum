@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('museum.urls')),
     path('user/', include('user.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
 
 ]
 
