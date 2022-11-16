@@ -29,7 +29,7 @@ def home(request: HttpRequest) -> HttpResponse:
 @require_GET
 def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
     try:
-        painting = Painting.objects.get(pk=painting_id, is_published=True)
+        painting = Painting.objects.prefetch_related('engraving', 'author').get(pk=painting_id, is_published=True)
     
     except ObjectDoesNotExist:
         raise Http404('Objects not found in database')

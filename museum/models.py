@@ -11,6 +11,10 @@ class Author(models.Model):
     
     def __str__(self) -> str:
         return self.name
+    
+    class Meta:
+        db_table = 'AUTHOR'
+    
 
 # igreja -> OneToMany -> pintura
 # pintura -> ManyToOne -> igreja 
@@ -22,6 +26,9 @@ class Church(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    class Meta:
+        db_table = 'CHURCH'
+    
 
 class Engraving(models.Model):
     name = models.CharField(max_length=50)
@@ -34,6 +41,9 @@ class Engraving(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    class Meta:
+        db_table = 'ENGRAVING'
+    
 
 
 class Painting(models.Model):
@@ -66,4 +76,7 @@ class Painting(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        db_table = 'PAINTING'
     
