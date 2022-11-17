@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
@@ -29,8 +29,8 @@ def home(request: HttpRequest) -> HttpResponse:
 @require_GET
 def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
     try:
-        painting = Painting.objects.prefetch_related('engraving', 'author').get(pk=painting_id, is_published=True)
-    
+        painting = Painting.objects.select_related('church', 'post_author').prefetch_related('engraving__author', 'author').get(pk=painting_id, is_published=True)
+
     except ObjectDoesNotExist:
         raise Http404('Objects not found in database')
 
@@ -46,8 +46,11 @@ def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
 def churches(request:HttpRequest) -> HttpResponse:
     churches_paintings = []
     churches = Church.objects.filter(painting__is_published = True).distinct().order_by('-id')
+    churches = churches.annotate(
+        num_paintings=Count('painting')
+    )
     for church in churches:
-        paintings_number = church.painting_set.filter(is_published=True).count()
+        paintings_number = church.num_paintings
         if paintings_number > 0:
             churches_paintings.append((church, paintings_number))
     
@@ -65,6 +68,9 @@ def detail_church(request: HttpRequest, id_church: int) -> HttpResponse:
     filter = request.GET.get('filter', '')
     current_page = int(request.GET.get('page', 1))
     paintings = Painting.objects.filter(church__id=id_church, is_published=True).order_by('-id')
+    paintings = paintings.select_related('church', 'post_author')
+    paintings = paintings.prefetch_related('engraving', 'author')
+
     
     if not paintings:
         raise Http404("there are no paintings related to this church id")
@@ -91,8 +97,11 @@ def detail_church(request: HttpRequest, id_church: int) -> HttpResponse:
 def painters(request: HttpRequest) -> HttpResponse:
     painter_paintings = []
     painters = Author.objects.filter(painting__is_published = True).distinct().order_by('-id')
+    painters = painters.annotate(
+        num_paintings = Count('painting')
+    )
     for painter in painters:
-        paintings_number = painter.painting_set.filter(is_published=True).count()
+        paintings_number = painter.num_paintings
         painter_paintings.append((painter, paintings_number))
     
     return render(request, 'museum/pages/search_painter.html',{
@@ -109,6 +118,9 @@ def detail_painter(request: HttpRequest, id_painter: int)-> HttpResponse:
     try:
         painter = Author.objects.get(pk=id_painter)
         paintings_this_painter = painter.painting_set.filter(is_published=True).order_by('-id')
+        paintings_this_painter = paintings_this_painter.select_related('church', 'post_author').defer('church__city','church__state', 'description')
+        paintings_this_painter = paintings_this_painter.prefetch_related('engraving', 'author').defer('engraving__book', 'author__biography')
+        
     except ObjectDoesNotExist:
         raise Http404("Painter doesn't found in this database!")
     
@@ -174,7 +186,7 @@ def search(request: HttpRequest)-> HttpResponse:
                 Q(name__icontains=search) | Q(summary__icontains=search) 
             ) & Q(is_published=True)
         ).order_by('-id')
-
+        paintings = paintings.select_related('church', 'post_author').prefetch_related('engraving', 'author')
         page = pagination(paintings, current_page)
         return render(request, template, {
             'page': page,
@@ -230,12 +242,12 @@ def search(request: HttpRequest)-> HttpResponse:
 @require_GET
 def detail_painting_not_published(request: HttpRequest, painting_id: int) -> HttpResponse:
     try:
-        painting = Painting.objects.get(pk=painting_id, is_published=False)
-    
+        painting = Painting.objects.select_related('church', 'post_author').prefetch_related('author', 'engraving__author').get(pk=painting_id, is_published=False)
+        print(engravings)
     except ObjectDoesNotExist:
         raise Http404('Objects not found in database')
     
-    return render(request, 'museum/pages/detail_painting.html', {
+    return render(request, 'museum/pages/detail_painting_edit.html', {
         'painting': painting,
         'isDetailPage': True,
         'search':False,

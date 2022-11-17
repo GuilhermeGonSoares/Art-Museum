@@ -4,8 +4,9 @@ from collections import defaultdict
 
 from django import forms
 from django.core.exceptions import ValidationError
-from museum.models import Author, Church, Engraving, Painting
 from pyUFbr.baseuf import ufbr
+
+from museum.models import Author, Church, Engraving, Painting
 from utils.django_form import (check_exist_church, check_exist_name,
                                date_validade)
 
@@ -32,7 +33,7 @@ class RegisterPaintingForm(forms.ModelForm):
         required=False,
         min_length=10,
         max_length=350,
-        label='Resumo',
+        label='Intertexto',
         widget=forms.Textarea(attrs={
             'placeholder': 'Breve resumo da obra',
             'class': 'span-2'
