@@ -52,7 +52,7 @@ class Painting(models.Model):
     description = models.TextField(blank=True)
     cover = models.ImageField(upload_to='museum/cover/%Y/%m/%d/')
     post_date = models.DateField(auto_now=True)
-    summary = models.CharField(max_length=250)
+    summary = models.TextField(blank=True)
     is_published = models.BooleanField(default=False)
 
     author = models.ManyToManyField(
