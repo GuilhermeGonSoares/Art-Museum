@@ -59,7 +59,24 @@
             {% endfor %}
         </span>
         -->
+        
     </div>
+    {% if isDetailPage is not True %}
+    <div class="painting-meta-container">
+        <div class="painting-meta painting-preparation">
+            <h3 class="painting-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
+            <div class="painting-meta-text">
+                {{painting.post_author.username}}
+            </div>
+        </div>
+        <div class="painting-meta painting-servings">
+            <h3 class="painting-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
+            <div class="painting-meta-text">
+                {{painting.post_date}}
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <div class="painting-content justify">
         <div class="text-line">
             <div class="text-background">INTERTEXTO</div>

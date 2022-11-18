@@ -43,6 +43,7 @@ class EngravingAdmin(admin.ModelAdmin):
     search_fields = ('id', 'name')
     list_per_page: int = 10
     ordering = '-id',
+    autocomplete_fields = 'author',
 
 admin.site.register(Painting, PaintingAdmin)
 admin.site.register(Author, AuthorAdmin)
