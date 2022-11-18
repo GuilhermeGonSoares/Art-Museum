@@ -1,3 +1,17 @@
+<script>
+    $(document).ready(function(){
+        $('#ddlselect').select2({
+            placeholder:'Selecione o pintor',
+            closeOnSelect:false,
+        });
+        $('#ddlselect').on('change', function(){
+            var display = $('#ddlselect').val();
+            console.log(display)
+            $('#authors_selected').val(display);
+        });
+    });
+</script>
+
 <form class="create_painting" action="{{form_action}}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% if form.errors %}
@@ -17,6 +31,14 @@
             {% if field.name == 'author' %}
                 <p class="church-select">Não achou o pintor na lista?
                 <a id="create_author" href="{% url 'user:painting_author_create' %} ">Adicione</a></p> 
+                
+                <select name="pintores_selecionados" id="ddlselect" multiple>
+                    {% for author in authors %}
+                        <option value="{{author.id}}">{{author.name}}</option>
+                    {% endfor %}
+                </select>
+                
+                <!--
                 <input type="text" id="search_author" onkeyup="searchInFormPaintings('search_author', 'id_author')" placeholder = "Procure pelo pintor...">
                 {{field}}
                 <p class="church-select">Pintores selecionados:
@@ -25,7 +47,7 @@
                 {% else %}
                     <input type="text" id="author_selected" disabled placeholder="Nenhum">
                 {% endif %}
-
+                -->
             {% elif field.name == 'church' %}
                 <p class="church-select">Não achou a igreja na lista?
                 <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>

@@ -1,5 +1,6 @@
-from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls import path
+
 from museum import views
 
 app_name = 'painting'
@@ -10,6 +11,7 @@ urlpatterns = [
     path('church/all/', views.churches, name='church_all'),
     path('painter/all/', views.painters, name='painter_all'),
     path('engraving/all/', views.engravings, name='engraving_all'),
+    path("paintings/tag/<slug:slug>/", views.tags_paintings, name="tag"),
     path('painting/<int:painting_id>/', views.detail_painting, name='detail'),
     path('church/<int:id_church>/', views.detail_church, name='church'),
     path('painter/<int:id_painter>/', views.detail_painter, name='painter'),

@@ -4,8 +4,9 @@ from collections import defaultdict
 
 from django import forms
 from django.core.exceptions import ValidationError
-from museum.models import Author, Church, Engraving, Painting
 from pyUFbr.baseuf import ufbr
+
+from museum.models import Author, Church, Engraving, Painting
 from utils.django_form import (check_exist_church, check_exist_name,
                                date_validade)
 
@@ -30,22 +31,11 @@ class RegisterPaintingForm(forms.ModelForm):
 
     summary = forms.CharField(
         required=False,
-        min_length=10,
-        max_length=350,
-        label='Resumo',
+        label='Intertexto',
         widget=forms.Textarea(attrs={
-            'placeholder': 'Breve resumo da obra',
+            'placeholder': 'Caso conheça, insira o intertexto da imagem',
             'class': 'span-2'
         })
-    )
-
-
-    author = forms.ModelMultipleChoiceField(
-        required=False,
-        label="Pintor",
-        queryset = Author.objects.filter(is_engraving=False),
-        help_text='É permitido selecionar nenhum ou mais de um pintor',
-        
     )
     
     church = forms.ModelChoiceField(
@@ -81,13 +71,13 @@ class RegisterPaintingForm(forms.ModelForm):
             'engraving',
             'church',
             'summary',
-            'description',
             'cover',
         ]
         labels = {
             'description': 'Descrição',
             'cover': 'Imagem',
             'engraving': 'Gravuras',
+            'author': 'Pintores'
         }
         widgets = {
             'description': forms.Textarea(attrs={
@@ -97,6 +87,9 @@ class RegisterPaintingForm(forms.ModelForm):
             'cover': forms.FileInput(attrs={
                 'class': 'span-2'
             })
+        }
+        help_texts={
+            'author': 'Selecione pelo menos um pintor'
         }
     def clean(self):
         super_clean = super().clean()

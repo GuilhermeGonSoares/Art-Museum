@@ -1,0 +1,70 @@
+<div class="center painting painting-list-item card">
+    <div class="painting-cover">
+        <img src="{{ painting.cover.url }}" alt="temporario" class="img-main no-filter">
+    </div>
+    <div class="painting-title-container">
+        <h2 class="painting-title">{{ painting.name | linebreaks }}</h2>
+    </div>
+
+    <div class="painting-author center-flex">
+        <span class="painting-author-item">
+            {% for author in painting.author.all %}
+                <i class="fas fa-paintbrush"></i>
+                    {{author}}
+                    <br>
+            {%empty%}
+                <i class="fas fa-paintbrush"></i>
+                    Desconhecido
+            {% endfor %}
+        </span>
+        <span class="painting-author-item">
+            <i class="fas fa-calendar-alt"></i>
+            {% if painting.date %}
+                {{ painting.date }}
+            {% else %}
+                Desconhecido
+            {% endif %}
+        </span>
+                
+        <span class="painting-author-item">   
+            <i class="fas fa-church"></i>
+                {% if painting.church is not None %}
+                    <span>{{ painting.church.name }}</span>
+                {% else %}
+                    <span>Igreja desconhecida</span>
+                {% endif %}
+        </span>
+        
+
+    </div>
+
+    <div class="painting-content justify">
+        <p>{{ painting.summary }}</p>
+    </div>
+
+    <div class="painting-meta-container">
+        <div class="painting-meta painting-preparation">
+            <h3 class="painting-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
+            <div class="painting-meta-text">
+                {{painting.post_author.username}}
+            </div>
+        </div>
+        <div class="painting-meta painting-servings">
+            <h3 class="painting-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
+            <div class="painting-meta-text">
+                {{painting.post_date}}
+            </div>
+        </div>
+    </div>
+    
+    {% if isDetailPage is True %}
+        <div class="painting-description justify">
+            {{ painting.description | linebreaks}}
+        </div>
+        
+        {% if painting.engraving.all.count > 0 %}
+            {% include 'museum/partials/sliderShow.html' %}
+        {% endif %}
+    {% endif %}
+
+</div>

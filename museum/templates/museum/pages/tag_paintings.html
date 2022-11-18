@@ -1,0 +1,16 @@
+{% extends 'templates/pages/global.html' %}
+{% block title %}{{tag_name}} | {% endblock title %}
+{% block content %}
+    {% include 'templates/partials/messages.html' %}
+    <div class="main-content main-content-list container">
+        {% for painting in page.paintings %}          
+            {% include 'museum/partials/painting.html' %} 
+        {%empty%}  
+        <h1>No paintings found here!</h1>
+        {% endfor %}
+    </div>
+    <div class="container">
+        {% include 'templates/partials/pagination.html' %}
+    </div>
+    
+{% endblock content %}

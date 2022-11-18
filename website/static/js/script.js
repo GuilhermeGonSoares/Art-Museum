@@ -25,17 +25,7 @@ function setDataForm(form){
     sessionStorage.setItem("name", form.name.value);
     sessionStorage.setItem("date", form.date.value);
     sessionStorage.setItem("summary", form.summary.value);
-    sessionStorage.setItem("description", form.description.value);
     sessionStorage.setItem("church", form.church.value);
-    const options = form.author.querySelectorAll('option')
-    const authors = []
-    for(op of options){
-        if (op.selected){
-            authors.push(op.value)
-        }
-    }
-    sessionStorage.setItem("authors", authors);
-
 }
 
 function form_data() {
@@ -59,25 +49,13 @@ function form_data() {
 }
 function loadForm(){
     const form = document.querySelector('.create_painting')
-    const options = form.author.querySelectorAll('option')
     if (sessionStorage.getItem("load")) {
         window.addEventListener('load', function(event) {
             event.preventDefault();
             form.name.value = sessionStorage.getItem("name");
             form.date.value = sessionStorage.getItem("date");
-            form.summary.value = sessionStorage.getItem("summary");
-            form.description.value = sessionStorage.getItem("description"); 
             form.church.value = sessionStorage.getItem("church");
-            authors_id = sessionStorage.getItem("authors").split(',')
-            for(op of options){
-                if (authors_id.includes(op.value)){
-                    console.log(op)
-                    op.selected = true
-                    op.style.background = "hsl(206,100%,52%)"
-                } else {
-                    op.selected = false
-                }
-            }       
+            form.summary.value = sessionStorage.getItem("summary");
         });
     }
 }
@@ -271,7 +249,7 @@ if (current_page.includes("user/painting/create") || (current_page.includes("use
     loadForm();
     form_data();
     resetSession();
-    desmarcarCampoSelectMultiple(); 
+    //desmarcarCampoSelectMultiple(); 
 }
 
 if(current_page.includes('engraving/create')){

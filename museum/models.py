@@ -2,6 +2,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from tag.models import Tag
+
 
 #pintura -> ManyToMany -> autor
 class Author(models.Model):
@@ -11,6 +13,10 @@ class Author(models.Model):
     
     def __str__(self) -> str:
         return self.name
+    
+    class Meta:
+        db_table = 'AUTHOR'
+    
 
 # igreja -> OneToMany -> pintura
 # pintura -> ManyToOne -> igreja 
@@ -22,6 +28,9 @@ class Church(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    class Meta:
+        db_table = 'CHURCH'
+    
 
 class Engraving(models.Model):
     name = models.CharField(max_length=50)
@@ -34,6 +43,9 @@ class Engraving(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    class Meta:
+        db_table = 'ENGRAVING'
+    
 
 
 class Painting(models.Model):
@@ -42,7 +54,7 @@ class Painting(models.Model):
     description = models.TextField(blank=True)
     cover = models.ImageField(upload_to='museum/cover/%Y/%m/%d/')
     post_date = models.DateField(auto_now=True)
-    summary = models.CharField(max_length=250)
+    summary = models.TextField(blank=True)
     is_published = models.BooleanField(default=False)
 
     author = models.ManyToManyField(
@@ -64,6 +76,11 @@ class Painting(models.Model):
         User, on_delete=models.SET_NULL, null=True
     )
 
+    tag = models.ManyToManyField(Tag, blank=True, default=None)
+
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        db_table = 'PAINTING'
     

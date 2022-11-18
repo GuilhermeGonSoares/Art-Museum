@@ -1,15 +1,20 @@
 <div class="center painting painting-list-item card">
+    {% if isDetailPage is True %}
+        <div class="painting-title-container">
+            <h1 class="painting-title">{{ painting.name | linebreaks }}</h1>
+        </div>
+    {% endif %}
     <div class="painting-cover">
         {% if isDetailPage is not True %}
             <a class="no-filter" href="{% url 'painting:detail' painting.id %}">
                 <img src="{{ painting.cover.url }}" alt="temporario" class="img-main">  
             </a>
+            <div class="painting-title-container">
+                <h2 class="painting-title">{{ painting.name | linebreaks }}</h2>
+            </div>
         {% else %}
             <img src="{{ painting.cover.url }}" alt="temporario" class="img-main no-filter">
         {% endif %}
-    </div>
-    <div class="painting-title-container">
-        <h2 class="painting-title">{{ painting.name | linebreaks }}</h2>
     </div>
 
     <div class="painting-author center-flex">
@@ -31,7 +36,7 @@
                 Desconhecido
             {% endif %}
         </span>
-                
+           
         <span class="painting-author-item">   
             <i class="fas fa-church"></i>
                 {% if painting.church is not None %}
@@ -42,23 +47,21 @@
                     <span>Igreja desconhecida</span>
                 {% endif %}
         </span>
+        <!--
         <span class="painting-author-item">
             {% for engraving in painting.engraving.all %}
                 <i class="fas fa-brush"></i>
-                    <a href="#">{{engraving}}</a>
+                    <a href="#">{{engraving.name}}</a>
                     <br>
             {%empty%}
                 <i class="fas fa-brush"></i>
                     Desconhecido
             {% endfor %}
         </span>
-
+        -->
+        
     </div>
-
-    <div class="painting-content justify">
-        <p>{{ painting.summary }}</p>
-    </div>
-
+    {% if isDetailPage is not True %}
     <div class="painting-meta-container">
         <div class="painting-meta painting-preparation">
             <h3 class="painting-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
@@ -73,7 +76,13 @@
             </div>
         </div>
     </div>
-
+    {% endif %}
+    <div class="painting-content justify">
+        <div class="text-line">
+            <div class="text-background">INTERTEXTO</div>
+        </div>
+        <p>{{ painting.summary }}</p>
+    </div>
 
     {% if isDetailPage is not True %}
     <footer class="painting-footer">
@@ -83,16 +92,39 @@
         </a>
     </footer>
     {% endif %}
-
-    
+ 
     {% if isDetailPage is True %}
-        <div class="painting-description justify">
-            {{ painting.description | linebreaks}}
+        <!--
+        <div class="painting-description justify">       
+        {% if painting.tag.all %}
+            <p>
+                Tags:
+                {% for tag in painting.tag.all %}
+                    <a href="{% url 'painting:tag' tag.slug %}">
+                        {{tag.name}},
+                    </a>
+                {% endfor %}
+            </p>
+        {% endif %}
         </div>
-        
+        -->
         {% if painting.engraving.all.count > 0 %}
         {% include 'museum/partials/sliderShow.html' %}
         {% endif %}
+        <div class="painting-meta-container">
+            <div class="painting-meta painting-preparation">
+                <h3 class="painting-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
+                <div class="painting-meta-text">
+                    {{painting.post_author.username}}
+                </div>
+            </div>
+            <div class="painting-meta painting-servings">
+                <h3 class="painting-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
+                <div class="painting-meta-text">
+                    {{painting.post_date}}
+                </div>
+            </div>
+        </div>
     {% endif %}
 
 </div>

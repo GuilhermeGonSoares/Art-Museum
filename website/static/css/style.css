@@ -650,7 +650,6 @@ p {
 }
 
 .main-content-detail .painting-cover {
-  background-color: var(--color-gray-1);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1252,4 +1251,14 @@ i:hover + .image-container .image-hover {
 .info-engraving,
 .author-engraving {
   justify-content: space-evenly;
+}
+
+.text-line {
+  border-bottom: 3px solid var(--color-primary);
+
+}
+.text-background{
+  background: black;
+  color: white;
+  
 }
