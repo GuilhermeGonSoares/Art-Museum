@@ -231,7 +231,6 @@ p {
 .painting-title-container {
   padding: var(--spacing-gutter-medium);
   padding-bottom: 0;
-  height: 9rem;
 }
 
 .painting-title-container a {
@@ -242,6 +241,7 @@ p {
 .painting-author {
   padding: 0 var(--spacing-gutter-medium);
   display: flex;
+  margin-top: 2rem;
 }
 
 .painting-content {
@@ -272,6 +272,7 @@ p {
   flex-flow: row wrap;
   padding: var(--spacing-gutter-medium);
   background: var(--color-gray-1);
+  margin-top: 2.5rem;
 }
 
 .painting-meta {
@@ -641,6 +642,11 @@ p {
   height: 30rem;
 }
 
+#details-page .img-main{
+  padding: 3rem;
+  height: auto;
+}
+
 .main-content-detail img {
   align-items: center;
   height: auto;
@@ -655,12 +661,15 @@ p {
   justify-content: center;
   align-items: center;
 }
+.painting-cover{
+  margin: 0;
+}
 
 .painting-list-item {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 75rem;
+  height: 80rem;
 }
 #details-page .painting-list-item {
   height: auto;
@@ -1258,7 +1267,19 @@ i:hover + .image-container .image-hover {
 
 }
 .text-background{
-  background: black;
+  background: var(--color-gray-8);
   color: white;
-  
+  width: fit-content;
+  padding: 0.4rem;
+  padding-top: 0.6rem;
+  font-size: 13px;
+}
+.inter-text{
+  display: flex;
+  flex-direction: column;
+}
+.inter-text-line{
+  height: 0.3rem;
+  background-color: #000;
+  margin-bottom: 1rem;
 }
