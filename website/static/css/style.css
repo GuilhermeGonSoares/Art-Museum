@@ -240,7 +240,6 @@ p {
 }
 
 .painting-author {
-  margin-top: 3rem;
   padding: 0 var(--spacing-gutter-medium);
   display: flex;
 }
@@ -1256,7 +1255,7 @@ i:hover + .image-container .image-hover {
 
 .text-line {
   border-bottom: 3px solid var(--color-primary);
-  
+
 }
 .text-background{
   background: black;

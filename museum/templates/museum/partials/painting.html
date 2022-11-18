@@ -1,12 +1,17 @@
 <div class="center painting painting-list-item card">
-    <div class="painting-title-container">
-        <h1 class="painting-title">{{ painting.name | linebreaks }}</h1>
-    </div>
+    {% if isDetailPage is True %}
+        <div class="painting-title-container">
+            <h1 class="painting-title">{{ painting.name | linebreaks }}</h1>
+        </div>
+    {% endif %}
     <div class="painting-cover">
         {% if isDetailPage is not True %}
             <a class="no-filter" href="{% url 'painting:detail' painting.id %}">
                 <img src="{{ painting.cover.url }}" alt="temporario" class="img-main">  
             </a>
+            <div class="painting-title-container">
+                <h2 class="painting-title">{{ painting.name | linebreaks }}</h2>
+            </div>
         {% else %}
             <img src="{{ painting.cover.url }}" alt="temporario" class="img-main no-filter">
         {% endif %}
