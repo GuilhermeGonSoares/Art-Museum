@@ -38,16 +38,7 @@
                     {% endfor %}
                 </select>
                 
-                <!--
-                <input type="text" id="search_author" onkeyup="searchInFormPaintings('search_author', 'id_author')" placeholder = "Procure pelo pintor...">
-                {{field}}
-                <p class="church-select">Pintores selecionados:
-                {% if painters %}
-                    <input type="text" id="author_selected" disabled placeholder="{{painters}}">
-                {% else %}
-                    <input type="text" id="author_selected" disabled placeholder="Nenhum">
-                {% endif %}
-                -->
+    
             {% elif field.name == 'church' %}
                 <p class="church-select">Não achou a igreja na lista?
                 <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>
