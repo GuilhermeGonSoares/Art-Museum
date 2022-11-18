@@ -14,7 +14,7 @@ from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from pyUFbr.baseuf import ufbr
 
-from museum.models import Engraving, Painting
+from museum.models import Author, Engraving, Painting
 from utils.pagination import pagination
 
 from .forms import (ChangePasswordForm, LoginForm, RegisterAuthorForm,
@@ -228,9 +228,10 @@ def painting_create(request:HttpRequest)-> HttpResponse:
             data=request.POST or None,
             files=request.FILES or None,
     )    
-    
     if form.is_valid():
-        authors = form.cleaned_data['author']
+        print(request.POST.getlist('pintores_selecionados'))
+        authors = [Author.objects.get(pk=int(id)) for id in request.POST.getlist('pintores_selecionados')]
+        print(authors)
         pant = form.save(commit=False)
         pant.post_author = user
         pant.is_published = False
@@ -245,10 +246,13 @@ def painting_create(request:HttpRequest)-> HttpResponse:
         if request.session.get('engravings'):
             del(request.session['engravings'])
         return redirect('user:dashboard')
+    
+    authors = Author.objects.filter(is_engraving=False).order_by('name')
 
     return render(request, 'user/pages/dashboard_painting.html', {
         'method': 'Criar',
         'form': form,
+        'authors': authors,
         'search': False,
         'engravings': engravings,
     })

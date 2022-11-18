@@ -37,15 +37,6 @@ class RegisterPaintingForm(forms.ModelForm):
             'class': 'span-2'
         })
     )
-
-
-    author = forms.ModelMultipleChoiceField(
-        required=False,
-        label="Pintor",
-        queryset = Author.objects.filter(is_engraving=False),
-        help_text='É permitido selecionar nenhum ou mais de um pintor',
-        
-    )
     
     church = forms.ModelChoiceField(
         required=False,
@@ -86,6 +77,7 @@ class RegisterPaintingForm(forms.ModelForm):
             'description': 'Descrição',
             'cover': 'Imagem',
             'engraving': 'Gravuras',
+            'author': 'Pintores'
         }
         widgets = {
             'description': forms.Textarea(attrs={
@@ -95,6 +87,9 @@ class RegisterPaintingForm(forms.ModelForm):
             'cover': forms.FileInput(attrs={
                 'class': 'span-2'
             })
+        }
+        help_texts={
+            'author': 'Selecione pelo menos um pintor'
         }
     def clean(self):
         super_clean = super().clean()

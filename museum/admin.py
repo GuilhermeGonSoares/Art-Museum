@@ -26,7 +26,7 @@ class PaintingAdmin(admin.ModelAdmin):
     '''
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'is_engraving')
     list_display_links = ('id', 'name')
     search_fields = ('id', 'name')
     list_per_page: int = 10
