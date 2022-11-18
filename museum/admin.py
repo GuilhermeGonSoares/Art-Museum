@@ -13,6 +13,8 @@ class PaintingAdmin(admin.ModelAdmin):
     list_per_page: int = 10
     list_editable = ('is_published',)
     ordering = '-id',
+    autocomplete_fields = 'tag', 'author', 'engraving'
+
 
     
     #No futuro irá ter "slug"

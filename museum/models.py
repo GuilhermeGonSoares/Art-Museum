@@ -2,6 +2,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from tag.models import Tag
+
 
 #pintura -> ManyToMany -> autor
 class Author(models.Model):
@@ -73,6 +75,8 @@ class Painting(models.Model):
     post_author = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True
     )
+
+    tag = models.ManyToManyField(Tag, blank=True, default=None)
 
     def __str__(self) -> str:
         return self.name

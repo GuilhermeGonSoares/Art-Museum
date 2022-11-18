@@ -12,8 +12,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
-from museum.models import Engraving, Painting
 from pyUFbr.baseuf import ufbr
+
+from museum.models import Engraving, Painting
 from utils.pagination import pagination
 
 from .forms import (ChangePasswordForm, LoginForm, RegisterAuthorForm,
@@ -329,7 +330,8 @@ def painting_user_published(request: HttpRequest) -> HttpResponse:
     current_page = int(request.GET.get('page', 1))
     user = request.user
     paintings = Painting.objects.filter(is_published=True, post_author=user.id).order_by('-id')
-
+    paintings = paintings.select_related('church', 'post_author').defer('church__city', 'church__state')
+    paintings = paintings.prefetch_related('author', 'engraving')
     page = pagination(paintings, current_page)
 
     return render(request, 'user/pages/paintings_published.html', {

@@ -31,11 +31,9 @@ class RegisterPaintingForm(forms.ModelForm):
 
     summary = forms.CharField(
         required=False,
-        min_length=10,
-        max_length=350,
         label='Intertexto',
         widget=forms.Textarea(attrs={
-            'placeholder': 'Breve resumo da obra',
+            'placeholder': 'Caso conheça, insira o intertexto da imagem',
             'class': 'span-2'
         })
     )
@@ -82,7 +80,6 @@ class RegisterPaintingForm(forms.ModelForm):
             'engraving',
             'church',
             'summary',
-            'description',
             'cover',
         ]
         labels = {

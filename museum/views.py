@@ -6,6 +6,7 @@ from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
+from tag.models import Tag
 from utils.pagination import pagination
 
 from .models import Author, Church, Engraving, Painting
@@ -15,8 +16,10 @@ from .models import Author, Church, Engraving, Painting
 def home(request: HttpRequest) -> HttpResponse:
     current_page = int(request.GET.get('page', 1))
     paintings = Painting.objects.filter(is_published=True).order_by('-id')
-    paintings = paintings.select_related('church', 'post_author')
-    paintings = paintings.prefetch_related('engraving', 'author')
+    paintings = paintings.select_related('church', 'post_author') \
+                .defer('description', 'is_published')
+    paintings = paintings.prefetch_related('engraving', 'author') \
+                .defer('engraving__book', 'engraving__cover')
 
     page = pagination(paintings, current_page)
     return render(request, 'museum/pages/home.html', {
@@ -40,6 +43,17 @@ def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
         'isDetailPage': True,
         'searchbar': False,
         
+    })
+
+@require_GET
+def tags_paintings(request, slug):
+    current_page = int(request.GET.get('page', 1))  
+    paintings = Painting.objects.filter(tag__slug=slug)
+    tag_name = Tag.objects.get(slug=slug).name
+    page = pagination(paintings, current_page)
+    return render(request, 'museum/pages/tag_paintings.html', {
+        'page':page,
+        'tag_name': tag_name,
     })
 
 @require_GET

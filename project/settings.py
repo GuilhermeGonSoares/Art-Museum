@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     #My apps:
     'museum',
     'user',
+    'tag',
 ]
 
 MIDDLEWARE = [
