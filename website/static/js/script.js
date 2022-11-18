@@ -26,6 +26,14 @@ function setDataForm(form){
     sessionStorage.setItem("date", form.date.value);
     sessionStorage.setItem("summary", form.summary.value);
     sessionStorage.setItem("church", form.church.value);
+    const authors = [];
+    for (op of document.getElementById('ddlselect').options){
+        if (op.selected){
+            authors.push(op.value);
+        }
+    }
+    console.log(authors);
+    sessionStorage.setItem("authors", authors);
 }
 
 function form_data() {
@@ -56,6 +64,16 @@ function loadForm(){
             form.date.value = sessionStorage.getItem("date");
             form.church.value = sessionStorage.getItem("church");
             form.summary.value = sessionStorage.getItem("summary");
+            authors_id = sessionStorage.getItem("authors").split(',')
+            console.log(authors_id)
+            for(op of document.getElementById('ddlselect').options){
+                if(authors_id.includes(op.value)){
+                    console.log(op)
+                    op.selected = true
+                } else {
+                    op.selected = false
+                }
+            }
         });
     }
 }
@@ -252,10 +270,7 @@ if (current_page.includes("user/painting/create") || (current_page.includes("use
     //desmarcarCampoSelectMultiple(); 
 }
 
-if(current_page.includes('engraving/create')){
-    desmarcarCampoSelectMultiple(); 
 
-}
 
 if (current_page.includes("user/engraving/all")){
     showHideTable();

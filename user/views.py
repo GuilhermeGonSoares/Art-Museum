@@ -139,9 +139,10 @@ def edit_user(request):
 @login_required(login_url='user:login')
 def dashboard(request:HttpRequest) -> HttpResponse:
     user = request.user
-
-    if request.session.get('engravings'):
-        del(request.session['engravings']) 
+    engraving = request.session.get('is_engraving', '')
+    
+    if engraving:
+        del(request.session['is_engraving']) 
 
     paintings = Painting.objects.filter(
         is_published=False, post_author=user
@@ -160,6 +161,9 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
     engravings_id = request.session.get('engravings', None)
     is_engraving = request.session.get('is_engraving', '')
     
+    if is_engraving:
+        del(request.session['is_engraving'])
+
     try:
         user = request.user
         painting = Painting.objects.get(
@@ -219,6 +223,8 @@ def painting_create(request:HttpRequest)-> HttpResponse:
 
     if session_id:
         del(request.session['painting_edit_id'])
+    if is_engraving:
+        del(request.session['is_engraving'])
       
     engravings = __load_engraving(engravings_id) 
 
@@ -262,6 +268,7 @@ def painting_author_create(request:HttpRequest) -> HTTPResponse:
     engraving = request.session.get('is_engraving', '')
 
     form = RegisterAuthorForm(data=request.POST or None)
+    
     if form.is_valid():
         author = form.save(commit=False)
         if engraving:
@@ -374,7 +381,6 @@ def engraving_create(request:HttpRequest) -> HttpResponse:
             eng.author.add(author)
 
         messages.success(request, "Igreja cadastrada com sucesso")
-        
         del(request.session['is_engraving'])
         return redirect('user:painting_engraving_all')
 
