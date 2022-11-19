@@ -4,8 +4,14 @@
             placeholder:'Selecione o pintor',
             closeOnSelect:false,
         });
-        
+        if (sessionStorage.getItem("authors") !== null){
+            const authors_selected = sessionStorage.getItem("authors").split(',');
+            console.log(authors_selected);
+            $('#ddlselect').val(authors_selected).change();
+        }
+
     });
+    
 </script>
 
 <form class="create_painting" action="{{form_action}}" method="POST" enctype="multipart/form-data">
@@ -37,6 +43,7 @@
                     {% endif %}
                     {% endfor %}
                 </select>
+                <input type="hidden" id="myVar" name="variable" value="{{ authors_json }}">
                 
     
             {% elif field.name == 'church' %}

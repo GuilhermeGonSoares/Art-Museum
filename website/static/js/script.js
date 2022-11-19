@@ -32,7 +32,6 @@ function setDataForm(form){
             authors.push(op.value);
         }
     }
-    console.log(authors);
     sessionStorage.setItem("authors", authors);
 }
 
@@ -64,16 +63,7 @@ function loadForm(){
             form.date.value = sessionStorage.getItem("date");
             form.church.value = sessionStorage.getItem("church");
             form.summary.value = sessionStorage.getItem("summary");
-            authors_id = sessionStorage.getItem("authors").split(',')
-            console.log(authors_id)
-            for(op of document.getElementById('ddlselect').options){
-                if(authors_id.includes(op.value)){
-                    console.log(op)
-                    op.selected = true
-                } else {
-                    op.selected = false
-                }
-            }
+            //authors_id = sessionStorage.getItem("authors").split(',')
         });
     }
 }

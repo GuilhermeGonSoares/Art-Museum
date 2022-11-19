@@ -1,5 +1,4 @@
 import json
-from collections import defaultdict
 from http.client import HTTPResponse
 
 from django.contrib import messages
@@ -166,7 +165,7 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
 
     try:
         user = request.user
-        painting = Painting.objects.get(
+        painting = Painting.objects.prefetch_related('author', 'engraving').get(
             pk=id,
             is_published=False, 
             post_author=user,
