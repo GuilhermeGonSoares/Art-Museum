@@ -188,6 +188,8 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
             files=request.FILES or None,
             instance=painting
         )
+
+    authors_registered = painting.author.all()
     
     if form.is_valid():
         authors = [Author.objects.get(pk=int(id)) for id in request.POST.getlist('pintores_selecionados')]
@@ -211,7 +213,8 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
         'form': form,
         'search': False,
         'engravings': engravings,
-        'authors': authors
+        'authors': authors,
+        'authors_registered': authors_registered,
     })
 
 @require_http_methods(['GET', 'POST'])
