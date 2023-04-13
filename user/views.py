@@ -1,5 +1,4 @@
 import json
-from collections import defaultdict
 from http.client import HTTPResponse
 
 from django.contrib import messages
@@ -139,9 +138,10 @@ def edit_user(request):
 @login_required(login_url='user:login')
 def dashboard(request:HttpRequest) -> HttpResponse:
     user = request.user
-
-    if request.session.get('engravings'):
-        del(request.session['engravings']) 
+    engraving = request.session.get('is_engraving', '')
+    
+    if engraving:
+        del(request.session['is_engraving']) 
 
     paintings = Painting.objects.filter(
         is_published=False, post_author=user
@@ -160,13 +160,17 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
     engravings_id = request.session.get('engravings', None)
     is_engraving = request.session.get('is_engraving', '')
     
+    if is_engraving:
+        del(request.session['is_engraving'])
+
     try:
         user = request.user
-        painting = Painting.objects.get(
+        painting = Painting.objects.prefetch_related('author', 'engraving').get(
             pk=id,
             is_published=False, 
             post_author=user,
         )
+        authors = Author.objects.filter(is_engraving=False)
  
     except ObjectDoesNotExist:
         raise Http404("Painter doesn't found in this database!")
@@ -177,16 +181,17 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
     if engravings_id != None:
         engravings = __load_engraving(engravings_id)
 
-    painters = ', '.join([p.name for p in painting.author.all()]) if painting.author.all().count() > 0 else None
 
     form = RegisterPaintingForm(
             data=request.POST or None,
             files=request.FILES or None,
             instance=painting
         )
+
+    authors_registered = painting.author.all()
     
     if form.is_valid():
-        authors = form.cleaned_data['author']
+        authors = [Author.objects.get(pk=int(id)) for id in request.POST.getlist('pintores_selecionados')]
         pant = form.save(commit=False)
         pant.author.set(authors)
         pant.engraving.set(engravings)
@@ -207,8 +212,8 @@ def painting_edit(request:HttpRequest, id:int)-> HttpResponse:
         'form': form,
         'search': False,
         'engravings': engravings,
-        'painters': painters
-        
+        'authors': authors,
+        'authors_registered': authors_registered,
     })
 
 @require_http_methods(['GET', 'POST'])
@@ -220,6 +225,8 @@ def painting_create(request:HttpRequest)-> HttpResponse:
 
     if session_id:
         del(request.session['painting_edit_id'])
+    if is_engraving:
+        del(request.session['is_engraving'])
       
     engravings = __load_engraving(engravings_id) 
 
@@ -229,9 +236,7 @@ def painting_create(request:HttpRequest)-> HttpResponse:
             files=request.FILES or None,
     )    
     if form.is_valid():
-        print(request.POST.getlist('pintores_selecionados'))
         authors = [Author.objects.get(pk=int(id)) for id in request.POST.getlist('pintores_selecionados')]
-        print(authors)
         pant = form.save(commit=False)
         pant.post_author = user
         pant.is_published = False
@@ -265,6 +270,7 @@ def painting_author_create(request:HttpRequest) -> HTTPResponse:
     engraving = request.session.get('is_engraving', '')
 
     form = RegisterAuthorForm(data=request.POST or None)
+    
     if form.is_valid():
         author = form.save(commit=False)
         if engraving:
@@ -366,17 +372,24 @@ def engraving_create(request:HttpRequest) -> HttpResponse:
         files=request.FILES or None)
     
     request.session['is_engraving'] = True
+
+    authors = Author.objects.filter(is_engraving=True)
     
     if form.is_valid():
-        form.save()
-        messages.success(request, "Igreja cadastrada com sucesso")
+        eng = form.save(commit=False)
+        eng.save()
         
+        for author in authors:
+            eng.author.add(author)
+
+        messages.success(request, "Igreja cadastrada com sucesso")
         del(request.session['is_engraving'])
         return redirect('user:painting_engraving_all')
 
     return render(request, 'user/pages/dashboard_engraving.html', {
         'form': form,
         'search': False,
+        'authors': authors,
     })
 
 @require_POST

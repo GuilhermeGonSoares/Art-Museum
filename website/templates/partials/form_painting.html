@@ -4,12 +4,14 @@
             placeholder:'Selecione o pintor',
             closeOnSelect:false,
         });
-        $('#ddlselect').on('change', function(){
-            var display = $('#ddlselect').val();
-            console.log(display)
-            $('#authors_selected').val(display);
-        });
+        if (sessionStorage.getItem("authors") !== null){
+            const authors_selected = sessionStorage.getItem("authors").split(',');
+            console.log(authors_selected);
+            $('#ddlselect').val(authors_selected).change();
+        }
+
     });
+    
 </script>
 
 <form class="create_painting" action="{{form_action}}" method="POST" enctype="multipart/form-data">
@@ -34,20 +36,16 @@
                 
                 <select name="pintores_selecionados" id="ddlselect" multiple>
                     {% for author in authors %}
+                    {% if author in authors_registered %}
+                        <option selected="selected" value="{{author.id}}">{{author.name}}</option>
+                    {% else %}
                         <option value="{{author.id}}">{{author.name}}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
+                <input type="hidden" id="myVar" name="variable" value="{{ authors_json }}">
                 
-                <!--
-                <input type="text" id="search_author" onkeyup="searchInFormPaintings('search_author', 'id_author')" placeholder = "Procure pelo pintor...">
-                {{field}}
-                <p class="church-select">Pintores selecionados:
-                {% if painters %}
-                    <input type="text" id="author_selected" disabled placeholder="{{painters}}">
-                {% else %}
-                    <input type="text" id="author_selected" disabled placeholder="Nenhum">
-                {% endif %}
-                -->
+    
             {% elif field.name == 'church' %}
                 <p class="church-select">Não achou a igreja na lista?
                 <a id="create_church" href="{% url 'user:painting_church_create' %} ">Adicione</a></p>

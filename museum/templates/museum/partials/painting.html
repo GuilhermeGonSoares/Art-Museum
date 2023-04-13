@@ -1,53 +1,53 @@
 <div class="center painting painting-list-item card">
-    {% if isDetailPage is True %}
-        <div class="painting-title-container">
-            <h1 class="painting-title">{{ painting.name | linebreaks }}</h1>
-        </div>
-    {% endif %}
-    <div class="painting-cover">
-        {% if isDetailPage is not True %}
-            <a class="no-filter" href="{% url 'painting:detail' painting.id %}">
-                <img src="{{ painting.cover.url }}" alt="temporario" class="img-main">  
-            </a>
-            <div class="painting-title-container">
-                <h2 class="painting-title">{{ painting.name | linebreaks }}</h2>
-            </div>
-        {% else %}
-            <img src="{{ painting.cover.url }}" alt="temporario" class="img-main no-filter">
-        {% endif %}
+  {% if isDetailPage is True %}
+  <div class="painting-title-container">
+    <h1 class="painting-title">{{ painting.name | linebreaks }}</h1>
+  </div>
+  {% endif %}
+  <div class="painting-cover">
+    {% if isDetailPage is not True %}
+    <a class="no-filter" href="{% url 'painting:detail' painting.id %}">
+      <img src="{{ painting.cover.url }}" alt="temporario" class="img-main" />
+    </a>
+    <div class="painting-title-container">
+      <h2 class="painting-title">{{ painting.name | linebreaks }}</h2>
     </div>
+    {% else %}
+    <img
+      src="{{ painting.cover.url }}"
+      alt="temporario"
+      class="img-main no-filter"
+    />
+    {% endif %}
+  </div>
 
-    <div class="painting-author center-flex">
-        <span class="painting-author-item">
-            {% for author in painting.author.all %}
-                <i class="fas fa-paintbrush"></i>
-                    <a href="{% url 'painting:painter' author.id %}">{{author}}</a>
-                    <br>
-            {%empty%}
-                <i class="fas fa-paintbrush"></i>
-                    Desconhecido
-            {% endfor %}
-        </span>
-        <span class="painting-author-item">
-            <i class="fas fa-calendar-alt"></i>
-            {% if painting.date %}
-                {{ painting.date }}
-            {% else %}
-                Desconhecido
-            {% endif %}
-        </span>
-           
-        <span class="painting-author-item">   
-            <i class="fas fa-church"></i>
-                {% if painting.church is not None %}
-                    <a href="{% url 'painting:church' painting.church.id %}">
-                        <span>{{ painting.church.name }}</span>
-                    </a>
-                {% else %}
-                    <span>Igreja desconhecida</span>
-                {% endif %}
-        </span>
-        <!--
+  <div class="painting-author center-flex">
+    <span class="painting-author-item">
+      {% for author in painting.author.all %}
+      <i class="fas fa-paintbrush"></i>
+      <a href="{% url 'painting:painter' author.id %}">{{author}}</a>
+      <br />
+      {%empty%}
+      <i class="fas fa-paintbrush"></i>
+      Desconhecido {% endfor %}
+    </span>
+    <span class="painting-author-item">
+      <i class="fas fa-calendar-alt"></i>
+      {% if painting.date %} {{ painting.date }} {% else %} Desconhecido {%
+      endif %}
+    </span>
+
+    <span class="painting-author-item">
+      <i class="fas fa-church"></i>
+      {% if painting.church is not None %}
+      <a href="{% url 'painting:church' painting.church.id %}">
+        <span>{{ painting.church.name }}</span>
+      </a>
+      {% else %}
+      <span>Igreja desconhecida</span>
+      {% endif %}
+    </span>
+    <!--
         <span class="painting-author-item">
             {% for engraving in painting.engraving.all %}
                 <i class="fas fa-brush"></i>
@@ -59,42 +59,43 @@
             {% endfor %}
         </span>
         -->
-        
+  </div>
+  {% if isDetailPage is not True %}
+  <div class="painting-meta-container">
+    <div class="painting-meta painting-preparation">
+      <h3 class="painting-meta-title">
+        <i class="fas fa-user"></i> Autor do post
+      </h3>
+      <div class="painting-meta-text">{{painting.post_author.username}}</div>
     </div>
-    {% if isDetailPage is not True %}
-    <div class="painting-meta-container">
-        <div class="painting-meta painting-preparation">
-            <h3 class="painting-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
-            <div class="painting-meta-text">
-                {{painting.post_author.username}}
-            </div>
-        </div>
-        <div class="painting-meta painting-servings">
-            <h3 class="painting-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
-            <div class="painting-meta-text">
-                {{painting.post_date}}
-            </div>
-        </div>
+    <div class="painting-meta painting-servings">
+      <h3 class="painting-meta-title">
+        <i class="fas fa-calendar-alt"></i> Data do post
+      </h3>
+      <div class="painting-meta-text">{{painting.post_date}}</div>
     </div>
-    {% endif %}
-    <div class="painting-content justify">
-        {% comment %} <div class="text-line">
-            <div class="text-background">INTERTEXTO</div>
-        </div> {% endcomment %}
-        <p>{{ painting.summary }}</p>
+  </div>
+  {% endif %}
+  <div class="painting-content justify">
+    <div class="text-line">
+      <div class="text-background">INTERTEXTO</div>
+      <div class="inter-text-line"></div>
     </div>
+    <p>{{ painting.summary }}</p>
+  </div>
 
-    {% if isDetailPage is not True %}
-    <footer class="painting-footer">
-        <a class="painting-read-more button button-dark button-full-width" href="{% url 'painting:detail' painting.id %}">
-            <i class="fas fa-eye"></i>
-            <span>ver mais...</span>
-        </a>
-    </footer>
-    {% endif %}
- 
-    {% if isDetailPage is True %}
-        <!--
+  {% if isDetailPage is not True %}
+  <footer class="painting-footer">
+    <a
+      class="painting-read-more button button-dark button-full-width"
+      href="{% url 'painting:detail' painting.id %}"
+    >
+      <i class="fas fa-eye"></i>
+      <span>ver mais...</span>
+    </a>
+  </footer>
+  {% endif %} {% if isDetailPage is True %}
+  <!--
         <div class="painting-description justify">       
         {% if painting.tag.all %}
             <p>
@@ -108,23 +109,21 @@
         {% endif %}
         </div>
         -->
-        {% if painting.engraving.all.count > 0 %}
-        {% include 'museum/partials/sliderShow.html' %}
-        {% endif %}
-        <div class="painting-meta-container">
-            <div class="painting-meta painting-preparation">
-                <h3 class="painting-meta-title"><i class="fas fa-user"></i> Autor do post</h3>
-                <div class="painting-meta-text">
-                    {{painting.post_author.username}}
-                </div>
-            </div>
-            <div class="painting-meta painting-servings">
-                <h3 class="painting-meta-title"><i class="fas fa-calendar-alt"></i> Data do post</h3>
-                <div class="painting-meta-text">
-                    {{painting.post_date}}
-                </div>
-            </div>
-        </div>
-    {% endif %}
-
+  {% if painting.engraving.all.count > 0 %} {% include
+  'museum/partials/sliderShow.html' %} {% endif %}
+  <div class="painting-meta-container">
+    <div class="painting-meta painting-preparation">
+      <h3 class="painting-meta-title">
+        <i class="fas fa-user"></i> Autor do post
+      </h3>
+      <div class="painting-meta-text">{{painting.post_author.username}}</div>
+    </div>
+    <div class="painting-meta painting-servings">
+      <h3 class="painting-meta-title">
+        <i class="fas fa-calendar-alt"></i> Data do post
+      </h3>
+      <div class="painting-meta-text">{{painting.post_date}}</div>
+    </div>
+  </div>
+  {% endif %}
 </div>

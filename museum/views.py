@@ -33,13 +33,14 @@ def home(request: HttpRequest) -> HttpResponse:
 def detail_painting(request: HttpRequest, painting_id: int) -> HttpResponse:
     try:
         painting = Painting.objects.select_related('church', 'post_author').prefetch_related('engraving__author', 'author').get(pk=painting_id, is_published=True)
-
+        engravings = painting.engraving.all()
     except ObjectDoesNotExist:
         raise Http404('Objects not found in database')
 
-
     return render(request, 'museum/pages/detail_painting.html', {
         'painting': painting,
+        'engravings':engravings,
+        'range': [i+1 for i in range(engravings.count())],
         'isDetailPage': True,
         'searchbar': False,
         
@@ -257,12 +258,14 @@ def search(request: HttpRequest)-> HttpResponse:
 def detail_painting_not_published(request: HttpRequest, painting_id: int) -> HttpResponse:
     try:
         painting = Painting.objects.select_related('church', 'post_author').prefetch_related('author', 'engraving__author').get(pk=painting_id, is_published=False)
-        print(engravings)
+        engravings = painting.engraving.all()
     except ObjectDoesNotExist:
         raise Http404('Objects not found in database')
     
     return render(request, 'museum/pages/detail_painting_edit.html', {
         'painting': painting,
+        'engravings': engravings,
+        'range': [i+1 for i in range(engravings.count())],
         'isDetailPage': True,
         'search':False,
         'edit': True,
