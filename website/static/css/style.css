@@ -247,7 +247,7 @@ p {
 .painting-content {
   padding: var(--spacing-gutter-medium);
   padding-top: 3rem;
-  height: 60rem;
+  height: 40rem;
 }
 
 .painting-author-item {
@@ -642,7 +642,7 @@ p {
   height: 30rem;
 }
 
-#details-page .img-main{
+#details-page .img-main {
   padding: 3rem;
   height: auto;
 }
@@ -661,7 +661,7 @@ p {
   justify-content: center;
   align-items: center;
 }
-.painting-cover{
+.painting-cover {
   margin: 0;
 }
 
@@ -1264,9 +1264,8 @@ i:hover + .image-container .image-hover {
 
 .text-line {
   border-bottom: 3px solid var(--color-primary);
-
 }
-.text-background{
+.text-background {
   background: var(--color-gray-8);
   color: white;
   width: fit-content;
@@ -1274,11 +1273,11 @@ i:hover + .image-container .image-hover {
   padding-top: 0.6rem;
   font-size: 13px;
 }
-.inter-text{
+.inter-text {
   display: flex;
   flex-direction: column;
 }
-.inter-text-line{
+.inter-text-line {
   height: 0.3rem;
   background-color: #000;
   margin-bottom: 1rem;
@@ -1294,7 +1293,8 @@ i:hover + .image-container .image-hover {
   transition: background-color 0.6s ease;
 }
 
-.active, .dot:hover {
+.active,
+.dot:hover {
   background-color: #717171;
 }
 .dot {
@@ -1308,14 +1308,15 @@ i:hover + .image-container .image-hover {
   transition: background-color 0.6s ease;
 }
 
-.active, .dot:hover {
+.active,
+.dot:hover {
   background-color: #717171;
 }
-.inter-text{
+.inter-text {
   display: flex;
   flex-direction: column;
 }
-.inter-text-line{
+.inter-text-line {
   height: 0.3rem;
   background-color: #000;
   margin-bottom: 1rem;
